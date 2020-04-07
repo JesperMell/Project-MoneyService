@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>81</x>
+      <y>90</y>
+      <w>306</w>
+      <h>153</h>
+    </coordinates>
+    <panel_attributes>MoneyServiceApp
+--
+--
++ main(String[] args)
+- configure
+- createExchangeOffice(MoneyService)
+- CLIApplication():
+--
+Responsibilities
+Application trigger and configuration</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1053</x>
+      <y>72</y>
+      <w>306</w>
+      <h>288</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Value Type&gt;&gt;
+Order
+--
+- orderNr: int
+- orderType: enum OrderType
+- currencyCode: String
+- amount: double
+- requestedOffice: String
+--
++ Order(OrderType, String, double, String)
++ getOrderNr():int
++ getOrderType(): OrderType
++ getCurrency(): Currency
++ getAmount(): double
++ getRequestedOffice(): String
+--
+Responsibilities
+Holding information about 
+the requested exchange
+and generate a unique
+identification of the order.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1125</x>
+      <y>765</y>
+      <w>243</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>Time
+
+--
+- hour: int
+- minute: int
+--
++ Time(int,int)
++ getHour(): int
++ getMinute(): int
+--
+Responsibilities
+This class holds time information
+in the form of hours and minutes.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1053</x>
+      <y>423</y>
+      <w>324</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>ExchangeOffice
+--
+- name: String
+- inventory: Map&lt;String currencyCode, double amount&gt;
+- completedOrders: List&lt;Order&gt;
+--
++ ExchangeOffice(String, Map)
++ getDestination(): String
++ getAmount(String currencyCode): double
++ transaction(Order)
++ getCompletedOrders(): List&lt;Order&gt;
+--
+Responsibilities
+Defines a exchange office
+within the system.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>90</x>
+      <y>648</y>
+      <w>297</w>
+      <h>207</h>
+    </coordinates>
+    <panel_attributes>Currency
+--
+- currencyCode: String
+- rate: double
+--
++ Currency(String, double)
++ getRate(): double
++ getCurrencyCode(): String
++ setRate(double):
+--
+Responsibilities
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>504</x>
+      <y>90</y>
+      <w>396</w>
+      <h>207</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+MoneyService
+--
+
+--
++ buyMoney(Order orderData): boolean
++ sellMoney(Order orderData): boolean
++ printSiteReport(String destination):
++ shutDownService(String destination):
++ getCurrencyMap(): Map&lt;String, Currency&gt;
++ getAvailableAmount(String currencyCode): Optional&lt;Double&gt;
+--
+Responsibilities
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>81</x>
+      <y>432</y>
+      <w>306</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>ServiceConfig
+--
+
+
+--
+_~readConfig(String)_
+--
+Responsibilities
+Applicationi configuration is set up
+from a passed file</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>504</x>
+      <y>387</y>
+      <w>396</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>MyMoneyService
+--
+- exchangeSites: Map&lt;String, List&lt;ExchangeOffice&gt; &gt;
+- currencyMap: Map&lt;String, Currency&gt;
+--
++ MyMoneyService()
++ buyMoney(Order orderData): boolean
++ sellMoney(Order orderData): boolean
++ printSiteReport(String destination):
++ shutDownService(String destination):
++ getCurrencyMap(): Map&lt;String, Currency&gt;
++ getAvailableAmount(String currencyCode): Optional&lt;Double&gt;
+--
+Responsibilities
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>234</x>
+      <y>288</y>
+      <w>189</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>CLIHelper
+--
+--
+_~menuInput(): int_
+_~orderRequest(): Order_
+--
+Responsibilities
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>297</x>
+      <y>234</y>
+      <w>27</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>144</x>
+      <y>234</y>
+      <w>27</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;220.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>378</x>
+      <y>162</y>
+      <w>144</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>684</x>
+      <y>288</y>
+      <w>27</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>738</x>
+      <y>666</y>
+      <w>297</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>MoneyServiceSupport
+--
+--
+_~ validateOrder(Order orderData): boolean_
+--
+Responsibilities
+	</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>810</x>
+      <y>594</y>
+      <w>27</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>891</x>
+      <y>495</y>
+      <w>180</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1..n</panel_attributes>
+    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>891</x>
+      <y>198</y>
+      <w>180</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;Uses&gt;&gt;</panel_attributes>
+    <additional_attributes>180.0;10.0;80.0;10.0;80.0;260.0;10.0;260.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>378</x>
+      <y>594</y>
+      <w>234</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>240.0;10.0;240.0;180.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>180</x>
+      <y>567</y>
+      <w>27</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
