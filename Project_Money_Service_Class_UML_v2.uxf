@@ -56,8 +56,8 @@ identification of the order.</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1107</x>
-      <y>648</y>
+      <x>747</x>
+      <y>666</y>
       <w>243</w>
       <h>171</h>
     </coordinates>
@@ -80,7 +80,7 @@ in the form of hours and minutes.</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1071</x>
-      <y>441</y>
+      <y>369</y>
       <w>315</w>
       <h>117</h>
     </coordinates>
@@ -174,14 +174,15 @@ ProjectConfig.txt</panel_attributes>
     </coordinates>
     <panel_attributes>ExchangeOffice
 --
-- name: String (Final)
+- name: String
 - completedOrders: List&lt;Order&gt;
 - inventory: Map&lt;String currencyCode, double amount&gt;
 --
-+ ExchangeOffice(String)
-+ getName(): String
++ ExchangeOffice(String, Map&lt;String, double&gt;)
 
-+ getCompletedOrders(): List&lt;Order&gt;
+- validateOrder(Order orderData): boolean
+- getCompletedOrders(): List&lt;Order&gt;
+- storeToTextfile(String destination)
 --
 Responsibilities
 
@@ -254,34 +255,23 @@ Responsibilities
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>756</x>
-      <y>648</y>
+      <x>1071</x>
+      <y>504</y>
       <w>297</w>
       <h>171</h>
     </coordinates>
     <panel_attributes>ExchangeOfficeSupport
 --
 --
-_~ validateOrder(Order orderData): boolean_
-_~ storeToTextfile(String destination):_
 --
 Responsibilities:
+
+For future development.
 
 Support class for exchange offices, this 
 includes validating orders, store data to file.
 	</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>828</x>
-      <y>576</y>
-      <w>27</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
