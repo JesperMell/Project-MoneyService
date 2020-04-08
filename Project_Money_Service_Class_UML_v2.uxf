@@ -10,7 +10,7 @@
     </coordinates>
     <panel_attributes>MoneyServiceApp
 --
-_- currencyMap: Map&lt;String, Currency&gt;_
+_~ currencyMap: Map&lt;String, Currency&gt;_
 - exchangeOfficeList: List&lt;ExchangeOffice&gt;
 --
 + main(String[] args)
@@ -33,6 +33,8 @@ Application trigger and configuration</panel_attributes>
     <panel_attributes>&lt;&lt;Value Type&gt;&gt;
 Order
 --
+_~ orderNrCounter: int_
+
 - orderNr: int
 - orderType: enum OrderType
 - currencyCode: String
@@ -172,7 +174,7 @@ ProjectConfig.txt</panel_attributes>
     </coordinates>
     <panel_attributes>ExchangeOffice
 --
-- name: String
+- name: String (Final)
 - completedOrders: List&lt;Order&gt;
 - inventory: Map&lt;String currencyCode, double amount&gt;
 --
@@ -257,12 +259,16 @@ Responsibilities
       <w>297</w>
       <h>171</h>
     </coordinates>
-    <panel_attributes>MoneyServiceSupport
+    <panel_attributes>ExchangeOfficeSupport
 --
 --
 _~ validateOrder(Order orderData): boolean_
+_~ storeToTextfile(String destination):_
 --
-Responsibilities
+Responsibilities:
+
+Support class for exchange offices, this 
+includes validating orders, store data to file.
 	</panel_attributes>
     <additional_attributes/>
   </element>
