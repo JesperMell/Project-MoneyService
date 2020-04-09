@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
-  <zoom_level>9</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>99</x>
-      <y>72</y>
-      <w>306</w>
-      <h>153</h>
+      <x>32</x>
+      <y>48</y>
+      <w>272</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>MoneyServiceApp
 --
@@ -25,10 +25,10 @@ Application trigger and configuration</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1071</x>
-      <y>54</y>
-      <w>306</w>
-      <h>288</h>
+      <x>896</x>
+      <y>32</y>
+      <w>272</w>
+      <h>280</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Value Type&gt;&gt;
 Order
@@ -39,12 +39,14 @@ _~ orderNrCounter: int_
 - orderType: enum OrderType
 - currencyCode: String
 - amount: double
+- createdAt: DateTime
 --
 + Order(OrderType, String, double, String)
 + getOrderNr():int
 + getOrderType(): OrderType
 + getCurrency(): Currency
 + getAmount(): double
+- getCurrentDateTime(): DateTime
 --
 Responsibilities
 Holding information about 
@@ -56,33 +58,10 @@ identification of the order.</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>747</x>
-      <y>666</y>
-      <w>243</w>
-      <h>171</h>
-    </coordinates>
-    <panel_attributes>Time
-
---
-- hour: int
-- minute: int
---
-+ Time(int,int)
-+ getHour(): int
-+ getMinute(): int
---
-Responsibilities
-This class holds time information
-in the form of hours and minutes.</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1071</x>
-      <y>369</y>
-      <w>315</w>
-      <h>117</h>
+      <x>1200</x>
+      <y>32</y>
+      <w>240</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>HQ
 --
@@ -95,10 +74,10 @@ For future development.</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>108</x>
-      <y>630</y>
-      <w>297</w>
-      <h>207</h>
+      <x>40</x>
+      <y>544</y>
+      <w>264</w>
+      <h>184</h>
     </coordinates>
     <panel_attributes>Currency
 --
@@ -117,10 +96,10 @@ Responsibilities
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>522</x>
-      <y>72</y>
-      <w>396</w>
-      <h>207</h>
+      <x>408</x>
+      <y>48</y>
+      <w>352</w>
+      <h>184</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
 MoneyService
@@ -143,10 +122,10 @@ Rules for Money Services.
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>99</x>
-      <y>396</y>
-      <w>342</w>
-      <h>189</h>
+      <x>32</x>
+      <y>336</y>
+      <w>304</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>ServiceConfig
 --
@@ -167,15 +146,15 @@ ProjectConfig.txt</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>522</x>
-      <y>369</y>
-      <w>396</w>
-      <h>216</h>
+      <x>408</x>
+      <y>312</y>
+      <w>368</w>
+      <h>192</h>
     </coordinates>
     <panel_attributes>ExchangeOffice
 --
 - name: String
-- completedOrders: List&lt;Order&gt;
+- completedTransactions: Map&lt;DateTime, List&lt;Transaction&gt; &gt;
 - inventory: Map&lt;String currencyCode, double amount&gt;
 --
 + ExchangeOffice(String, Map&lt;String, double&gt;)
@@ -193,10 +172,10 @@ within the system.</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>252</x>
-      <y>270</y>
-      <w>189</w>
-      <h>99</h>
+      <x>168</x>
+      <y>224</y>
+      <w>168</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>CLIHelper
 --
@@ -211,10 +190,10 @@ Responsibilities
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>315</x>
-      <y>216</y>
-      <w>27</w>
-      <h>72</h>
+      <x>224</x>
+      <y>176</y>
+      <w>24</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
@@ -222,10 +201,10 @@ Responsibilities
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>162</x>
-      <y>216</y>
-      <w>27</w>
-      <h>198</h>
+      <x>88</x>
+      <y>176</y>
+      <w>24</w>
+      <h>176</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;200.0;10.0;10.0</additional_attributes>
@@ -233,10 +212,10 @@ Responsibilities
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>396</x>
-      <y>144</y>
-      <w>144</w>
-      <h>27</h>
+      <x>296</x>
+      <y>112</y>
+      <w>128</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
@@ -244,10 +223,10 @@ Responsibilities
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>702</x>
-      <y>270</y>
-      <w>27</w>
-      <h>117</h>
+      <x>568</x>
+      <y>224</y>
+      <w>24</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
@@ -255,10 +234,10 @@ Responsibilities
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1071</x>
-      <y>504</y>
-      <w>297</w>
-      <h>171</h>
+      <x>1200</x>
+      <y>152</y>
+      <w>240</w>
+      <h>152</h>
     </coordinates>
     <panel_attributes>ExchangeOfficeSupport
 --
@@ -276,22 +255,22 @@ includes validating orders, store data to file.
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>909</x>
-      <y>180</y>
-      <w>180</w>
-      <h>252</h>
+      <x>768</x>
+      <y>144</y>
+      <w>144</w>
+      <h>224</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 &lt;&lt;Uses&gt;&gt;</panel_attributes>
-    <additional_attributes>180.0;10.0;80.0;10.0;80.0;260.0;10.0;260.0</additional_attributes>
+    <additional_attributes>160.0;10.0;60.0;10.0;60.0;260.0;10.0;260.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>396</x>
-      <y>576</y>
-      <w>234</w>
-      <h>180</h>
+      <x>296</x>
+      <y>496</y>
+      <w>208</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>240.0;10.0;240.0;180.0;10.0;180.0</additional_attributes>
@@ -299,12 +278,82 @@ includes validating orders, store data to file.
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>198</x>
-      <y>576</y>
-      <w>27</w>
-      <h>72</h>
+      <x>120</x>
+      <y>496</y>
+      <w>24</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>896</x>
+      <y>416</y>
+      <w>272</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Value Type&gt;&gt;
+Transaction
+--
+- order: Order
+- createdAt: DateTime
+--
++ Transaction(Order)
++ getOrder: Order
+- getCurrentDateTime(): DateTime
+--
+Responsibilities
+Represents a completed order. When order is
+validated, a transaction is created.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1024</x>
+      <y>304</y>
+      <w>72</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;Ownes&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>768</x>
+      <y>456</y>
+      <w>144</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;Creates&gt;&gt;</panel_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1208</x>
+      <y>776</y>
+      <w>216</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>Time
+
+--
+- hour: int
+- minute: int
+--
++ Time(int,int)
++ getHour(): int
++ getMinute(): int
+--
+Responsibilities
+This class holds time information
+in the form of hours and minutes.</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
