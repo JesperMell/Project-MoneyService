@@ -3,7 +3,7 @@ package ya.thn.project.MoneyService;
 public class Currency {
 	
 	private final String currencyCode;
-	private final double rate;
+	private final double exchangeRate;
 	
 	
 	/**
@@ -12,7 +12,7 @@ public class Currency {
 	 */
 	public Currency(String currencyCode, double rate) {
 		this.currencyCode = currencyCode;
-		this.rate = rate;
+		this.exchangeRate = rate;
 	}
 
 
@@ -27,8 +27,8 @@ public class Currency {
 	/**
 	 * @return the rate
 	 */
-	public double getRate() {
-		return rate;
+	public double getExchangeRate() {
+		return exchangeRate;
 	}
 
 
@@ -38,7 +38,7 @@ public class Currency {
 		int result = 1;
 		result = prime * result + ((currencyCode == null) ? 0 : currencyCode.hashCode());
 		long temp;
-		temp = Double.doubleToLongBits(rate);
+		temp = Double.doubleToLongBits(exchangeRate);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
@@ -58,14 +58,14 @@ public class Currency {
 				return false;
 		} else if (!currencyCode.equals(other.currencyCode))
 			return false;
-		if (Double.doubleToLongBits(rate) != Double.doubleToLongBits(other.rate))
+		if (Double.doubleToLongBits(exchangeRate) != Double.doubleToLongBits(other.exchangeRate))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Currency [currencyCode=%s, exchange rate=%s]", currencyCode, rate);
+		return String.format("Currency [currencyCode=%s, exchange rate=%s]", currencyCode, exchangeRate);
 	}
 	
 }
