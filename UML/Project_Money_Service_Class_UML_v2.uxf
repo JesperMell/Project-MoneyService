@@ -40,7 +40,7 @@ _~ orderNrCounter: int_
 - currencyCode: String
 - amount: double
 --
-+ Order(OrderType, String, double, String)
++ Order(OrderType, String, double)
 + getOrderNr():int
 + getOrderType(): OrderType
 + getCurrency(): Currency
