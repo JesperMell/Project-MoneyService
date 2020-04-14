@@ -5,7 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class ExchangeOffice {
+/**
+ * This is an implementation of the generic interface MoneyService
+ * plus some own implemented methods
+ * @author group Center
+ */
+public class ExchangeOffice implements MoneyService{
 
 	private String name;
 	//private Double amount; 
@@ -71,3 +76,4 @@ public class ExchangeOffice {
 //		completedTransactions.putIfAbsent(theTransaction.getCurrencyCode, theTransaction);	
 //	}
 }
+
