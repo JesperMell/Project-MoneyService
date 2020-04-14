@@ -1,5 +1,6 @@
 package ya.thn.project.MoneyService;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class ExchangeOffice implements MoneyService{
 	//private Double amount; 
 	private String currencyCode;
 
-	private Map<DateTime, List<Transaction>> completedTransactions
+	private Map<LocalDateTime, List<Transaction>> completedTransactions
 	= new HashMap<>();
 
 	private Map<String, Double> inventory
@@ -53,7 +54,7 @@ public class ExchangeOffice implements MoneyService{
 
 			// Create new transaction and add to map with completed orders
 			Transaction completedOrders = new Transaction(orderData);
-			completedTransactions.putIfAbsent(completedOrders.getCurrenDateTime(), completedOrders);
+			completedTransactions.putIfAbsent(completedOrders.getCreatedAt(), completedOrders);
 			return true;
 		}
 		else {
@@ -82,7 +83,7 @@ public class ExchangeOffice implements MoneyService{
 
 			// Create new transaction and add to map with completed orders
 			Transaction completedOrders = new Transaction(orderData);
-			completedTransactions.putIfAbsent(completedOrders.getCurrenDataTime(), completedOrders);
+			completedTransactions.putIfAbsent(completedOrders.getCreatedAt(), completedOrders);
 			return true;
 		}
 		else {
