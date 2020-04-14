@@ -43,7 +43,7 @@ _~ orderNrCounter: int_
 + Order(OrderType, String, double)
 + getOrderNr():int
 + getOrderType(): OrderType
-+ getCurrency(): Currency
++ getCurrencyCode(): String
 + getAmount(): double
 --
 Responsibilities
@@ -80,12 +80,12 @@ For future development.</panel_attributes>
     <panel_attributes>Currency
 --
 - currencyCode: String
-- rate: double
+- exhangeRate: double
 --
 + Currency(String, double)
-+ getRate(): double
++ getExhangeRate(): double
 + getCurrencyCode(): String
-+ setRate(double):
++ setExhangeRate(double):
 --
 Responsibilities
 </panel_attributes>
