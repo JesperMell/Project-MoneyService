@@ -1,5 +1,7 @@
 package ya.thn.project.MoneyService;
 
+import java.util.Map;
+
 import ya.thn.project.MoneyService.Order.OrderType;
 
 /**
@@ -11,7 +13,7 @@ public class MoneyServiceApp {
 	/**
 	 * Storage for Currency objects using CurrencyCodeType as key
 	 */
-	static Map<CurrencyCodeType, Currency> currencyMap;
+	static Map<String, Currency> currencyMap;
 	
 	public static void main(String[] args) {
 		
