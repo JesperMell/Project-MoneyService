@@ -11,6 +11,12 @@ public class Order {
 	private final String currencyCode;
 	private final double amount;
 	
+
+	/**
+  * @param orderType holds what kind of orderType, either SELL or BUY.
+  * @param amount the amount what the order should BUY or SELL.
+  * @param currencyCode the currency the order should deal with.
+  */
 	public Order(OrderType orderType, double amount, String currencyCode) {
 		this.orderNr = ++orderCounter;
 		
@@ -19,18 +25,34 @@ public class Order {
 		this.currencyCode = currencyCode;
 	}
 
+
+	/**
+	 * @return the orderNr
+	 */
 	public int getOrderNr() {
 		return orderNr;
 	}
-	
+
+  
+	/**
+	 * @return the orderType
+	 */
 	public OrderType getOrderType() {
 		return orderType;
 	}
 	
+
+	/**
+	 * @return the currencyCode
+	 */
 	public String getCurrencyCode() {
 		return currencyCode;
 	}
 	
+
+	/**
+	 * @return the amount
+	 */
 	public double getAmount() {
 		return amount;
 	}
