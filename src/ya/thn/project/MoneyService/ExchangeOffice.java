@@ -70,7 +70,7 @@ public class ExchangeOffice implements MoneyService{
 		// Alter the exchange rate with profit margin
 		double alteredExchangeRate = temp.getExchangeRate() * SELL_RATE;
 
-		double soldAmount = orderData.getAmount() * alteredExchangeRate;
+		double soldAmount = orderData.getAmount() / (1 / alteredExchangeRate);
 
 		if(validateOrder(orderData)) {
 			double newValueSEK = inventory.get(REFERENCE_CURRENCY) + orderData.getAmount();
