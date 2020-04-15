@@ -40,12 +40,12 @@ public class ExchangeOffice implements MoneyService{
 		// Amount to be returned to customer after bought currency
 		double boughtInSEK = orderData.getAmount() * alteredExchangeRate;
 
-		if(inventory.get(MoneyServiceApp.referensceCurrencyCode)>= boughtInSEK) {
-			double newValueSEK = inventory.get(MoneyServiceApp.referensceCurrencyCode) - boughtInSEK;
+		if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInSEK) {
+			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) - boughtInSEK;
 			double newBoughtCurrVal = inventory.get(orderData.getCurrencyCode()) + orderData.getAmount();
 
 			// Update the inventory with the new values
-			inventory.replace(MoneyServiceApp.referensceCurrencyCode, newValueSEK);
+			inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueSEK);
 			inventory.replace(orderData.getCurrencyCode(), newBoughtCurrVal);
 
 			// Create new transaction and add to map with completed orders
@@ -70,11 +70,11 @@ public class ExchangeOffice implements MoneyService{
 		double soldAmount = orderData.getAmount() / (1 / alteredExchangeRate);
 
 		if(validateOrder(orderData)) {
-			double newValueSEK = inventory.get(MoneyServiceApp.referensceCurrencyCode) + orderData.getAmount();
+			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) + orderData.getAmount();
 			double newSoldCurrVal = inventory.get(orderData.getCurrencyCode()) - soldAmount;
 
 			// Update the inventory with the new values
-			inventory.replace(MoneyServiceApp.referensceCurrencyCode, newValueSEK);
+			inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueSEK);
 			inventory.replace(orderData.getCurrencyCode(), newSoldCurrVal);
 
 			// Create new transaction and add to map with completed orders
