@@ -3,22 +3,69 @@ package ya.thn.project.MoneyService;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServiceConfig {
-	
-	//public static final String CURRENCY_CONFIG_FILE = "CurrencyConfig_2020-04-01.txt";
+
+	private static final String CONFIG_FILE = "ProjectConfig.txt";
 	public static final int CURRENCY_CONFIG_FILE_LINE_START = 2;
 	
-	static void readConfig(String file) {
+  private static String currencyFile;
+	
+      
+	public static void readProjectConfigFile() {
+		boolean insertToBox = false;
 		
+		try(BufferedReader br = new BufferedReader(new FileReader(CONFIG_FILE))){
+			while(br.ready()) {
+				String row = br.readLine();
+				
+				// Start inserting cash to the 'box'.
+				if(row.equals("BoxOfCash")) {
+					insertToBox = true;
+					continue;
+				}
+
+				// Stop inserting cash to the 'box'.
+				if(row.equals("End") && insertToBox) {
+					insertToBox = false;
+					continue;
+				}
+				
+				// If the row doesn't include ' = ' then continue to next line.
+				// Maybe bad format.
+				// TODO: perhaps create suitable exception?
+				if(!row.contains(" = ")) continue;
+				
+				// Split the row by key, value.
+				String[] columns = row.split(" = ");
+				
+				// Decide if the key/value should be inserted to
+				// box or updating other variables.
+				if(insertToBox) {
+					MoneyServiceApp.inventoryMap.putIfAbsent(columns[0], Double.parseDouble(columns[1]));
+				} else {
+					switch(columns[0]) {
+						case "CurrencyConfig":
+							currencyFile = columns[1];
+						case "ReferenceCurrency":
+							MoneyServiceApp.referenceCurrencyCode = columns[1];
+						default:
+							throw new IllegalArgumentException(
+										String.format("%s is not a valid setting", columns[0])
+									);
+					}
+				}
+			}
+		}
+		catch(IOException ioe) {
+			System.out.println("Sorry, could read config file.");
+		}
 	}
 	
 	public static void readCurrencyConfigFile() {
 		
-		// check if storage is a text file
-		if (currencyFile.endsWith(".txt")) {
-			
-//			Map<String, Currency> data = new HashMap<String, Currency>();
 			int lineNumber = 1;
 			
 			try(BufferedReader br = new BufferedReader(new FileReader(currencyFile))) {
@@ -34,11 +81,6 @@ public class ServiceConfig {
 			catch (IOException ioe) {
 				System.out.println("An IOException occurred for file " + currencyFile);
 			}
-			
-		}
-		// Not a textfile
-		else
-			System.out.println("The input file is not a text file");
 	}
 	
 	private static Currency parseInput(String input) {

@@ -1,5 +1,6 @@
 package ya.thn.project.MoneyService;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class ExchangeOffice implements MoneyService{
 	//private Double amount; 
 	private String currencyCode;
 
-	private Map<DateTime, List<Transaction>> completedTransactions
+	private Map<LocalDateTime, List<Transaction>> completedTransactions
 	= new HashMap<>();
 
 	private Map<String, Double> inventory
@@ -28,11 +29,62 @@ public class ExchangeOffice implements MoneyService{
 	}
 
 	public boolean buyMoney(Order orderData){
-		// idea of implementation before Order class available.
 
+		// CurrencyCode is the bought currency
+		// Extract specific exchange rate for the currency the customer has
+		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
+
+		// Alter the exchange rate with profit margin
+		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.BUY_RATE;
+
+		// Amount to be returned to customer after bought currency
+		double boughtInSEK = orderData.getAmount() * alteredExchangeRate;
+
+		if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInSEK) {
+			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) - boughtInSEK;
+			double newBoughtCurrVal = inventory.get(orderData.getCurrencyCode()) + orderData.getAmount();
+
+			// Update the inventory with the new values
+			inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueSEK);
+			inventory.replace(orderData.getCurrencyCode(), newBoughtCurrVal);
+
+			// Create new transaction and add to map with completed orders
+			Transaction completedOrders = new Transaction(orderData);
+			completedTransactions.putIfAbsent(completedOrders.getCreatedAt(), completedOrders);
+			return true;
+		}
+		else {
+			throw new IllegalArgumentException("Order could not be accepted! missing amount in specified currency!");
+		}
 	}
 
 	public boolean sellMoney(Order orderData) {
+
+		// CurrencyCode is the sold currency
+		// Extract specific exchange rate for the currency the customer has
+		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
+
+		// Alter the exchange rate with profit margin
+		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.SELL_RATE;
+
+		double soldAmount = orderData.getAmount() / (1 / alteredExchangeRate);
+
+		if(validateOrder(orderData)) {
+			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) + orderData.getAmount();
+			double newSoldCurrVal = inventory.get(orderData.getCurrencyCode()) - soldAmount;
+
+			// Update the inventory with the new values
+			inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueSEK);
+			inventory.replace(orderData.getCurrencyCode(), newSoldCurrVal);
+
+			// Create new transaction and add to map with completed orders
+			Transaction completedOrders = new Transaction(orderData);
+			completedTransactions.putIfAbsent(completedOrders.getCreatedAt(), completedOrders);
+			return true;
+		}
+		else {
+			throw new IllegalArgumentException("Order could not be accepted! missing amount in specified currency!");
+		}
 
 	}
 
@@ -45,7 +97,7 @@ public class ExchangeOffice implements MoneyService{
 	}
 
 	public Map<String, Currency> getCurrencyMap() {
-
+		return MoneyServiceApp.currencyMap;
 	}
 
 	public Optional<Double> getAvailableAmount(String currencyCode){
@@ -60,20 +112,18 @@ public class ExchangeOffice implements MoneyService{
 
 	private boolean validateOrder(Order orderData) {
 		// Get the available amount at site.
-		Optional<Double> availableAmount = getAvailableAmount(orderData.getCurrencyCode);
+		Optional<Double> maybeAvailableAmount = getAvailableAmount(orderData.getCurrencyCode());
 		// Return true if amount requested is available. Otherwise, return false.
-		if(availableAmount >= orderData.getAmount) {
-			return true;
+		if(maybeAvailableAmount.isPresent()) {
+			if(maybeAvailableAmount.get() >= orderData.getAmount())
+				return true;
+			else {
+				return false;
+			}
 		}
 		else {
 			return false;
 		}
 	}
-	// Generating an Transaction object and put it in completedTransactions map.
-	// Call this method only if validate order returned true.
-//	private void generateTransaction(Order orderData) {
-//		Transaction theTransaction = new Transaction(orderData);
-//		completedTransactions.putIfAbsent(theTransaction.getCurrencyCode, theTransaction);	
-//	}
 }
 

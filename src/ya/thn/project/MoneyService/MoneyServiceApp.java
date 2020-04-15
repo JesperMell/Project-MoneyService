@@ -10,6 +10,8 @@ import ya.thn.project.MoneyService.Order.OrderType;
  */
 public class MoneyServiceApp {
 	
+	static String referenceCurrencyCode;
+	
 	/**
 	 * Storage for Currency objects using CurrencyCode as key
 	 */
