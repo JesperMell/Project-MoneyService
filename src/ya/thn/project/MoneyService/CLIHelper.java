@@ -50,6 +50,17 @@ public class CLIHelper {
 	}
 	
 	
+	static void showSupportedCurrencies() {
+		
+		System.out.println("Supported currencies");
+		System.out.println("--------------------");
+		System.out.println("1 - SEK");
+		System.out.println("2 - GBP");
+		System.out.println("3 - USD");
+		System.out.println();
+	}
+	
+	
 	/**
 	 * Helper method for creating a new Order object
 	 * @return a Order object based on user input
@@ -84,7 +95,7 @@ public class CLIHelper {
 			
 			} while(!ok);
 			
-			ExchangeOffice.showSupportedCurrencies();
+			showSupportedCurrencies();
 			System.out.print("Enter currency No: ");
 			String userCurrencyChoice = input.next();
 			
@@ -104,13 +115,13 @@ public class CLIHelper {
 			
 			switch(sellBuyChoice) {
 			case 1:
-				aOrder = new Order(OrderType.SELL, amount, CurrencyCodeType.valueOf(currencyChoice));
+				aOrder = new Order(OrderType.SELL, amount, String.valueOf(CurrencyCodeType.valueOf(currencyChoice)));
 				break;
 			case 2:
-				aOrder = new Order(OrderType.BUY, amount, CurrencyCodeType.valueOf(currencyChoice));
+				aOrder = new Order(OrderType.BUY, amount, String.valueOf(CurrencyCodeType.valueOf(currencyChoice)));
 				break;
 			case 0:
-				MoneyServiceApp.CLIApplication(); // För att kunna gå tillbaka i menyn måste metoden "CLIApplication()" vara package eller public. Vill vi det?
+				menuInput();
 				break;
 			}
 			

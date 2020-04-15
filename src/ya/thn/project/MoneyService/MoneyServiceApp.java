@@ -1,5 +1,7 @@
 package ya.thn.project.MoneyService;
 
+import java.util.Map;
+
 import ya.thn.project.MoneyService.Order.OrderType;
 
 /**
@@ -9,24 +11,30 @@ import ya.thn.project.MoneyService.Order.OrderType;
 public class MoneyServiceApp {
 	
 	/**
-	 * Storage for Currency objects using CurrencyCodeType as key
+	 * Storage for Currency objects using CurrencyCode as key
 	 */
-	static Map<CurrencyCodeType, Currency> currencyMap;
+	static Map<String, Currency> currencyMap;
+	static Map<String, Double> inventoryMap;
 	
 	public static void main(String[] args) {
 		
-		if (args.length > 0)
-			ServiceConfig.readConfig(args[0]);
+		configure();
+		MoneyService aExchangeOffice = new ExchangeOffice("THN", inventoryMap);
+		CLIApplication(aExchangeOffice);
+	}
+	
+	private static void configure() {
 		
-		CLIApplication();
+		ServiceConfig.readConfigFile();
+		ServiceConfig.readCurrencyConfigFile();
 	}
 	
 	/**
 	 * This method supports user interaction via CLI
 	 */
-	private static void CLIApplication() {
+	private static void CLIApplication(MoneyService aExchangeOffice) {
 		
-		MoneyService aExchangeOffice = new ExchangeOffice();
+//		MoneyService aExchangeOffice = new ExchangeOffice();
 		
 		boolean done = false;
 		do {
