@@ -13,10 +13,6 @@ import java.util.Optional;
  */
 public class ExchangeOffice implements MoneyService{
 
-	private static final double BUY_RATE = 0.995;
-	private static final double SELL_RATE = 1.005;
-	private static final String REFERENCE_CURRENCY = "SEK";
-
 	private String name;
 	//private Double amount; 
 	private String currencyCode;
@@ -39,17 +35,17 @@ public class ExchangeOffice implements MoneyService{
 		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
 
 		// Alter the exchange rate with profit margin
-		double alteredExchangeRate = temp.getExchangeRate() * BUY_RATE;
+		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.BUY_RATE;
 
 		// Amount to be returned to customer after bought currency
 		double boughtInSEK = orderData.getAmount() * alteredExchangeRate;
 
-		if(inventory.get(REFERENCE_CURRENCY)>= boughtInSEK) {
-			double newValueSEK = inventory.get(REFERENCE_CURRENCY) - boughtInSEK;
+		if(inventory.get(MoneyServiceApp.referensceCurrencyCode)>= boughtInSEK) {
+			double newValueSEK = inventory.get(MoneyServiceApp.referensceCurrencyCode) - boughtInSEK;
 			double newBoughtCurrVal = inventory.get(orderData.getCurrencyCode()) + orderData.getAmount();
 
 			// Update the inventory with the new values
-			inventory.replace(REFERENCE_CURRENCY, newValueSEK);
+			inventory.replace(MoneyServiceApp.referensceCurrencyCode, newValueSEK);
 			inventory.replace(orderData.getCurrencyCode(), newBoughtCurrVal);
 
 			// Create new transaction and add to map with completed orders
@@ -69,16 +65,16 @@ public class ExchangeOffice implements MoneyService{
 		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
 
 		// Alter the exchange rate with profit margin
-		double alteredExchangeRate = temp.getExchangeRate() * SELL_RATE;
+		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.SELL_RATE;
 
 		double soldAmount = orderData.getAmount() / (1 / alteredExchangeRate);
 
 		if(validateOrder(orderData)) {
-			double newValueSEK = inventory.get(REFERENCE_CURRENCY) + orderData.getAmount();
+			double newValueSEK = inventory.get(MoneyServiceApp.referensceCurrencyCode) + orderData.getAmount();
 			double newSoldCurrVal = inventory.get(orderData.getCurrencyCode()) - soldAmount;
 
 			// Update the inventory with the new values
-			inventory.replace(REFERENCE_CURRENCY, newValueSEK);
+			inventory.replace(MoneyServiceApp.referensceCurrencyCode, newValueSEK);
 			inventory.replace(orderData.getCurrencyCode(), newSoldCurrVal);
 
 			// Create new transaction and add to map with completed orders
