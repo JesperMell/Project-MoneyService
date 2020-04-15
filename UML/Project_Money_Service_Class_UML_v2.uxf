@@ -26,7 +26,7 @@ Application trigger and configuration</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1112</x>
+      <x>1088</x>
       <y>184</y>
       <w>272</w>
       <h>256</h>
@@ -37,13 +37,13 @@ Order
 _~ orderNrCounter: int_
 
 - orderNr: int
-- orderType: enum OrderType
+- transactionMode: TransactionMode
 - currencyCode: String
 - amount: double
 --
 + Order(OrderType, String, double)
 + getOrderNr():int
-+ getOrderType(): OrderType
++ getTransactionMode(): TransactionMode
 + getCurrencyCode(): String
 + getAmount(): double
 --
@@ -116,8 +116,8 @@ _~CONFIG_FILE: String_
 _~ BUY_RATE: double_
 _~ SELL_RATE: double_
 --
-_~readCurrencyConfigFile(String)_
-_~readProjectConfigFile(): Map&lt;String, Double&gt;_
+_~readCurrencyConfigFile()_
+_~readProjectConfigFile()_
 --
 Responsibilities
 Applicationi configuration is set up
@@ -242,12 +242,12 @@ Create and deliver orders.
     <coordinates>
       <x>984</x>
       <y>272</y>
-      <w>144</w>
+      <w>120</w>
       <h>288</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 &lt;&lt;Uses&gt;&gt;</panel_attributes>
-    <additional_attributes>160.0;10.0;60.0;10.0;60.0;340.0;10.0;340.0</additional_attributes>
+    <additional_attributes>130.0;10.0;60.0;10.0;60.0;340.0;10.0;340.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -275,10 +275,10 @@ m2=1..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1112</x>
+      <x>1088</x>
       <y>488</y>
-      <w>272</w>
-      <h>352</h>
+      <w>352</w>
+      <h>272</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Value Type&gt;&gt;
 Transaction
@@ -288,15 +288,14 @@ Transaction
 - timeStamp: LocaleDateTime
 - currencyCode: String
 - amount: int
-- transactionMode: OrderType
+- transactionMode: TransactionMode
 _- uniqueId: int_
 --
-+ Transaction(Order)
-+ Transaction(int, Order)
++ Transaction(LocaleDateTime, String, int, TransactionMode)
 + getTimeStamp: LocalDateTime
 + getCurrencyCode: String
 + getAmount(): int
-+ getTransactionMode: OrderType
++ getTransactionMode: TransactionMode
 + getId(): int
 --
 Responsibilities
@@ -307,7 +306,7 @@ validated, a transaction is created.</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1240</x>
+      <x>1216</x>
       <y>432</y>
       <w>24</w>
       <h>72</h>
@@ -321,12 +320,12 @@ m1=1</panel_attributes>
     <coordinates>
       <x>984</x>
       <y>648</y>
-      <w>144</w>
+      <w>120</w>
       <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 &lt;&lt;Creates&gt;&gt;</panel_attributes>
-    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>130.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -380,5 +379,25 @@ fontsize=30
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>50.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1112</x>
+      <y>24</y>
+      <w>240</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Type&gt;&gt;
+TransactionMode
+--
+BUY, SELL
+--
+Responsibilities
+
+Defines if the Order/Transaction is a
+Sell or Buy type.
+</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
