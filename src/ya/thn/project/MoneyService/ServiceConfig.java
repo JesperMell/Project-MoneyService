@@ -14,18 +14,6 @@ public class ServiceConfig {
 	private static String currencyFile;
 	static Map<String, Double> box = new HashMap<String, Double>();
 	
-	public static void main(String[] args) {
-		readProjectConfigFile();
-		
-		System.out.println(currencyFile);
-		System.out.println(MoneyServiceApp.referenceCurrencyCode);
-		System.out.println(box.toString());
-	
-	}
-	
-	static void readConfig(String file) {
-		
-	}
 	
 	public static void readProjectConfigFile() {
 		boolean insertToBox = false;
