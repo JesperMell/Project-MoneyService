@@ -1,8 +1,6 @@
 package ya.thn.project.MoneyService;
 import java.time.LocalDateTime;
 
-//import ya.thn.project.MoneyService.Order.OrderType;
-
 public class Transaction implements java.io.Serializable{
 	
 	/**

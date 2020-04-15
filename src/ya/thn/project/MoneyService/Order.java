@@ -2,12 +2,11 @@ package ya.thn.project.MoneyService;
 
 public class Order {
 	
-	enum OrderType {BUY, SELL};
 	
 	private static int orderCounter = 0;
 	
 	private final int orderNr;
-	private final OrderType orderType;
+	private final TransactionMode mode;
 	private final String currencyCode;
 	private final int amount;
 	
@@ -17,10 +16,10 @@ public class Order {
   * @param amount the amount what the order should BUY or SELL.
   * @param currencyCode the currency the order should deal with.
   */
-	public Order(OrderType orderType, int amount, String currencyCode) {
+	public Order(TransactionMode mode, int amount, String currencyCode) {
 		this.orderNr = ++orderCounter;
 		
-		this.orderType = orderType;
+		this.mode = mode;
 		this.amount = amount;
 		this.currencyCode = currencyCode;
 	}
@@ -33,15 +32,15 @@ public class Order {
 		return orderNr;
 	}
 
+	
   
 	/**
-	 * @return the orderType
+	 * @return the mode
 	 */
-	public OrderType getOrderType() {
-		return orderType;
+	public TransactionMode getMode() {
+		return mode;
 	}
 	
-
 	/**
 	 * @return the currencyCode
 	 */
@@ -57,25 +56,25 @@ public class Order {
 		return amount;
 	}
 	
-
+	
 	@Override
 	public String toString() {
-		return "Order [orderNr=" + orderNr + ", orderType=" + orderType + ", currencyCode=" + currencyCode + ", amount="
-				+ amount + "]";
+		return "Order [orderNr=" + orderNr + ", mode=" + mode + ", currencyCode=" + currencyCode + ", amount=" + amount
+				+ "]";
 	}
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(amount);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + amount;
 		result = prime * result + ((currencyCode == null) ? 0 : currencyCode.hashCode());
+		result = prime * result + ((mode == null) ? 0 : mode.hashCode());
 		result = prime * result + orderNr;
-		result = prime * result + ((orderType == null) ? 0 : orderType.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -86,18 +85,17 @@ public class Order {
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))
+		if (amount != other.amount)
 			return false;
 		if (currencyCode == null) {
 			if (other.currencyCode != null)
 				return false;
 		} else if (!currencyCode.equals(other.currencyCode))
 			return false;
-		if (orderNr != other.orderNr)
+		if (mode != other.mode)
 			return false;
-		if (orderType != other.orderType)
+		if (orderNr != other.orderNr)
 			return false;
 		return true;
 	}
-
 }

@@ -19,6 +19,8 @@ public class ServiceConfig {
 	public static void readProjectConfigFile() {
 		boolean insertToBox = false;
 		
+		Map <String, Double> box = new HashMap<>();
+		
 		try(BufferedReader br = new BufferedReader(new FileReader(CONFIG_FILE))){
 			while(br.ready()) {
 				String row = br.readLine();
@@ -46,13 +48,15 @@ public class ServiceConfig {
 				// Decide if the key/value should be inserted to
 				// box or updating other variables.
 				if(insertToBox) {
-					MoneyServiceApp.inventoryMap.putIfAbsent(columns[0], Double.parseDouble(columns[1]));
+					box.putIfAbsent(columns[0], Double.parseDouble(columns[1]));
 				} else {
 					switch(columns[0]) {
 						case "CurrencyConfig":
 							currencyFile = columns[1];
+							break;
 						case "ReferenceCurrency":
 							MoneyServiceApp.referenceCurrencyCode = columns[1];
+							break;
 						default:
 							throw new IllegalArgumentException(
 										String.format("%s is not a valid setting", columns[0])
@@ -64,10 +68,12 @@ public class ServiceConfig {
 		catch(IOException ioe) {
 			System.out.println("Sorry, could read config file.");
 		}
+		MoneyServiceApp.inventoryMap = box;
 	}
 	
 	public static void readCurrencyConfigFile() {
-		
+			Map <String, Currency> currencyMap = new HashMap<>();
+			
 			int lineNumber = 1;
 			
 			try(BufferedReader br = new BufferedReader(new FileReader(currencyFile))) {
@@ -77,7 +83,7 @@ public class ServiceConfig {
 					if (lineNumber++ < CURRENCY_CONFIG_FILE_LINE_START) continue;
 					
 					Currency currency = parseInput(row);
-					MoneyServiceApp.currencyMap.putIfAbsent(currency.getCurrencyCode(), currency);
+					currencyMap.putIfAbsent(currency.getCurrencyCode(), currency);
 				}
 			}
 			catch (IOException ioe) {
@@ -98,7 +104,7 @@ public class ServiceConfig {
 		String currencyCode = currencyCodeParts[1].strip();
 		
 		String exchangeRateString = parts[3].strip();
-		double exchangeRate = Integer.parseInt(exchangeRateString);
+		double exchangeRate = Double.parseDouble(exchangeRateString);
 		
 		if (currencyCodeParts[0].strip().length() > 1)
 			return new Currency(currencyCode, exchangeRate/100);

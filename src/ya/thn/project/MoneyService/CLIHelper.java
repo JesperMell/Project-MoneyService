@@ -2,8 +2,6 @@ package ya.thn.project.MoneyService;
 
 import java.util.Scanner;
 
-import ya.thn.project.MoneyService.Order.OrderType;
-
 /**
  * This is a support class for user interaction using CLI
  * @author Group Center
@@ -115,10 +113,10 @@ public class CLIHelper {
 			
 			switch(sellBuyChoice) {
 			case 1:
-				aOrder = new Order(OrderType.SELL, amount, String.valueOf(CurrencyCodeType.valueOf(currencyChoice)));
+				aOrder = new Order(TransactionMode.SELL, amount, String.valueOf(CurrencyCodeType.valueOf(currencyChoice)));
 				break;
 			case 2:
-				aOrder = new Order(OrderType.BUY, amount, String.valueOf(CurrencyCodeType.valueOf(currencyChoice)));
+				aOrder = new Order(TransactionMode.BUY, amount, String.valueOf(CurrencyCodeType.valueOf(currencyChoice)));
 				break;
 			case 0:
 				menuInput();

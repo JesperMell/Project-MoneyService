@@ -9,4 +9,4 @@
 2020-04-01;	Valutor mot svenska kronor;	100 JPY;	9.2693
 2020-04-01;	Valutor mot svenska kronor;	100 NOK;	95.9989
 2020-04-01;	Valutor mot svenska kronor;	100 RUB;	12.583
-2020-04-01;	Valutor mot svenska kronor,	1 USD;		9.9638
+2020-04-01;	Valutor mot svenska kronor;	1 USD;		9.9638
