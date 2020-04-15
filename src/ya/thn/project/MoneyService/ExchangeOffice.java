@@ -97,7 +97,7 @@ public class ExchangeOffice implements MoneyService{
 	}
 
 	public Map<String, Currency> getCurrencyMap() {
-
+		return MoneyServiceApp.currencyMap;
 	}
 
 	public Optional<Double> getAvailableAmount(String currencyCode){
