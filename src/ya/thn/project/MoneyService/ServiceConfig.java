@@ -13,8 +13,8 @@ public class ServiceConfig {
 	
 	private static String currencyFile;
 	
-	private static final double BUY_RATE = 1.005;
-	private static final double SELL_RATE = 0.995;
+	static final double BUY_RATE = 1.005;
+	static final double SELL_RATE = 0.995;
       
 	public static void readProjectConfigFile() {
 		boolean insertToBox = false;
