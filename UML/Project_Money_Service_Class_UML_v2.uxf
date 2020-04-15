@@ -116,8 +116,8 @@ _~CONFIG_FILE: String_
 _~ BUY_RATE: double_
 _~ SELL_RATE: double_
 --
-_~readCurrencyConfigFile()_
-_~readProjectConfigFile()_
+_+readCurrencyConfigFile()_
+_+readProjectConfigFile()_
 --
 Responsibilities
 Applicationi configuration is set up
