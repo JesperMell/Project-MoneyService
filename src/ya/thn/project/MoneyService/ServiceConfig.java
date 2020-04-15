@@ -11,8 +11,10 @@ public class ServiceConfig {
 	private static final String CONFIG_FILE = "ProjectConfig.txt";
 	public static final int CURRENCY_CONFIG_FILE_LINE_START = 2;
 	
-  private static String currencyFile;
+	private static String currencyFile;
 	
+	private static final double BUY_RATE = 1.005;
+	private static final double SELL_RATE = 0.995;
       
 	public static void readProjectConfigFile() {
 		boolean insertToBox = false;

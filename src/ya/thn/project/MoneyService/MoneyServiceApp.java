@@ -27,7 +27,7 @@ public class MoneyServiceApp {
 	
 	private static void configure() {
 		
-		ServiceConfig.readConfigFile();
+		ServiceConfig.readProjectConfigFile();
 		ServiceConfig.readCurrencyConfigFile();
 	}
 	

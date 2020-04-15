@@ -17,7 +17,7 @@ public class Order {
   * @param amount the amount what the order should BUY or SELL.
   * @param currencyCode the currency the order should deal with.
   */
-	public Order(OrderType orderType, double amount, String currencyCode) {
+	public Order(OrderType orderType, int amount, String currencyCode) {
 		this.orderNr = ++orderCounter;
 		
 		this.orderType = orderType;
