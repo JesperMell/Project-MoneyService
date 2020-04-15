@@ -9,7 +9,7 @@ public class Order {
 	private final int orderNr;
 	private final OrderType orderType;
 	private final String currencyCode;
-	private final double amount;
+	private final int amount;
 	
 
 	/**
@@ -53,7 +53,7 @@ public class Order {
 	/**
 	 * @return the amount
 	 */
-	public double getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 	
