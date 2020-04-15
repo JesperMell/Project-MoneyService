@@ -89,6 +89,7 @@ public class ServiceConfig {
 			catch (IOException ioe) {
 				System.out.println("An IOException occurred for file " + currencyFile);
 			}
+			MoneyServiceApp.currencyMap = currencyMap;
 	}
 	
 	private static Currency parseInput(String input) {

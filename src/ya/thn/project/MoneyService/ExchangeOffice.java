@@ -69,8 +69,8 @@ public class ExchangeOffice implements MoneyService{
 		double soldAmount = orderData.getAmount() / (1 / alteredExchangeRate);
 
 		if(validateOrder(orderData)) {
-			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) + orderData.getAmount();
-			double newSoldCurrVal = inventory.get(orderData.getCurrencyCode()) - soldAmount;
+			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) + soldAmount;
+			double newSoldCurrVal = inventory.get(orderData.getCurrencyCode()) - orderData.getAmount();
 
 			// Update the inventory with the new values
 			inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueSEK);
