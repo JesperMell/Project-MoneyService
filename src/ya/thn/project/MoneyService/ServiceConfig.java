@@ -6,15 +6,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ServiceConfig {
 
 	private static final String CONFIG_FILE = "ProjectConfig.txt";
+	public static final int CURRENCY_CONFIG_FILE_LINE_START = 2;
 	
-	private static String currencyFile;
-	static Map<String, Double> box = new HashMap<String, Double>();
+  private static String currencyFile;
 	
-	
+      
 	public static void readProjectConfigFile() {
 		boolean insertToBox = false;
 		
@@ -45,7 +44,7 @@ public class ServiceConfig {
 				// Decide if the key/value should be inserted to
 				// box or updating other variables.
 				if(insertToBox) {
-					box.putIfAbsent(columns[0], Double.parseDouble(columns[1]));
+					MoneyServiceApp.inventoryMap.putIfAbsent(columns[0], Double.parseDouble(columns[1]));
 				} else {
 					switch(columns[0]) {
 						case "CurrencyConfig":
@@ -63,5 +62,45 @@ public class ServiceConfig {
 		catch(IOException ioe) {
 			System.out.println("Sorry, could read config file.");
 		}
+	}
+	
+	public static void readCurrencyConfigFile() {
+		
+			int lineNumber = 1;
+			
+			try(BufferedReader br = new BufferedReader(new FileReader(currencyFile))) {
+				while (br.ready()) {
+					
+					String row = br.readLine();
+					if (lineNumber++ < CURRENCY_CONFIG_FILE_LINE_START) continue;
+					
+					Currency currency = parseInput(row);
+					MoneyServiceApp.currencyMap.putIfAbsent(currency.getCurrencyCode(), currency);
+				}
+			}
+			catch (IOException ioe) {
+				System.out.println("An IOException occurred for file " + currencyFile);
+			}
+	}
+	
+	private static Currency parseInput(String input) {
+		
+		// The column looks like following:
+		// column 0 = Period
+		// column 1 = Group
+		// column 2 = "Serie" (Currency code)
+		// column 3 = Exchange rate
+		String[] parts = input.split(";");
+		
+		String[] currencyCodeParts = parts[2].split(" ");
+		String currencyCode = currencyCodeParts[1].strip();
+		
+		String exchangeRateString = parts[3].strip();
+		double exchangeRate = Integer.parseInt(exchangeRateString);
+		
+		if (currencyCodeParts[0].strip().length() > 1)
+			return new Currency(currencyCode, exchangeRate/100);
+		else
+			return new Currency(currencyCode, exchangeRate);
 	}
 }
