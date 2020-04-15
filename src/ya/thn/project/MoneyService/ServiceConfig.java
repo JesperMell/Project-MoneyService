@@ -9,41 +9,71 @@ import java.util.Map;
 
 public class ServiceConfig {
 
-	public static final String CONFIG_FILE = "ProjectConfig.txt";
-	public static final int CONFIG_FILE_LINE_START = 3;
+	private static final String CONFIG_FILE = "ProjectConfig.txt";
+	
+	private static String currencyFile;
+	static Map<String, Double> box = new HashMap<String, Double>();
+	
+	public static void main(String[] args) {
+		readProjectConfigFile();
+		
+		System.out.println(currencyFile);
+		System.out.println(MoneyServiceApp.referenceCurrencyCode);
+		System.out.println(box.toString());
+	
+	}
 	
 	static void readConfig(String file) {
 		
 	}
 	
-	public static Map<String, Double> readConfigFile() {
-		Map<String, Double> box = new HashMap<String, Double>();
-		boolean completed = false;
-		int lineNumber = 0;
+	public static void readProjectConfigFile() {
+		boolean insertToBox = false;
 		
 		try(BufferedReader br = new BufferedReader(new FileReader(CONFIG_FILE))){
-			while(br.ready() && !completed) {
-				
+			while(br.ready()) {
 				String row = br.readLine();
-				if(lineNumber++ <= CONFIG_FILE_LINE_START) continue;
+				
+				// Start inserting cash to the 'box'.
+				if(row.equals("BoxOfCash")) {
+					insertToBox = true;
+					continue;
+				}
 
-				if(row.equals("End")) {
-					completed = true;
-					break;
+				// Stop inserting cash to the 'box'.
+				if(row.equals("End") && insertToBox) {
+					insertToBox = false;
+					continue;
 				}
 				
-				// The column looks like following:
-				// column0 = Currency Code.
-				// column1 = the 'equal' sign.
-				// column2 = the currency amount.
-				String[] columns = row.split(" ");
-				box.putIfAbsent(columns[0], Double.parseDouble(columns[2]));
+				// If the row doesn't include ' = ' then continue to next line.
+				// Maybe bad format.
+				// TODO: perhaps create suitable exception?
+				if(!row.contains(" = ")) continue;
+				
+				// Split the row by key, value.
+				String[] columns = row.split(" = ");
+				
+				// Decide if the key/value should be inserted to
+				// box or updating other variables.
+				if(insertToBox) {
+					box.putIfAbsent(columns[0], Double.parseDouble(columns[1]));
+				} else {
+					switch(columns[0]) {
+						case "CurrencyConfig":
+							currencyFile = columns[1];
+						case "ReferenceCurrency":
+							MoneyServiceApp.referenceCurrencyCode = columns[1];
+						default:
+							throw new IllegalArgumentException(
+										String.format("%s is not a valid setting", columns[0])
+									);
+					}
+				}
 			}
 		}
 		catch(IOException ioe) {
 			System.out.println("Sorry, could read config file.");
 		}
-		
-		return box;
 	}
 }
