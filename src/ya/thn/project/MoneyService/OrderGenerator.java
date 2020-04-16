@@ -13,7 +13,7 @@ public class OrderGenerator {
 	/*
 	 * generateOrders
 	 * 
-	 * Create a orders with random values.
+	 * Create orders with random values.
 	 * Read generateOrder for random values description
 	 * 
 	 * int size for the amount of random orders.
