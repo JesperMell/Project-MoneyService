@@ -4,14 +4,16 @@
     <id>UMLClass</id>
     <coordinates>
       <x>248</x>
-      <y>216</y>
+      <y>168</y>
       <w>272</w>
-      <h>160</h>
+      <h>208</h>
     </coordinates>
     <panel_attributes>MoneyServiceApp
 --
 _~ currencyMap: Map&lt;String, Currency&gt;_
+_~ inventoryMap: Map&lt;String, Double&gt;_
 _~ referenceCurrencyCode: String_
+_~ orderAmountLimit: int_
 - exchangeOffice: ExchangeOffice
 --
 + main(String[] args)
@@ -39,13 +41,13 @@ _~ orderNrCounter: int_
 - orderNr: int
 - transactionMode: TransactionMode
 - currencyCode: String
-- amount: double
+- amount: int
 --
 + Order(OrderType, String, double)
 + getOrderNr():int
 + getTransactionMode(): TransactionMode
 + getCurrencyCode(): String
-+ getAmount(): double
++ getAmount(): int
 --
 Responsibilities
 Holding information about 
@@ -58,7 +60,7 @@ identification of the order.</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>256</x>
-      <y>640</y>
+      <y>760</y>
       <w>264</w>
       <h>184</h>
     </coordinates>
@@ -108,7 +110,7 @@ Rules for Money Services.
       <x>248</x>
       <y>400</y>
       <w>304</w>
-      <h>224</h>
+      <h>336</h>
     </coordinates>
     <panel_attributes>ServiceConfig
 --
@@ -118,6 +120,7 @@ _~ SELL_RATE: double_
 --
 _+readCurrencyConfigFile()_
 _+readProjectConfigFile()_
+_+readMoneyServiceConfigFile(): int_
 --
 Responsibilities
 Applicationi configuration is set up
@@ -141,13 +144,12 @@ MoneyServiceApp.currencyMap.</panel_attributes>
     <panel_attributes>ExchangeOffice
 --
 - name: String
-- completedTransactions: Map&lt;DateTime, List&lt;Transaction&gt; &gt;
+- completedTransactions: List&lt;Transaction&gt;
 - inventory: Map&lt;String currencyCode, double amount&gt;
 --
 + ExchangeOffice(String, Map&lt;String, double&gt;)
 
 - validateOrder(Order orderData): boolean
-- storeAsSerialized(String destination)
 --
 Responsibilities
 
@@ -159,7 +161,7 @@ within the system.</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>384</x>
-      <y>112</y>
+      <y>48</y>
       <w>168</w>
       <h>88</h>
     </coordinates>
@@ -177,12 +179,12 @@ Responsibilities
     <id>Relation</id>
     <coordinates>
       <x>440</x>
-      <y>192</y>
+      <y>128</y>
       <w>24</w>
-      <h>40</h>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -221,19 +223,23 @@ Responsibilities
     <id>UMLClass</id>
     <coordinates>
       <x>16</x>
-      <y>216</y>
-      <w>200</w>
-      <h>112</h>
+      <y>168</y>
+      <w>216</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>OrderGenerator
 --
+_- MAX_RAND: int_
+_- MIN_RAND: int_
 --
-+ generateOrders(): List&lt;Order&gt;
++ generateOrders(int): List&lt;Order&gt;
++ generateOrder(): Order
+- fillCurrencies():
 --
 Responsibilities:
 
-Create and deliver orders.
-25 orders per day.
+Randomly generates orders. 
+Use only for testing.
 	</panel_attributes>
     <additional_attributes/>
   </element>
@@ -255,22 +261,22 @@ Create and deliver orders.
       <x>512</x>
       <y>688</y>
       <w>208</w>
-      <h>72</h>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m2=1..n</panel_attributes>
-    <additional_attributes>240.0;10.0;240.0;60.0;10.0;60.0</additional_attributes>
+    <additional_attributes>240.0;10.0;240.0;210.0;10.0;210.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>336</x>
-      <y>616</y>
+      <y>728</y>
       <w>24</w>
-      <h>40</h>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;30.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -331,13 +337,13 @@ m1=1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>544</x>
-      <y>136</y>
+      <y>72</y>
       <w>784</w>
-      <h>64</h>
+      <h>128</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 &lt;&lt;Creates&gt;&gt;</panel_attributes>
-    <additional_attributes>890.0;60.0;890.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>890.0;140.0;890.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Text</id>
@@ -370,22 +376,11 @@ fontsize=30
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>208</x>
-      <y>264</y>
-      <w>56</w>
-      <h>24</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>50.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1112</x>
-      <y>24</y>
-      <w>240</w>
+      <x>16</x>
+      <y>344</y>
+      <w>216</w>
       <h>104</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Type&gt;&gt;
