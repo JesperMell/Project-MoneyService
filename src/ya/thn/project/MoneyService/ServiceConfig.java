@@ -19,7 +19,6 @@ public class ServiceConfig {
 	public static void readProjectConfigFile() {
 		boolean insertToBox = false;
 		
-		Map <String, Double> box = new HashMap<>();
 		
 		try(BufferedReader br = new BufferedReader(new FileReader(CONFIG_FILE))){
 			while(br.ready()) {
@@ -48,7 +47,7 @@ public class ServiceConfig {
 				// Decide if the key/value should be inserted to
 				// box or updating other variables.
 				if(insertToBox) {
-					box.putIfAbsent(columns[0], Double.parseDouble(columns[1]));
+					MoneyServiceApp.inventoryMap.putIfAbsent(columns[0], Double.parseDouble(columns[1]));
 				} else {
 					switch(columns[0]) {
 						case "CurrencyConfig":
@@ -68,11 +67,9 @@ public class ServiceConfig {
 		catch(IOException ioe) {
 			System.out.println("Sorry, could read config file.");
 		}
-		MoneyServiceApp.inventoryMap = box;
 	}
 	
 	public static void readCurrencyConfigFile() {
-			Map <String, Currency> currencyMap = new HashMap<>();
 			
 			int lineNumber = 1;
 			
@@ -83,13 +80,12 @@ public class ServiceConfig {
 					if (lineNumber++ < CURRENCY_CONFIG_FILE_LINE_START) continue;
 					
 					Currency currency = parseInput(row);
-					currencyMap.putIfAbsent(currency.getCurrencyCode(), currency);
+					MoneyServiceApp.currencyMap.putIfAbsent(currency.getCurrencyCode(), currency);
 				}
 			}
 			catch (IOException ioe) {
 				System.out.println("An IOException occurred for file " + currencyFile);
 			}
-			MoneyServiceApp.currencyMap = currencyMap;
 	}
 	
 	private static Currency parseInput(String input) {

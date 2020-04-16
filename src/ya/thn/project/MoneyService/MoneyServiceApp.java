@@ -1,5 +1,6 @@
 package ya.thn.project.MoneyService;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -13,8 +14,8 @@ public class MoneyServiceApp {
 	/**
 	 * Storage for Currency objects using CurrencyCode as key
 	 */
-	static Map<String, Currency> currencyMap;
-	static Map<String, Double> inventoryMap;
+	static Map<String, Currency> currencyMap = new HashMap<>();
+	static Map<String, Double> inventoryMap = new HashMap<>();
 	
 	public static void main(String[] args) {
 		
