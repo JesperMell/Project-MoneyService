@@ -1,5 +1,10 @@
 package ya.thn.project.MoneyService;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -8,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+
 
 /**
  * This is an implementation of the generic interface MoneyService
@@ -18,7 +25,7 @@ public class ExchangeOffice implements MoneyService{
 
 	private String name;
 
-	
+
 	// CHANGED FROM List<Transaction> CHECK WITH OTHERS IN THE GROUP
 	private List<Transaction> completedTransactions
 	= new ArrayList<>();
@@ -92,6 +99,23 @@ public class ExchangeOffice implements MoneyService{
 	}
 
 	public void printSiteReport(String destination) {
+
+		if(destination.equalsIgnoreCase("console")) {
+			inventory.forEach((key, value) -> System.out.println(key + ": " + value));
+		}
+		if(destination.equalsIgnoreCase("txt")) {
+			try(PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("SiteReport.txt")))){
+				//iterate map entries
+				for(Map.Entry<String, Double> entry : inventory.entrySet()){
+
+					//put key and value separated by a colon
+					pw.write( entry.getKey() + ": " + entry.getValue() + "\n" );
+				}
+			}
+			catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 
