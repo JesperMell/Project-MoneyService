@@ -1,7 +1,11 @@
 package ya.thn.project.MoneyService;
 
-import java.time.LocalDateTime;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -16,8 +20,8 @@ public class ExchangeOffice implements MoneyService{
 
 	
 	// CHANGED FROM List<Transaction> CHECK WITH OTHERS IN THE GROUP
-	private Map<LocalDateTime, Transaction> completedTransactions
-	= new HashMap<>();
+	private List<Transaction> completedTransactions
+	= new ArrayList<>();
 
 	private Map<String, Double> inventory
 	= new HashMap<>();
@@ -42,14 +46,14 @@ public class ExchangeOffice implements MoneyService{
 		if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInSEK) {
 			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) - boughtInSEK;
 			double newBoughtCurrVal = inventory.get(orderData.getCurrencyCode()) + orderData.getAmount();
-
+		
 			// Update the inventory with the new values
 			inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueSEK);
 			inventory.replace(orderData.getCurrencyCode(), newBoughtCurrVal);
 
 			// Create new transaction and add to map with completed orders
 			Transaction completedOrders = new Transaction(orderData.getCurrencyCode(), orderData.getAmount(), orderData.getMode());
-			completedTransactions.putIfAbsent(completedOrders.getCreatedAt(), completedOrders);
+			completedTransactions.add(completedOrders);
 			return true;
 		}
 		else {
@@ -78,7 +82,7 @@ public class ExchangeOffice implements MoneyService{
 
 			// Create new transaction and add to map with completed orders
 			Transaction completedOrders = new Transaction(orderData.getCurrencyCode(), orderData.getAmount(), orderData.getMode());
-			completedTransactions.putIfAbsent(completedOrders.getCreatedAt(), completedOrders);
+			completedTransactions.add(completedOrders);
 			return true;
 		}
 		else {
@@ -92,7 +96,14 @@ public class ExchangeOffice implements MoneyService{
 	}
 
 	public void shutDownService(String destination) {
-
+		
+		// Serialize and store completed transactions.
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(destination))){
+			oos.writeObject(completedTransactions);
+		}
+		catch(IOException ioe) {
+			System.out.println("Sorry, could save transactions to file.");
+		}
 	}
 
 	public Map<String, Currency> getCurrencyMap() {
