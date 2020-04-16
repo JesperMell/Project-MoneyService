@@ -1,6 +1,7 @@
 package ya.thn.project.MoneyService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -9,7 +10,8 @@ public class OrderGenerator {
 	private static int MAX_RAND = 500;
 	private static int MIN_RAND = 10;
 	
-
+	private static Set<String> currencies = new HashSet<String>();
+	
 	/*
 	 * generateOrders
 	 * 
@@ -50,12 +52,28 @@ public class OrderGenerator {
 		TransactionMode randMode = (Math.random() > 0.5) ? TransactionMode.BUY : TransactionMode.SELL;
 
 		// Fetch all currencies.
-		Set<String> currencies = MoneyServiceApp.currencyMap.keySet();
-		
+		fillCurrencies();
+	
 		// Create a random index, between 0 and currencies.size().
 		int randCurrencyIndex = (int) ((Math.random() * ((currencies.size() - 1) + 1)));
 		
 		// Return the new order. 
 		return new Order(randMode, randAmount, (String) currencies.toArray()[randCurrencyIndex]);
+	}
+
+	
+	/*
+	 * fillCurrencies
+	 *
+	 * Get the currencies from the MoneyServiceApp
+	 * and merge them to single.
+	 *
+	 */
+	private static void fillCurrencies() {
+		if(!currencies.isEmpty())
+			return;
+		
+		currencies.addAll(MoneyServiceApp.currencyMap.keySet());
+		currencies.addAll(MoneyServiceApp.inventoryMap.keySet());
 	}
 }
