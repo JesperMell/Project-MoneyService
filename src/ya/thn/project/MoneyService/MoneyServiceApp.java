@@ -1,8 +1,7 @@
 package ya.thn.project.MoneyService;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import ya.thn.project.MoneyService.Order.OrderType;
 
 /**
  * This class triggers an application defining an ExchangeOffice for Order objects.
@@ -15,8 +14,8 @@ public class MoneyServiceApp {
 	/**
 	 * Storage for Currency objects using CurrencyCode as key
 	 */
-	static Map<String, Currency> currencyMap;
-	static Map<String, Double> inventoryMap;
+	static Map<String, Currency> currencyMap = new HashMap<>();
+	static Map<String, Double> inventoryMap = new HashMap<>();
 	
 	public static void main(String[] args) {
 		
@@ -50,9 +49,9 @@ public class MoneyServiceApp {
 				break;
 			case 2:
 				aOrder = CLIHelper.orderRequest();
-				if (aOrder.getOrderType() == OrderType.SELL)
+				if (aOrder.getMode() == TransactionMode.SELL)
 					aExchangeOffice.sellMoney(aOrder);
-				if (aOrder.getOrderType() == OrderType.BUY)
+				if (aOrder.getMode() == TransactionMode.BUY)
 					aExchangeOffice.buyMoney(aOrder);
 				break;
 //			case 3:
