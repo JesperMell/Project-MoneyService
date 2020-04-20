@@ -1,6 +1,9 @@
 package ya.thn.project.MoneyService;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.Optional;
+
 import org.junit.Test;
 
 public class TestJUnitExchangeOffice {
@@ -56,5 +59,25 @@ public class TestJUnitExchangeOffice {
 		Order testOrder = new Order(TransactionMode.SELL, 10000, "RUB"); // Max amount in stock
 
 		assertEquals(true, testOffice.sellMoney(testOrder));
+	}
+	
+	@Test
+	public void testAvailableAmount1() {
+		ServiceConfig.readProjectConfigFile();
+		ServiceConfig.readCurrencyConfigFile();
+
+		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
+		
+		assertEquals(Optional.ofNullable(MoneyServiceApp.inventoryMap.get("USD")), testOffice.getAvailableAmount("USD"));
+	}
+	
+	@Test
+	public void testAvailableAmount2() {
+		ServiceConfig.readProjectConfigFile();
+		ServiceConfig.readCurrencyConfigFile();
+
+		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
+		
+		assertEquals(Optional.ofNullable(MoneyServiceApp.inventoryMap.get("JPY")), testOffice.getAvailableAmount("JPY"));
 	}
 }
