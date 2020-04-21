@@ -4,10 +4,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+
 @RunWith(Suite.class)
 @SuiteClasses(
 		{
-			TestJUnitOrder.class
+			TestJUnitOrder.class,
+			TestJUnitTransaction.class, 
+			TestJUnitExchangeOffice.class,
+			TestJUnitCurrency.class,
+			
 
 		}
 		)
