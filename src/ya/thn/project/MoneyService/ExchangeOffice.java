@@ -43,16 +43,21 @@ public class ExchangeOffice implements MoneyService{
 		// CurrencyCode is the bought currency
 		// Extract specific exchange rate for the currency the customer has
 		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
-
+		System.out.println(" requested CurrencyCode: " + temp); // delete this.
 		// Alter the exchange rate with profit margin
 		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.BUY_RATE;
+		System.out.println("AlteredExhangeRate: " + alteredExchangeRate); // delete this.
 
 		// Amount to be returned to customer after bought currency
 		double boughtInSEK = orderData.getAmount() * alteredExchangeRate;
+		System.out.println("The SEK amount given to customer: " + boughtInSEK); // delete this.
+		System.out.println("Inventory refCurrency is: " + inventory.get(MoneyServiceApp.referenceCurrencyCode)); // delete this.
 
 		if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInSEK) {
 			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) - boughtInSEK;
+			System.out.println("New inventory SEK stock after: " + newValueSEK); // delete this.
 			double newBoughtCurrVal = inventory.get(orderData.getCurrencyCode()) + orderData.getAmount();
+			System.out.println("The inventory amount of ordered currency after is: " + newBoughtCurrVal);
 		
 			// Update the inventory with the new values
 			inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueSEK);
