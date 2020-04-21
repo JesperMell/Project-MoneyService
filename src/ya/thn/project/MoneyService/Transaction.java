@@ -14,7 +14,7 @@ public class Transaction implements java.io.Serializable{
 	private final TransactionMode transactionMode;
 	private LocalDateTime createdAt;
 	
-	private static int uniqueId = 1;
+	private static int uniqueId = 0;
 	
 	public Transaction(String currencyCode, int amount, TransactionMode mode) {
 		this(currencyCode, amount, mode, ++uniqueId);

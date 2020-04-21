@@ -37,6 +37,7 @@ public class TestJUnitExchangeOffice {
 		assertEquals(true, testOffice.buyMoney(testOrder));
 	}
 	
+	
 	@Test
 	public void testSellMoney1() {
 		ServiceConfig.readProjectConfigFile();
