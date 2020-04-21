@@ -12,7 +12,7 @@ public class OrderGenerator {
 	
 	private static Set<String> currencies = new HashSet<String>();
 	
-	/*
+	/**
 	 * generateOrders
 	 * 
 	 * Create orders with random values.
@@ -31,7 +31,7 @@ public class OrderGenerator {
 		return l;
 	}
 	
-	/*
+	/**
 	 * generateOrder
 	 * 
 	 * Create a order with random values.
@@ -62,7 +62,7 @@ public class OrderGenerator {
 	}
 
 	
-	/*
+	/**
 	 * fillCurrencies
 	 *
 	 * Get the currencies from the MoneyServiceApp

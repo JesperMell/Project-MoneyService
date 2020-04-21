@@ -25,7 +25,6 @@ public class ExchangeOffice implements MoneyService{
 
 	private String name;
 
-
 	// CHANGED FROM List<Transaction> CHECK WITH OTHERS IN THE GROUP
 	private List<Transaction> completedTransactions
 	= new ArrayList<>();
@@ -39,26 +38,31 @@ public class ExchangeOffice implements MoneyService{
 	}
 
 	public boolean buyMoney(Order orderData){
+		// We do not allow buying orders with reference currency.
+		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode)
+			return false;
 
 		// CurrencyCode is the bought currency
 		// Extract specific exchange rate for the currency the customer has
-		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
-		System.out.println(" requested CurrencyCode: " + temp); // delete this.
+		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());		
+		// If currency does not exist in currencyMap, then return false (Missing currencyRate).
+		if(temp == null) return false;
+    
 		// Alter the exchange rate with profit margin
 		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.BUY_RATE;
-		System.out.println("AlteredExhangeRate: " + alteredExchangeRate); // delete this.
 
 		// Amount to be returned to customer after bought currency
 		double boughtInSEK = orderData.getAmount() * alteredExchangeRate;
-		System.out.println("The SEK amount given to customer: " + boughtInSEK); // delete this.
-		System.out.println("Inventory refCurrency is: " + inventory.get(MoneyServiceApp.referenceCurrencyCode)); // delete this.
-
+    
 		if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInSEK) {
-			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) - boughtInSEK;
-			System.out.println("New inventory SEK stock after: " + newValueSEK); // delete this.
-			double newBoughtCurrVal = inventory.get(orderData.getCurrencyCode()) + orderData.getAmount();
-			System.out.println("The inventory amount of ordered currency after is: " + newBoughtCurrVal);
-		
+			Double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) - boughtInSEK;
+			Double newBoughtCurrVal = inventory.get(orderData.getCurrencyCode());
+			// Add new currency to list if it doens't exist.
+			if(newBoughtCurrVal == null) {
+				inventory.putIfAbsent(orderData.getCurrencyCode(), (double) 0);
+				newBoughtCurrVal = (double) (0 + orderData.getAmount());
+			}
+
 			// Update the inventory with the new values
 			inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueSEK);
 			inventory.replace(orderData.getCurrencyCode(), newBoughtCurrVal);
@@ -74,10 +78,16 @@ public class ExchangeOffice implements MoneyService{
 	}
 
 	public boolean sellMoney(Order orderData) {
+		// We do not allow selling orders with reference currency.
+		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode)
+			return false;
 
 		// CurrencyCode is the sold currency
 		// Extract specific exchange rate for the currency the customer has
 		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
+		
+		// If currency does not exist in currencyMap, then return false (Missing currencyRate).
+		if(temp == null) return false;
 
 		// Alter the exchange rate with profit margin
 		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.SELL_RATE;
@@ -85,8 +95,15 @@ public class ExchangeOffice implements MoneyService{
 		double soldAmount = orderData.getAmount() / (1 / alteredExchangeRate);
 
 		if(validateOrder(orderData)) {
-			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) + soldAmount;
-			double newSoldCurrVal = inventory.get(orderData.getCurrencyCode()) - orderData.getAmount();
+			Double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) + soldAmount;
+			Double newSoldCurrVal = inventory.get(orderData.getCurrencyCode());
+			
+			// Return false if currency doesn't exist in office.
+			if(newSoldCurrVal == null)
+				return false;
+			
+			// Remove the amount from office.
+			newSoldCurrVal -= orderData.getAmount();
 
 			// Update the inventory with the new values
 			inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueSEK);
@@ -150,6 +167,11 @@ public class ExchangeOffice implements MoneyService{
 
 
 	private boolean validateOrder(Order orderData) {
+		// We do not allow order which are lower
+		// then the limit. (read MoneyServiceConfig.txt - ORDER_AMOUNT_LIMIT)
+		if(orderData.getAmount() < MoneyServiceApp.orderAmountLimit)
+			return false;
+		
 		// Get the available amount at site.
 		Optional<Double> maybeAvailableAmount = getAvailableAmount(orderData.getCurrencyCode());
 		// Return true if amount requested is available. Otherwise, return false.
