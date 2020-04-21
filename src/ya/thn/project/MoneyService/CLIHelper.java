@@ -1,6 +1,9 @@
 package ya.thn.project.MoneyService;
 
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * This is a support class for user interaction using CLI
@@ -48,13 +51,26 @@ public class CLIHelper {
 	}
 	
 	
-	static void showSupportedCurrencies() {
+	/**
+	 * Helper method that show supported currencies,
+	 * original taken from the "CurrencyConfig.txt"
+	 * @param a map with currencyCode as key and Currency as value
+	 */
+	static void showSupportedCurrencies(Map<String, Currency> hm) {
 		
+		// To get the map in alphabetical order
+		Map<String, Currency> tm = new TreeMap<String, Currency>(hm);
+		
+		// Get a set of the entries
+		Set<Map.Entry<String, Currency>> set = tm.entrySet();
+		
+		// Display the keys
 		System.out.println("Supported currencies");
 		System.out.println("--------------------");
-		System.out.println("1 - SEK");
-		System.out.println("2 - GBP");
-		System.out.println("3 - USD");
+		
+		for (Map.Entry<String, Currency> me : set)
+			System.out.println(me.getKey());
+		
 		System.out.println();
 	}
 	
@@ -66,7 +82,7 @@ public class CLIHelper {
 	static Order orderRequest() {
 		
 		int sellBuyChoice = 0; // Default "Back to main menu"
-		int currencyChoice = 1; // Default SEK
+		String currencyCode = "SEK"; // Default SEK
 		int amount = 0;
 		Order aOrder = null;
 		boolean ok;
@@ -93,30 +109,34 @@ public class CLIHelper {
 			
 			} while(!ok);
 			
-			showSupportedCurrencies();
-			System.out.print("Enter currency No: ");
-			String userCurrencyChoice = input.next();
+			//showSupportedCurrencies();
+			System.out.print("Enter currency code (3 capital letters): ");
+			String userCurrencyCode = input.next();
 			
 			System.out.print("Enter amount: ");
 			String userAmount = input.next();
-			
+
 			try {
-				currencyChoice = Integer.parseInt(userCurrencyChoice);
+				currencyCode = userCurrencyCode.toUpperCase();
+			} catch(NumberFormatException e) {
+				System.out.format("Your choice %s is not accepted!", userCurrencyCode);
+				ok = false;
+			}
+
+			try {
 				amount = Integer.parseInt(userAmount);
 			} catch(NumberFormatException e) {
-				System.out.format("Your choice is not accepted!");
+				System.out.format("Your choice %s is not accepted!", userAmount);
 				ok = false;
 			}
 			
-			if (currencyChoice < 0 || currencyChoice > 3) // Magic number!!! CHANGE
-				ok = false;
 			
 			switch(sellBuyChoice) {
 			case 1:
-				aOrder = new Order(TransactionMode.SELL, amount, String.valueOf(CurrencyCodeType.valueOf(currencyChoice)));
+				aOrder = new Order(TransactionMode.SELL, amount, currencyCode);
 				break;
 			case 2:
-				aOrder = new Order(TransactionMode.BUY, amount, String.valueOf(CurrencyCodeType.valueOf(currencyChoice)));
+				aOrder = new Order(TransactionMode.BUY, amount, currencyCode);
 				break;
 			case 0:
 				menuInput();
