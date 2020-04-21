@@ -145,6 +145,11 @@ public class ExchangeOffice implements MoneyService{
 
 
 	private boolean validateOrder(Order orderData) {
+		// We do not allow order which are lower
+		// then the limit. (read MoneyServiceConfig.txt - ORDER_AMOUNT_LIMIT)
+		if(orderData.getAmount() < MoneyServiceApp.orderAmountLimit)
+			return false;
+		
 		// Get the available amount at site.
 		Optional<Double> maybeAvailableAmount = getAvailableAmount(orderData.getCurrencyCode());
 		// Return true if amount requested is available. Otherwise, return false.
