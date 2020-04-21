@@ -16,6 +16,7 @@ public class MoneyServiceApp {
 	 */
 	static Map<String, Currency> currencyMap = new HashMap<>();
 	static Map<String, Double> inventoryMap = new HashMap<>();
+	static int orderAmountLimit;
 	
 	public static void main(String[] args) {
 		
@@ -26,6 +27,7 @@ public class MoneyServiceApp {
 	
 	private static void configure() {
 		
+		orderAmountLimit = ServiceConfig.readMoneyServiceConfigFile();
 		ServiceConfig.readProjectConfigFile();
 		ServiceConfig.readCurrencyConfigFile();
 	}
@@ -45,7 +47,8 @@ public class MoneyServiceApp {
 			
 			switch(choice) {
 			case 1:
-				aExchangeOffice.getCurrencyMap();
+				//aExchangeOffice.getCurrencyMap().keySet();
+				CLIHelper.showSupportedCurrencies(aExchangeOffice.getCurrencyMap());
 				break;
 			case 2:
 				aOrder = CLIHelper.orderRequest();

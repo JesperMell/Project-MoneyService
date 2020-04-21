@@ -9,12 +9,13 @@ import java.util.Map;
 public class ServiceConfig {
 
 	private static final String CONFIG_FILE = "ProjectConfig.txt";
-	public static final int CURRENCY_CONFIG_FILE_LINE_START = 2;
+	private static final int CURRENCY_CONFIG_FILE_LINE_START = 2;
+	private static final String MONEYSERVICE_CONFIG_FILE = "MoneyServiceConfig.txt";
 	
 	private static String currencyFile;
 	
-	static final double BUY_RATE = 1.005;
-	static final double SELL_RATE = 0.995;
+	static final double BUY_RATE = 0.995;
+	static final double SELL_RATE = 1.005;
       
 	public static void readProjectConfigFile() {
 		boolean insertToBox = false;
@@ -65,7 +66,7 @@ public class ServiceConfig {
 			}
 		}
 		catch(IOException ioe) {
-			System.out.println("Sorry, could read config file.");
+			System.out.println("Sorry, could not read config file.");
 		}
 	}
 	
@@ -107,5 +108,26 @@ public class ServiceConfig {
 			return new Currency(currencyCode, exchangeRate/100);
 		else
 			return new Currency(currencyCode, exchangeRate);
+	}
+	
+	public static int readMoneyServiceConfigFile() {
+		
+		int orderAmountLimit = 0;
+		
+		try(BufferedReader br = new BufferedReader(new FileReader(MONEYSERVICE_CONFIG_FILE))) {
+			while (br.ready()) {
+				
+				String row = br.readLine();
+				
+				String[] parts = row.split("=");
+				String orderAmountLimitString = parts[1].strip();
+				orderAmountLimit = Integer.parseInt(orderAmountLimitString);
+			}
+		}
+		catch (IOException ioe) {
+			System.out.println("Could not read " + MONEYSERVICE_CONFIG_FILE);
+		}
+		
+		return orderAmountLimit;
 	}
 }
