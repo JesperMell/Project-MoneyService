@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>72</x>
+      <y>63</y>
+      <w>441</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Team Center
+fontsize=25
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>72</x>
+      <y>27</y>
+      <w>441</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Project: MoneyService/HQ
+fontsize=30
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>27</x>
+      <y>351</y>
+      <w>306</w>
+      <h>243</h>
+    </coordinates>
+    <panel_attributes>HQApp
+--
+sites: Map&lt;String, Site&gt;
+--
+_+ readProjectConfig()_
+
+_- CLIApplication()_
+--
+Responsibilities
+
+The initializing file for MoneyService HQ 
+service. </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>27</x>
+      <y>117</y>
+      <w>360</w>
+      <h>207</h>
+    </coordinates>
+    <panel_attributes>CLIHelper
+--
+--
+_+ menuInput()_
+
+_- readStartDate()_
+_- createEndDate(LocalDate): LocalDate_
+--
+Responsibilities
+
+Command-line interface for HQ application.
+Handles user inputs and renders data.
+
+Should present following
+criteria: Site, Period and Currency.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1044</x>
+      <y>351</y>
+      <w>396</w>
+      <h>306</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Value Type&gt;&gt;
+Transaction
+--
+- serialVersionUID: Long
+- id: int
+- timeStamp: LocaleDateTime
+- currencyCode: String
+- amount: int
+- transactionMode: TransactionMode
+_- uniqueId: int_
+--
++ Transaction(LocaleDateTime, String, int, TransactionMode)
++ getTimeStamp: LocalDateTime
++ getCurrencyCode: String
++ getAmount(): int
++ getTransactionMode: TransactionMode
++ getId(): int
+--
+Responsibilities
+Represents a completed order. When order is
+validated, a transaction is created.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>441</x>
+      <y>351</y>
+      <w>495</w>
+      <h>243</h>
+    </coordinates>
+    <panel_attributes>Site
+--
+- siteName: String
+--
++ Site(String siteName)
++ ReadTransactions(LocalDate, LocalDate): List&lt;Transaction&gt;
+--
+Responsibilities
+
+Contains a list of completed transaction related
+to instance site.
+
+Current available sites: NORTH, CENTER, SOUTH.
+
+ReadTransaction should read transaction from files according
+to dates.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>927</x>
+      <y>414</y>
+      <w>135</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=1..n</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>324</x>
+      <y>414</y>
+      <w>135</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=1..n</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>234</x>
+      <y>315</y>
+      <w>27</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>27</x>
+      <y>630</y>
+      <w>387</w>
+      <h>315</h>
+    </coordinates>
+    <panel_attributes>Statistic
+--
+- transactions: List&lt;Transaction&gt;
+- currencyCodes: List&lt;String&gt;
+--
++ Statistic(List&lt;Transaction&gt;, List&lt;String&gt;)
++ getTotalTransactions(): Map&lt;String. int&gt;
++ getAverageAmount(): Map&lt;String. int&gt;
++ getTotalAmount(): Map&lt;String. int&gt;
++ getDiffCurrency(): Map&lt;String. int&gt;
++ getTotalBuy(): Map&lt;String. int&gt;
++ getTotalSell(): Map&lt;String. int&gt;
++ getTransactionCountPerCurrency(): Map&lt;String. int&gt;
+--
+Responsibilities
+
+The initializing file for MoneyService HQ 
+service. </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>171</x>
+      <y>585</y>
+      <w>27</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
