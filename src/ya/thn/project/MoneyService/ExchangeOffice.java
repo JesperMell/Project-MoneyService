@@ -32,10 +32,16 @@ public class ExchangeOffice implements MoneyService{
 	}
 
 	public boolean buyMoney(Order orderData){
+		// We do not allow buying orders with reference currency.
+		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode)
+			return false;
 
 		// CurrencyCode is the bought currency
 		// Extract specific exchange rate for the currency the customer has
 		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
+		
+		// If currency does not exist in currencyMap, then return false (Missing currencyRate).
+		if(temp == null) return false;
 
 		// Alter the exchange rate with profit margin
 		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.BUY_RATE;
@@ -44,8 +50,13 @@ public class ExchangeOffice implements MoneyService{
 		double boughtInSEK = orderData.getAmount() * alteredExchangeRate;
 
 		if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInSEK) {
-			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) - boughtInSEK;
-			double newBoughtCurrVal = inventory.get(orderData.getCurrencyCode()) + orderData.getAmount();
+			Double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) - boughtInSEK;
+			Double newBoughtCurrVal = inventory.get(orderData.getCurrencyCode());
+			// Add new currency to list if it doens't exist.
+			if(newBoughtCurrVal == null) {
+				inventory.putIfAbsent(orderData.getCurrencyCode(), (double) 0);
+				newBoughtCurrVal = (double) (0 + orderData.getAmount());
+			}
 		
 			// Update the inventory with the new values
 			inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueSEK);
@@ -62,10 +73,16 @@ public class ExchangeOffice implements MoneyService{
 	}
 
 	public boolean sellMoney(Order orderData) {
+		// We do not allow selling orders with reference currency.
+		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode)
+			return false;
 
 		// CurrencyCode is the sold currency
 		// Extract specific exchange rate for the currency the customer has
 		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
+		
+		// If currency does not exist in currencyMap, then return false (Missing currencyRate).
+		if(temp == null) return false;
 
 		// Alter the exchange rate with profit margin
 		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.SELL_RATE;
@@ -73,8 +90,15 @@ public class ExchangeOffice implements MoneyService{
 		double soldAmount = orderData.getAmount() / (1 / alteredExchangeRate);
 
 		if(validateOrder(orderData)) {
-			double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) + soldAmount;
-			double newSoldCurrVal = inventory.get(orderData.getCurrencyCode()) - orderData.getAmount();
+			Double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) + soldAmount;
+			Double newSoldCurrVal = inventory.get(orderData.getCurrencyCode());
+			
+			// Return false if currency doesn't exist in office.
+			if(newSoldCurrVal == null)
+				return false;
+			
+			// Remove the amount from office.
+			newSoldCurrVal -= orderData.getAmount();
 
 			// Update the inventory with the new values
 			inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueSEK);
