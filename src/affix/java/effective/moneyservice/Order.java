@@ -18,12 +18,12 @@ public class Order {
   */
 	public Order(TransactionMode mode, int amount, String currencyCode) {
 		
-		if(amount <= 0) {
-			throw new IllegalArgumentException("Amount not valid");
+		if(currencyCode == null || currencyCode.isEmpty()) {
+			throw new IllegalArgumentException("Currency code missing!");
 		}
 		else{
-			if(currencyCode.isEmpty() || currencyCode == null) {
-				throw new IllegalArgumentException("currencyCode missing!");
+			if(amount <= 0) {
+				throw new IllegalArgumentException("Amount cant be negative!");
 			}
 		}
 		this.orderNr = ++orderCounter;
