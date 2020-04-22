@@ -49,7 +49,7 @@ public class TestJUnitTransaction {
 	
 	@Test
 	public void testGetTransactionMode() {
-		assertEquals(TransactionMode.SELL, t1.getTransactionMode());
+		assertEquals(TransactionMode.SELL, t1.getMode());
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
