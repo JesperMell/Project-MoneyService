@@ -9,9 +9,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import affix.java.effective.moneyservice.Transaction;
-import affix.java.effective.moneyservice.TransactionMode;
-
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestJUnitTransaction {
