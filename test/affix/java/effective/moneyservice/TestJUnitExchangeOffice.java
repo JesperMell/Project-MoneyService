@@ -6,12 +6,6 @@ import java.util.Optional;
 
 import org.junit.Test;
 
-import affix.java.effective.moneyservice.ExchangeOffice;
-import affix.java.effective.moneyservice.MoneyServiceApp;
-import affix.java.effective.moneyservice.Order;
-import affix.java.effective.moneyservice.ServiceConfig;
-import affix.java.effective.moneyservice.TransactionMode;
-
 public class TestJUnitExchangeOffice {
 
 	@Test
