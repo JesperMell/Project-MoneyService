@@ -16,7 +16,7 @@ public class ServiceConfig {
 	
 	static final double BUY_RATE = 0.995;
 	static final double SELL_RATE = 1.005;
-      
+	
 	public static void readProjectConfigFile() {
 		boolean insertToBox = false;
 		
@@ -48,11 +48,15 @@ public class ServiceConfig {
 				// Decide if the key/value should be inserted to
 				// box or updating other variables.
 				if(insertToBox) {
-					MoneyServiceApp.inventoryMap.putIfAbsent(columns[0], Double.parseDouble(columns[1]));
+					MoneyServiceApp.inventoryMap.put(columns[0], Double.parseDouble(columns[1]));
 				} else {
 					switch(columns[0]) {
 						case "CurrencyConfig":
-							currencyFile = columns[1];
+							if(MoneyServiceApp.dummyDate == null) {
+								currencyFile = columns[1];
+							} else {
+								currencyFile = String.format("ExchangeRates/CurrencyConfig_%s.txt", MoneyServiceApp.dummyDate);
+							}
 							break;
 						case "ReferenceCurrency":
 							MoneyServiceApp.referenceCurrencyCode = columns[1];
@@ -70,7 +74,7 @@ public class ServiceConfig {
 		}
 	}
 	
-	public static void readCurrencyConfigFile() {
+	public static boolean readCurrencyConfigFile() {
 			
 			int lineNumber = 1;
 			
@@ -81,12 +85,14 @@ public class ServiceConfig {
 					if (lineNumber++ < CURRENCY_CONFIG_FILE_LINE_START) continue;
 					
 					Currency currency = parseInput(row);
-					MoneyServiceApp.currencyMap.putIfAbsent(currency.getCurrencyCode(), currency);
+					MoneyServiceApp.currencyMap.put(currency.getCurrencyCode(), currency);
 				}
 			}
 			catch (IOException ioe) {
 				System.out.println("An IOException occurred for file " + currencyFile);
+				return false;
 			}
+			return true;
 	}
 	
 	private static Currency parseInput(String input) {

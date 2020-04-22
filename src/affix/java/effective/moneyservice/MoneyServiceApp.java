@@ -1,5 +1,7 @@
 package affix.java.effective.moneyservice;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,18 +20,19 @@ public class MoneyServiceApp {
 	static Map<String, Double> inventoryMap = new HashMap<>();
 	static int orderAmountLimit;
 	
+	static LocalDate dummyDate = null;
+	
 	public static void main(String[] args) {
 		
-		configure();
-		MoneyService aExchangeOffice = new ExchangeOffice("THN", inventoryMap);
-		CLIApplication(aExchangeOffice);
+		TransactionGenerator.run();
+		TransactionGenerator.read();
 	}
 	
-	private static void configure() {
+	static boolean configure() {
 		
 		orderAmountLimit = ServiceConfig.readMoneyServiceConfigFile();
 		ServiceConfig.readProjectConfigFile();
-		ServiceConfig.readCurrencyConfigFile();
+		return ServiceConfig.readCurrencyConfigFile();
 	}
 	
 	/**

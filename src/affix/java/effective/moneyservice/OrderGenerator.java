@@ -7,9 +7,6 @@ import java.util.Set;
 
 public class OrderGenerator {
 	
-	private static int MAX_RAND = 500;
-	private static int MIN_RAND = 10;
-	
 	private static Set<String> currencies = new HashSet<String>();
 	
 	/**
@@ -46,7 +43,7 @@ public class OrderGenerator {
 			throw new IllegalArgumentException("You need to register currencies!");
 		
 		// Create a random amount.
-		int randAmount = (int) ((Math.random() * ((MAX_RAND - MIN_RAND) + 1)) + MIN_RAND);
+		int randAmount = (int) ((Math.random() * 1000 / 50) + 1) * 50;
 		
 		// Determine BUY or SELL mode.
 		TransactionMode randMode = (Math.random() > 0.5) ? TransactionMode.BUY : TransactionMode.SELL;

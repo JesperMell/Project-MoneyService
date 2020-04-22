@@ -1,6 +1,7 @@
 package affix.java.effective.moneyservice;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 public class Transaction implements java.io.Serializable{
@@ -36,9 +37,18 @@ public class Transaction implements java.io.Serializable{
 		this.amount = amount;
 
 		this.mode = mode;
-		timeStamp = LocalDateTime.now();
-		
+		if(MoneyServiceApp.dummyDate != null) {
+			timeStamp = LocalDateTime.parse(MoneyServiceApp.dummyDate.toString() + "T" + LocalTime.now().toString());
+		} else {
+			timeStamp = LocalDateTime.now();
+		}
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Transaction [id=" + id + ", currencyCode=" + currencyCode + ", amount=" + amount + ", mode=" + mode
+				+ ", timeStamp=" + timeStamp + "]";
 	}
 
 	public LocalDateTime getCreatedAt() {
