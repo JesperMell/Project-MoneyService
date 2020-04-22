@@ -36,13 +36,16 @@ fontsize=30
       <x>27</x>
       <y>351</y>
       <w>306</w>
-      <h>243</h>
+      <h>180</h>
     </coordinates>
     <panel_attributes>HQApp
 --
 sites: Map&lt;String, Site&gt;
+_~ currencyMap: Map&lt;String, Currency&gt;_
 --
-_+ readProjectConfig()_
+_+ main()_
+_+ readCurrencyConfigFile()_
+_+ readConfigFile()_
 
 _- CLIApplication()_
 --
@@ -80,48 +83,19 @@ criteria: Site, Period and Currency.</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1044</x>
-      <y>351</y>
-      <w>396</w>
-      <h>306</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Value Type&gt;&gt;
-Transaction
---
-- serialVersionUID: Long
-- id: int
-- timeStamp: LocaleDateTime
-- currencyCode: String
-- amount: int
-- transactionMode: TransactionMode
-_- uniqueId: int_
---
-+ Transaction(LocaleDateTime, String, int, TransactionMode)
-+ getTimeStamp: LocalDateTime
-+ getCurrencyCode: String
-+ getAmount(): int
-+ getTransactionMode: TransactionMode
-+ getId(): int
---
-Responsibilities
-Represents a completed order. When order is
-validated, a transaction is created.</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>441</x>
-      <y>351</y>
+      <x>612</x>
+      <y>189</y>
       <w>495</w>
-      <h>243</h>
+      <h>252</h>
     </coordinates>
     <panel_attributes>Site
 --
 - siteName: String
+- transactions: List&lt;Transaction&gt; 
 --
 + Site(String siteName)
-+ ReadTransactions(LocalDate, LocalDate): List&lt;Transaction&gt;
++ ReadTransactions(LocalDate, LocalDate)
++ getTransactions(): List&lt;Transaction&gt;
 --
 Responsibilities
 
@@ -130,33 +104,33 @@ to instance site.
 
 Current available sites: NORTH, CENTER, SOUTH.
 
-ReadTransaction should read transaction from files according
-to dates.</panel_attributes>
+ReadTransaction should read transactions from files according
+to dates. The list should return to HQ App for statistics.</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>927</x>
-      <y>414</y>
-      <w>135</w>
+      <x>405</x>
+      <y>657</y>
+      <w>234</w>
       <h>36</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m2=1..n</panel_attributes>
-    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m1=1..n</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>324</x>
-      <y>414</y>
-      <w>135</w>
-      <h>36</h>
+      <y>252</y>
+      <w>306</w>
+      <h>189</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m2=1..n</panel_attributes>
-    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m1=1..n</panel_attributes>
+    <additional_attributes>320.0;10.0;130.0;10.0;130.0;190.0;10.0;190.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -173,39 +147,127 @@ m2=1..n</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>27</x>
-      <y>630</y>
+      <y>594</y>
       <w>387</w>
       <h>315</h>
     </coordinates>
-    <panel_attributes>Statistic
+    <panel_attributes>&lt;&lt;ValueType&gt;&gt;
+Statistic
 --
 - transactions: List&lt;Transaction&gt;
 - currencyCodes: List&lt;String&gt;
+- siteName: String
 --
-+ Statistic(List&lt;Transaction&gt;, List&lt;String&gt;)
++ Statistic(List&lt;Transaction&gt;, List&lt;String&gt;, String)
 + getTotalTransactions(): Map&lt;String. int&gt;
 + getAverageAmount(): Map&lt;String. int&gt;
 + getTotalAmount(): Map&lt;String. int&gt;
 + getDiffCurrency(): Map&lt;String. int&gt;
 + getTotalBuy(): Map&lt;String. int&gt;
 + getTotalSell(): Map&lt;String. int&gt;
++ getProfit(): Map&lt;String. int&gt;
 + getTransactionCountPerCurrency(): Map&lt;String. int&gt;
 --
 Responsibilities
-
-The initializing file for MoneyService HQ 
-service. </panel_attributes>
+An instance should calculate different values on 
+transaction list according to currencies in currencyCodes.</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>171</x>
-      <y>585</y>
-      <w>27</w>
-      <h>63</h>
+      <y>522</y>
+      <w>90</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;creates&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>855</x>
+      <y>432</y>
+      <w>90</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;creates&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;180.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>621</x>
+      <y>594</y>
+      <w>396</w>
+      <h>306</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Value Type&gt;&gt;
+Transaction
+--
+- serialVersionUID: Long
+- id: int
+- timeStamp: LocaleDateTime
+- currencyCode: String
+- amount: int
+- mode: TransactionMode
+_- uniqueId: int_
+--
++ Transaction(LocaleDateTime, String, int, TransactionMode)
++ getTimeStamp: LocalDateTime
++ getCurrencyCode: String
++ getAmount(): int
++ getMode: TransactionMode
++ getId(): int
+--
+Responsibilities
+Represents a completed order. When order is
+validated, a transaction is created.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1179</x>
+      <y>603</y>
+      <w>243</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Type&gt;&gt;
+TransactionMode
+--
+BUY, SELL
+--
+Responsibilities
+
+Defines if the Order/Transaction is a
+Sell or Buy type.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1179</x>
+      <y>729</y>
+      <w>243</w>
+      <h>207</h>
+    </coordinates>
+    <panel_attributes>Currency
+--
+- currencyCode: String
+- exhangeRate: double
+--
++ Currency(String, double)
++ getExhangeRate(): double
++ getCurrencyCode(): String
++ setExhangeRate(double):
+--
+Responsibilities
+</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>

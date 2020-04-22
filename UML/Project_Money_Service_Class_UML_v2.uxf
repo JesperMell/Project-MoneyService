@@ -29,9 +29,9 @@ Application trigger and configuration</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1088</x>
-      <y>184</y>
+      <y>128</y>
       <w>272</w>
-      <h>256</h>
+      <h>312</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Value Type&gt;&gt;
 Order
@@ -39,15 +39,17 @@ Order
 _~ orderNrCounter: int_
 
 - orderNr: int
-- transactionMode: TransactionMode
+- mode: TransactionMode
 - currencyCode: String
 - amount: int
+- timeStamp: LocalDateTime
 --
-+ Order(OrderType, String, double)
++ Order(TransactionMode, String, int)
 + getOrderNr():int
-+ getTransactionMode(): TransactionMode
++ getMode(): TransactionMode
 + getCurrencyCode(): String
 + getAmount(): int
++ getTimeStamp(): LocalDateTime
 --
 Responsibilities
 Holding information about 
@@ -110,7 +112,7 @@ Rules for Money Services.
       <x>248</x>
       <y>400</y>
       <w>304</w>
-      <h>336</h>
+      <h>280</h>
     </coordinates>
     <panel_attributes>ServiceConfig
 --
@@ -271,12 +273,12 @@ m2=1..n</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>336</x>
-      <y>728</y>
+      <y>672</y>
       <w>24</w>
-      <h>48</h>
+      <h>104</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -294,14 +296,14 @@ Transaction
 - timeStamp: LocaleDateTime
 - currencyCode: String
 - amount: int
-- transactionMode: TransactionMode
+- mode: TransactionMode
 _- uniqueId: int_
 --
 + Transaction(LocaleDateTime, String, int, TransactionMode)
 + getTimeStamp: LocalDateTime
 + getCurrencyCode: String
 + getAmount(): int
-+ getTransactionMode: TransactionMode
++ getMode: TransactionMode
 + getId(): int
 --
 Responsibilities
@@ -339,11 +341,11 @@ m1=1</panel_attributes>
       <x>544</x>
       <y>72</y>
       <w>784</w>
-      <h>128</h>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 &lt;&lt;Creates&gt;&gt;</panel_attributes>
-    <additional_attributes>890.0;140.0;890.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>890.0;70.0;890.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Text</id>
