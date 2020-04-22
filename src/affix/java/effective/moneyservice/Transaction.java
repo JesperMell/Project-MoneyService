@@ -2,8 +2,6 @@ package affix.java.effective.moneyservice;
 
 import java.time.LocalDateTime;
 
-import ya.thn.project.MoneyService.TransactionMode;
-
 public class Transaction implements java.io.Serializable{
 	
 	/**

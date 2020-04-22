@@ -1,4 +1,4 @@
-package ya.thn.project.MoneyService;
+package affix.java.effective.moneyservice;
 
 /**
  * CurrencyCodeType defines supported currencies.
