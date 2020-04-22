@@ -36,12 +36,10 @@ public class Transaction implements java.io.Serializable{
 		this.amount = amount;
 		this.transactionMode = mode;
 		createdAt = LocalDateTime.now();
-
+		
 		this.id = id;
 	}
-	/**
-	 * @return the createdAt
-	 */
+
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}

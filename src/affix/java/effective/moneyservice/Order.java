@@ -27,7 +27,6 @@ public class Order {
 			}
 		}
 		this.orderNr = ++orderCounter;
-		
 		this.mode = mode;
 		this.amount = amount;
 		this.currencyCode = currencyCode;
