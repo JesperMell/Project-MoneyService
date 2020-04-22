@@ -17,6 +17,15 @@ public class Order {
   * @param currencyCode the currency the order should deal with.
   */
 	public Order(TransactionMode mode, int amount, String currencyCode) {
+		
+		if(amount <= 0) {
+			throw new IllegalArgumentException("Amount not valid");
+		}
+		else{
+			if(currencyCode.isEmpty() || currencyCode == null) {
+				throw new IllegalArgumentException("currencyCode missing!");
+			}
+		}
 		this.orderNr = ++orderCounter;
 		
 		this.mode = mode;
