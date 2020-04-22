@@ -39,7 +39,8 @@ public class ExchangeOffice implements MoneyService{
 
 	public boolean buyMoney(Order orderData){
 		// We do not allow buying orders with reference currency.
-		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode)
+		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode 
+				|| orderData.getAmount() %50 != 0)
 			return false;
 
 		// CurrencyCode is the bought currency
@@ -54,7 +55,7 @@ public class ExchangeOffice implements MoneyService{
 		// Amount to be returned to customer after bought currency
 		double boughtInSEK = orderData.getAmount() * alteredExchangeRate;
     
-		if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInSEK) {
+		if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInSEK ) {
 			Double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) - boughtInSEK;
 			Double newBoughtCurrVal = inventory.get(orderData.getCurrencyCode());
 			// Add new currency to list if it doens't exist.
@@ -79,7 +80,8 @@ public class ExchangeOffice implements MoneyService{
 
 	public boolean sellMoney(Order orderData) {
 		// We do not allow selling orders with reference currency.
-		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode)
+		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode
+				|| orderData.getAmount() %50 != 0)
 			return false;
 
 		// CurrencyCode is the sold currency
