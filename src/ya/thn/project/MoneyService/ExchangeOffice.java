@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import affix.java.effective.moneyservice.Transaction;
+
 
 
 /**
