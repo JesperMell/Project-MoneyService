@@ -11,6 +11,16 @@ public class Currency {
 	 * @param rate double holding the value of the exchange rate to local currency
 	 */
 	public Currency(String currencyCode, double rate) {
+		
+		if(currencyCode == null || currencyCode.isEmpty()) {
+			throw new IllegalArgumentException("Currency Code missing!");
+		}
+		else {
+			if(rate <= 0) {
+				throw new IllegalArgumentException("Exchange rate cant be negative");
+			}
+		}
+		
 		this.currencyCode = currencyCode;
 		this.exchangeRate = rate;
 	}
