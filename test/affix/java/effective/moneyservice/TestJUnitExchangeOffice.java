@@ -1,10 +1,16 @@
-package ya.thn.project.MoneyService;
+package affix.java.effective.moneyservice;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.Optional;
 
 import org.junit.Test;
+
+import affix.java.effective.moneyservice.ExchangeOffice;
+import affix.java.effective.moneyservice.MoneyServiceApp;
+import affix.java.effective.moneyservice.Order;
+import affix.java.effective.moneyservice.ServiceConfig;
+import affix.java.effective.moneyservice.TransactionMode;
 
 public class TestJUnitExchangeOffice {
 

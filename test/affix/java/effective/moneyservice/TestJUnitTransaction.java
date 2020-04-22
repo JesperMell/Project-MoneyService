@@ -1,4 +1,4 @@
-package ya.thn.project.MoneyService;
+package affix.java.effective.moneyservice;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,6 +8,9 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import affix.java.effective.moneyservice.Transaction;
+import affix.java.effective.moneyservice.TransactionMode;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
