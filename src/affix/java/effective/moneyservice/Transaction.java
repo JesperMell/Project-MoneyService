@@ -13,8 +13,8 @@ public class Transaction implements java.io.Serializable{
 	private final int id;
 	private final String currencyCode;
 	private final int amount;
-	private final TransactionMode transactionMode;
-	private LocalDateTime createdAt;
+	private final TransactionMode mode;
+	private LocalDateTime timeStamp;
 	
 	private static int uniqueId = 0;
 	
@@ -34,14 +34,22 @@ public class Transaction implements java.io.Serializable{
 
 		this.currencyCode = currencyCode;
 		this.amount = amount;
-		this.transactionMode = mode;
-		createdAt = LocalDateTime.now();
+
+		this.mode = mode;
+		timeStamp = LocalDateTime.now();
 		
 		this.id = id;
 	}
 
 	public LocalDateTime getCreatedAt() {
-		return createdAt;
+		return timeStamp;
+	}
+	/**
+	 * @return the timeStamp
+	 */
+	public LocalDateTime getTimeStamp() {
+		return timeStamp;
+
 	}
 
 	public int getId() {
@@ -56,8 +64,8 @@ public class Transaction implements java.io.Serializable{
 		return amount;
 	}
 
-	public TransactionMode getTransactionMode() {
-		return transactionMode;
+	public TransactionMode getMode() {
+		return mode;
 	}
 	
 	

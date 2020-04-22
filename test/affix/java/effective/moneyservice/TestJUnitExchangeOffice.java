@@ -1,4 +1,4 @@
-package ya.thn.project.MoneyService;
+package affix.java.effective.moneyservice;
 
 import static org.junit.Assert.assertEquals;
 
