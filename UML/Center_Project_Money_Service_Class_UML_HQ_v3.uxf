@@ -35,9 +35,9 @@ fontsize=30
     <id>UMLClass</id>
     <coordinates>
       <x>54</x>
-      <y>360</y>
+      <y>342</y>
       <w>306</w>
-      <h>180</h>
+      <h>216</h>
     </coordinates>
     <panel_attributes>HQApp
 --
@@ -49,6 +49,7 @@ _+ readCurrencyConfigFile()_
 _+ readConfigFile()_
 
 _- CLIApplication()_
+- makeStatistics()
 --
 Responsibilities
 
@@ -60,7 +61,7 @@ service. </panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>54</x>
-      <y>126</y>
+      <y>108</y>
       <w>360</w>
       <h>207</h>
     </coordinates>
@@ -84,7 +85,7 @@ criteria: Site, Period and Currency.</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>639</x>
+      <x>630</x>
       <y>198</y>
       <w>495</w>
       <h>252</h>
@@ -112,30 +113,30 @@ to dates. The list should return to HQ App for statistics.</panel_attributes>
     <coordinates>
       <x>432</x>
       <y>666</y>
-      <w>225</w>
+      <w>216</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;
 m1=1..n</panel_attributes>
-    <additional_attributes>230.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>220.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>351</x>
       <y>324</y>
-      <w>306</w>
-      <h>171</h>
+      <w>297</w>
+      <h>153</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;
 m1=1..n</panel_attributes>
-    <additional_attributes>320.0;10.0;230.0;10.0;230.0;170.0;10.0;170.0</additional_attributes>
+    <additional_attributes>310.0;10.0;230.0;10.0;230.0;150.0;10.0;150.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>261</x>
-      <y>324</y>
+      <y>306</y>
       <w>27</w>
       <h>54</h>
     </coordinates>
@@ -150,10 +151,8 @@ m1=1..n</panel_attributes>
       <w>387</w>
       <h>315</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;ValueType&gt;&gt;
-Statistic
+    <panel_attributes>Statistic
 --
-- transactions: List&lt;Transaction&gt;
 - currencyCodes: List&lt;String&gt;
 - siteName: String
 --
@@ -176,18 +175,18 @@ transaction list according to currencies in currencyCodes.</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>198</x>
-      <y>531</y>
+      <y>549</y>
       <w>81</w>
-      <h>90</h>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 &lt;&lt;creates&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>873</x>
+      <x>864</x>
       <y>441</y>
       <w>81</w>
       <h>180</h>
@@ -199,7 +198,7 @@ transaction list according to currencies in currencyCodes.</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>639</x>
+      <x>630</x>
       <y>603</y>
       <w>396</w>
       <h>306</h>
@@ -272,13 +271,13 @@ Responsibilities
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1026</x>
+      <x>1017</x>
       <y>648</y>
-      <w>108</w>
+      <w>117</w>
       <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;100.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -286,9 +285,9 @@ Responsibilities
       <x>351</x>
       <y>81</y>
       <w>306</w>
-      <h>333</h>
+      <h>315</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;350.0;160.0;350.0;160.0;10.0;320.0;10.0</additional_attributes>
+    <additional_attributes>10.0;330.0;160.0;330.0;160.0;10.0;320.0;10.0</additional_attributes>
   </element>
 </diagram>
