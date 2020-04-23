@@ -1,4 +1,4 @@
-package ya.thn.project.MoneyService;
+package affix.java.effective.moneyservice;
 
 public class Order {
 	
@@ -17,8 +17,16 @@ public class Order {
   * @param currencyCode the currency the order should deal with.
   */
 	public Order(TransactionMode mode, int amount, String currencyCode) {
-		this.orderNr = ++orderCounter;
 		
+		if(currencyCode == null || currencyCode.isEmpty()) {
+			throw new IllegalArgumentException("Currency code missing!");
+		}
+		else{
+			if(amount <= 0) {
+				throw new IllegalArgumentException("Amount cant be negative!");
+			}
+		}
+		this.orderNr = ++orderCounter;
 		this.mode = mode;
 		this.amount = amount;
 		this.currencyCode = currencyCode;

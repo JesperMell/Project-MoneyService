@@ -1,4 +1,4 @@
-package ya.thn.project.MoneyService;
+package affix.java.effective.moneyservice;
 
 import java.util.ArrayList;
 import java.util.HashSet;

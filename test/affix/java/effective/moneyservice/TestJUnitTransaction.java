@@ -1,4 +1,4 @@
-package ya.thn.project.MoneyService;
+package affix.java.effective.moneyservice;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -49,7 +49,7 @@ public class TestJUnitTransaction {
 	
 	@Test
 	public void testGetTransactionMode() {
-		assertEquals(TransactionMode.SELL, t1.getTransactionMode());
+		assertEquals(TransactionMode.SELL, t1.getMode());
 	}
 	
 	@Test(expected = IllegalArgumentException.class)

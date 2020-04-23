@@ -1,5 +1,7 @@
-package ya.thn.project.MoneyService;
+package affix.java.effective.moneyservice;
+
 import java.time.LocalDateTime;
+
 
 public class Transaction implements java.io.Serializable{
 	
@@ -11,28 +13,43 @@ public class Transaction implements java.io.Serializable{
 	private final int id;
 	private final String currencyCode;
 	private final int amount;
-	private final TransactionMode transactionMode;
-	private LocalDateTime createdAt;
+	private final TransactionMode mode;
+	private LocalDateTime timeStamp;
 	
 	private static int uniqueId = 0;
 	
 	public Transaction(String currencyCode, int amount, TransactionMode mode) {
 		this(currencyCode, amount, mode, ++uniqueId);
 	}
-	
+
 	public Transaction(String currencyCode, int amount, TransactionMode mode, int id) {
+		if(currencyCode == null || currencyCode.isEmpty()) {
+			throw new IllegalArgumentException("currencyCode missing!");
+		}
+		else{
+			if(amount < 50) {
+				throw new IllegalArgumentException("Amount too low!");
+			}
+		}
+
 		this.currencyCode = currencyCode;
 		this.amount = amount;
-		this.transactionMode = mode;
-		createdAt = LocalDateTime.now();
-	
+
+		this.mode = mode;
+		timeStamp = LocalDateTime.now();
+		
 		this.id = id;
 	}
-	/**
-	 * @return the createdAt
-	 */
+
 	public LocalDateTime getCreatedAt() {
-		return createdAt;
+		return timeStamp;
+	}
+	/**
+	 * @return the timeStamp
+	 */
+	public LocalDateTime getTimeStamp() {
+		return timeStamp;
+
 	}
 
 	public int getId() {
@@ -47,8 +64,8 @@ public class Transaction implements java.io.Serializable{
 		return amount;
 	}
 
-	public TransactionMode getTransactionMode() {
-		return transactionMode;
+	public TransactionMode getMode() {
+		return mode;
 	}
 	
 	
