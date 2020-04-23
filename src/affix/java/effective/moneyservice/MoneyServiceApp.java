@@ -1,7 +1,14 @@
 package affix.java.effective.moneyservice;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  * This class triggers an application defining an ExchangeOffice for Order objects.
@@ -11,6 +18,13 @@ public class MoneyServiceApp {
 	
 	static String referenceCurrencyCode;
 	
+	// create logger
+	private static Logger logger;
+	
+	static {
+		logger = Logger.getLogger("affix.java.effective.moneyservice");
+	}
+	
 	/**
 	 * Storage for Currency objects using CurrencyCode as key
 	 */
@@ -18,7 +32,32 @@ public class MoneyServiceApp {
 	static Map<String, Double> inventoryMap = new HashMap<>();
 	static int orderAmountLimit;
 	
+	private static void setupLogger() {
+		LogManager.getLogManager().reset();
+		// set the level of logging.
+		logger.setLevel(Level.ALL);
+		// Create a new Handler for console.
+		ConsoleHandler consHandler = new ConsoleHandler();
+		consHandler.setLevel(Level.SEVERE);
+		logger.addHandler(consHandler);
+		
+		try {
+			// Create a new Handler for file.
+		FileHandler fHandler = new FileHandler("logger.log");
+		fHandler.setFormatter(new SimpleFormatter());
+		// set level of logging
+		fHandler.setLevel(Level.FINEST);
+		logger.addHandler(fHandler);
+		}catch(IOException e) {
+			logger.log(Level.SEVERE, "File logger not working! ", e);
+		}
+	}
+	
 	public static void main(String[] args) {
+		
+		setupLogger();
+	
+		logger.info("------File_Log------");
 		
 		configure();
 		MoneyService aExchangeOffice = new ExchangeOffice("THN", inventoryMap);
@@ -60,6 +99,8 @@ public class MoneyServiceApp {
 					ok = true;
 					aOrder = null;
 					aOrder = CLIHelper.orderRequest();
+					//delete this log?
+					logger.log(Level.FINER, "Order" + aOrder);
 					
 					if (aOrder != null) {
 					

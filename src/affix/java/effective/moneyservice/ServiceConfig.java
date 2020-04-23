@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class ServiceConfig {
 
@@ -16,6 +17,9 @@ public class ServiceConfig {
 	
 	static final double BUY_RATE = 0.995;
 	static final double SELL_RATE = 1.005;
+	
+	//logger
+	private final static Logger logger = Logger.getLogger("affix.java.effective.moneyservice");
       
 	public static void readProjectConfigFile() {
 		boolean insertToBox = false;
@@ -66,6 +70,8 @@ public class ServiceConfig {
 			}
 		}
 		catch(IOException ioe) {
+			// add log.info
+			logger.info("Sorry, could not read config file." + ioe);
 			System.out.println("Sorry, could not read config file.");
 		}
 	}

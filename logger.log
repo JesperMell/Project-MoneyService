@@ -1,0 +1,4 @@
+apr. 23, 2020 3:22:37 EM affix.java.effective.moneyservice.MoneyServiceApp main
+INFO: ------File_Log------
+apr. 23, 2020 3:22:42 EM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+FINER: OrderOrder [orderNr=1, mode=SELL, currencyCode=USD, amount=50]
