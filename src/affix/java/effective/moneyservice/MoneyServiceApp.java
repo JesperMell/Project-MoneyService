@@ -27,7 +27,7 @@ public class MoneyServiceApp {
 	
 	private static void configure() {
 		
-		orderAmountLimit = ServiceConfig.readMoneyServiceConfigFile();
+		ServiceConfig.readMoneyServiceConfigFile();
 		ServiceConfig.readProjectConfigFile();
 		ServiceConfig.readCurrencyConfigFile();
 	}
@@ -76,6 +76,7 @@ public class MoneyServiceApp {
 						if (aOrder.getMode() == TransactionMode.BUY)
 							try {
 								aExchangeOffice.buyMoney(aOrder);
+								aExchangeOffice.printSiteReport("Console");
 							} catch (IllegalArgumentException iae) {
 								System.out.println(iae.getMessage());
 								System.out.println();

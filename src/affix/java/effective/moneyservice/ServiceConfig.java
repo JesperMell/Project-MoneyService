@@ -110,7 +110,7 @@ public class ServiceConfig {
 			return new Currency(currencyCode, exchangeRate);
 	}
 	
-	public static int readMoneyServiceConfigFile() {
+	public static void readMoneyServiceConfigFile() {
 		
 		int orderAmountLimit = 0;
 		
@@ -128,6 +128,6 @@ public class ServiceConfig {
 			System.out.println("Could not read " + MONEYSERVICE_CONFIG_FILE);
 		}
 		
-		return orderAmountLimit;
+		MoneyServiceApp.orderAmountLimit = orderAmountLimit;
 	}
 }
