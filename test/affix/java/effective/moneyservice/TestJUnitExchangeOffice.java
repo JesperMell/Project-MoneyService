@@ -1,4 +1,4 @@
-package ya.thn.project.MoneyService;
+package affix.java.effective.moneyservice;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,8 +18,7 @@ public class TestJUnitExchangeOffice {
 		// When you call buy method, from service side, you "buy" the requested currency
 		// and give the customer the amount of SEK that the requested order equals.
 		// Example request 100 USD and the office gives back roughly 1000 SEK.
-		Order testOrder = new Order(TransactionMode.BUY, 3495, "USD"); // the limit(SEK stock is 35k). 
-		System.out.println("--------Here starts buyMoney1 method----------");
+		Order testOrder = new Order(TransactionMode.BUY, 3400, "USD"); 
 
 		assertEquals(true, testOffice.buyMoney(testOrder));
 	}
@@ -32,7 +31,6 @@ public class TestJUnitExchangeOffice {
 		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
 		testOffice.getCurrencyMap();
 		Order testOrder = new Order(TransactionMode.BUY, 150000, "RUB"); 
-		System.out.println("--------Here starts buyMoney2 method----------");
 
 		assertEquals(true, testOffice.buyMoney(testOrder));
 	}
@@ -45,7 +43,7 @@ public class TestJUnitExchangeOffice {
 
 		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
 		testOffice.getCurrencyMap();
-		Order testOrder = new Order(TransactionMode.SELL, 2000, "USD"); // Max amount in stock
+		Order testOrder = new Order(TransactionMode.SELL, 2000, "USD"); 
 
 		assertEquals(true, testOffice.sellMoney(testOrder));
 	}
@@ -57,7 +55,8 @@ public class TestJUnitExchangeOffice {
 
 		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
 		testOffice.getCurrencyMap();
-		Order testOrder = new Order(TransactionMode.SELL, 10000, "RUB"); // Max amount in stock
+	//	System.out.println(MoneyServiceApp.inventoryMap.get("RUB"));
+		Order testOrder = new Order(TransactionMode.SELL, 8000, "RUB"); 
 
 		assertEquals(true, testOffice.sellMoney(testOrder));
 	}
@@ -80,5 +79,101 @@ public class TestJUnitExchangeOffice {
 		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
 		
 		assertEquals(Optional.ofNullable(MoneyServiceApp.inventoryMap.get("JPY")), testOffice.getAvailableAmount("JPY"));
+	}
+	
+	@Test
+	public void testBuyMoneyCheckModulus1() {
+		ServiceConfig.readProjectConfigFile();
+		ServiceConfig.readCurrencyConfigFile();
+
+		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
+		testOffice.getCurrencyMap();
+		Order testOrder = new Order(TransactionMode.BUY, 50, "RUB"); 
+
+		assertEquals(true, testOffice.buyMoney(testOrder));
+	}
+	
+	@Test
+	public void testBuyMoneyCheckModulus2() {
+		ServiceConfig.readProjectConfigFile();
+		ServiceConfig.readCurrencyConfigFile();
+
+		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
+		testOffice.getCurrencyMap();
+		Order testOrder = new Order(TransactionMode.BUY, 250, "RUB"); 
+
+		assertEquals(true, testOffice.buyMoney(testOrder));
+	}
+	
+	@Test
+	public void testBuyMoneyCheckModulus3() {
+		ServiceConfig.readProjectConfigFile();
+		ServiceConfig.readCurrencyConfigFile();
+
+		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
+		testOffice.getCurrencyMap();
+		Order testOrder = new Order(TransactionMode.BUY, 65, "RUB"); 
+
+		assertEquals(false, testOffice.buyMoney(testOrder));
+	}
+	
+	@Test
+	public void testBuyMoneyCheckModulus4() {
+		ServiceConfig.readProjectConfigFile();
+		ServiceConfig.readCurrencyConfigFile();
+
+		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
+		testOffice.getCurrencyMap();
+		Order testOrder = new Order(TransactionMode.BUY, 93, "RUB"); 
+
+		assertEquals(false, testOffice.buyMoney(testOrder));
+	}
+	
+	@Test
+	public void testSellMoneyCheckModulus1() {
+		ServiceConfig.readProjectConfigFile();
+		ServiceConfig.readCurrencyConfigFile();
+
+		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
+		testOffice.getCurrencyMap();
+		Order testOrder = new Order(TransactionMode.SELL, 50, "RUB");
+
+		assertEquals(true, testOffice.sellMoney(testOrder));
+	}
+	
+	@Test
+	public void testSellMoneyCheckModulus2() {
+		ServiceConfig.readProjectConfigFile();
+		ServiceConfig.readCurrencyConfigFile();
+
+		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
+		testOffice.getCurrencyMap();
+		Order testOrder = new Order(TransactionMode.SELL, 200, "RUB"); 
+
+		assertEquals(true, testOffice.sellMoney(testOrder));
+	}
+	
+	@Test
+	public void testSellMoneyCheckModulus3() {
+		ServiceConfig.readProjectConfigFile();
+		ServiceConfig.readCurrencyConfigFile();
+
+		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
+		testOffice.getCurrencyMap();
+		Order testOrder = new Order(TransactionMode.SELL, 52, "RUB"); 
+
+		assertEquals(false, testOffice.sellMoney(testOrder));
+	}
+	
+	@Test
+	public void testSellMoneyCheckModulus4() {
+		ServiceConfig.readProjectConfigFile();
+		ServiceConfig.readCurrencyConfigFile();
+
+		ExchangeOffice testOffice = new ExchangeOffice("TestOffice", MoneyServiceApp.inventoryMap);
+		testOffice.getCurrencyMap();
+		Order testOrder = new Order(TransactionMode.SELL, 175, "RUB"); 
+
+		assertEquals(false, testOffice.sellMoney(testOrder));
 	}
 }
