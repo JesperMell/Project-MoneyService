@@ -39,6 +39,10 @@ public class MoneyServiceApp {
 		
 //		MoneyService aExchangeOffice = new ExchangeOffice();
 		
+		System.out.println("Welcome to group Center MoneyService");
+		System.out.println("------------------------------------");
+		System.out.println();
+		
 		boolean done = false;
 		do {
 			int choice = CLIHelper.menuInput();
@@ -51,19 +55,49 @@ public class MoneyServiceApp {
 				CLIHelper.showSupportedCurrencies(aExchangeOffice.getCurrencyMap());
 				break;
 			case 2:
-				aOrder = CLIHelper.orderRequest();
-				if (aOrder.getMode() == TransactionMode.SELL)
-					aExchangeOffice.sellMoney(aOrder);
-				if (aOrder.getMode() == TransactionMode.BUY)
-					aExchangeOffice.buyMoney(aOrder);
+				boolean ok;
+				do {
+					ok = true;
+					aOrder = null;
+					aOrder = CLIHelper.orderRequest();
+					
+					if (aOrder != null) {
+					
+						if (aOrder.getMode() == TransactionMode.SELL)
+							try {
+								aExchangeOffice.sellMoney(aOrder);
+							} catch(IllegalArgumentException iae) {
+								System.out.println(iae.getMessage());
+								System.out.println();
+								ok = false;
+								//aOrder = null;
+							}
+						
+						if (aOrder.getMode() == TransactionMode.BUY)
+							try {
+								aExchangeOffice.buyMoney(aOrder);
+							} catch (IllegalArgumentException iae) {
+								System.out.println(iae.getMessage());
+								System.out.println();
+								ok = false;
+								//aOrder = null;
+							}
+						
+					}
+					
+				} while(!ok);
+				
+				CLIHelper.showValidatedOrder(aOrder);
 				break;
 //			case 3:
 //				aBuyOrder = CLIHelper.orderRequest();
 //				aExchangeOffice.buyMoney(aBuyOrder);
 //				break;
 			case 0:
+				System.out.println("Thanks for visiting group center MoneyService. Welcome back!");
 				done = true;
 			}
+			
 		} while(!done);
 	}
 
