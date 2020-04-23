@@ -98,7 +98,7 @@ public class ExchangeOffice implements MoneyService{
 			// Calculation of what the customer has to pay for the transaction
 			double soldAmountInREF = orderData.getAmount() / (1 / alteredExchangeRate);
 
-			if(validateOrderSell(orderData, orderData.getAmount())) {
+			if(validateOrderSell(orderData)) {
 				// Calculate the new inventory value of reference currency
 				Double newValueREF = inventory.get(MoneyServiceApp.referenceCurrencyCode) + soldAmountInREF;
 				// Calculate the new inventory value of sold currency
@@ -178,7 +178,7 @@ public class ExchangeOffice implements MoneyService{
 		return false;
 	}
 
-	private boolean validateOrderSell(Order orderData, int soldCurrencyAmount) {
+	private boolean validateOrderSell(Order orderData) {
 
 		// Check if amount is accepted configured via min amount
 		if(orderData.getAmount() %MoneyServiceApp.orderAmountLimit == 0) {
