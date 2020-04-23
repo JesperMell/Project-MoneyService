@@ -1,5 +1,6 @@
-package ya.thn.project.MoneyService;
+package affix.java.effective.moneyservice;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -20,15 +21,18 @@ public class CLIHelper {
 	 */
 	static int menuInput() {
 		
+//		System.out.println("Welcome to group Center MoneyService");
+//		System.out.println("------------------------------------");
+//		System.out.println();
+		
 		int choice = 0;
 		boolean ok;
 		do {
 			ok = true;
-			System.out.println("Welcome to group Center MoneyService");
-			System.out.println("------------------------------------");
+			System.out.println("----- Main menu -----");
 			System.out.println("1 - Show supported currencies and their exchange rate");
 			System.out.println("2 - Exchange currency");
-			System.out.println("3 - Show order");
+			//System.out.println("3 - Show order");
 			System.out.println("0 - Exit");
 			
 			System.out.print("Enter your choice: ");
@@ -37,13 +41,14 @@ public class CLIHelper {
 			try {
 				choice = Integer.parseInt(userChoice);
 			} catch(NumberFormatException e) {
-				System.out.format("Your choice %s is not accepted!", userChoice);
+				System.out.format("Your choice %s is not accepted!%n", userChoice);
 				ok = false;
 			}
 			
-			if (choice > 3)
+			if (choice > 2)
 				ok = false;
 			
+			System.out.println();
 			
 		} while (!ok);
 		
@@ -69,7 +74,8 @@ public class CLIHelper {
 		System.out.println("--------------------");
 		
 		for (Map.Entry<String, Currency> me : set)
-			System.out.println(me.getKey());
+			System.out.format(Locale.US, "%s: %7.4f%n", me.getKey(), me.getValue().getExchangeRate());
+			//System.out.println(me.getKey() + ": " + me.getValue().getExchangeRate());
 		
 		System.out.println();
 	}
@@ -90,46 +96,53 @@ public class CLIHelper {
 			ok = true;
 			
 			do {
+				ok = true;
+				
 				System.out.println("----- Exchange currency -----");
-				System.out.println("Do you want to sell or buy currency? ");
+				System.out.println("Do you want to sell or buy currency (from the company view)? ");
 				System.out.println("1 - Sell currency");
 				System.out.println("2 - Buy currency");
 				System.out.println("0 - Back to main menu");
+				System.out.print("Enter your choice: ");
 				String userSellBuyChoice = input.next();
 			
 				try {
 					sellBuyChoice = Integer.parseInt(userSellBuyChoice);
 				} catch(NumberFormatException e) {
-					System.out.format("Your choice %s is not accepted!", userSellBuyChoice);
+					System.out.format("Your choice %s is not accepted!%n", userSellBuyChoice);
 					ok = false;
 				}
 				
 				if (sellBuyChoice < 0 || sellBuyChoice > 2)
 					ok = false;
+				
+				System.out.println();
 			
 			} while(!ok);
 			
-			//showSupportedCurrencies();
-			System.out.print("Enter currency code (3 capital letters): ");
-			String userCurrencyCode = input.next();
+			if (sellBuyChoice == 1 || sellBuyChoice == 2) {
+				
+				//showSupportedCurrencies();
+				System.out.print("Enter currency code (3 capital letters): ");
+				String userCurrencyCode = input.next();
 			
-			System.out.print("Enter amount: ");
-			String userAmount = input.next();
+				System.out.print("Enter amount (minimum "+MoneyServiceApp.orderAmountLimit+" of the choosen currency and multiples of "+MoneyServiceApp.orderAmountLimit+"): ");
+				String userAmount = input.next();
 
-			try {
-				currencyCode = userCurrencyCode.toUpperCase();
-			} catch(NumberFormatException e) {
-				System.out.format("Your choice %s is not accepted!", userCurrencyCode);
-				ok = false;
-			}
+				try {
+					currencyCode = userCurrencyCode.toUpperCase();
+				} catch(NumberFormatException e) {
+					System.out.format("Your choice %s is not accepted!", userCurrencyCode);
+					ok = false;
+				}
 
-			try {
-				amount = Integer.parseInt(userAmount);
-			} catch(NumberFormatException e) {
-				System.out.format("Your choice %s is not accepted!", userAmount);
-				ok = false;
+				try {
+					amount = Integer.parseInt(userAmount);
+				} catch(NumberFormatException e) {
+					System.out.format("Your choice %s is not accepted!%n", userAmount);
+					ok = false;
+				}
 			}
-			
 			
 			switch(sellBuyChoice) {
 			case 1:
@@ -139,13 +152,27 @@ public class CLIHelper {
 				aOrder = new Order(TransactionMode.BUY, amount, currencyCode);
 				break;
 			case 0:
-				menuInput();
+				//menuInput();
 				break;
 			}
 			
+			System.out.println();
+			
 		} while (!ok);
-		
+				
 		return aOrder;
+		
+	}
+	
+	static void showValidatedOrder(Order aOrder) {
+		
+		if (aOrder != null) {
+			System.out.println("Your Order: ");
+			System.out.println("Order type: " + aOrder.getMode());
+			System.out.println("Currency code: " + aOrder.getCurrencyCode());
+			System.out.println("Amount in that currency: " + aOrder.getAmount());
+			System.out.println();
+		}
 		
 	}
 
