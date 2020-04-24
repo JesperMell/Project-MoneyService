@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ServiceConfig {
@@ -71,7 +72,7 @@ public class ServiceConfig {
 		}
 		catch(IOException ioe) {
 			// add log.info
-			logger.info("Sorry, could not read config file." + ioe);
+			logger.log(Level.SEVERE, "Sorry, could not read config file." + ioe);
 			System.out.println("Sorry, could not read config file.");
 		}
 	}

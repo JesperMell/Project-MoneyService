@@ -108,6 +108,7 @@ public class MoneyServiceApp {
 							try {
 								aExchangeOffice.sellMoney(aOrder);
 							} catch(IllegalArgumentException iae) {
+								logger.log(Level.SEVERE, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
 								System.out.println();
 								ok = false;
@@ -118,6 +119,7 @@ public class MoneyServiceApp {
 							try {
 								aExchangeOffice.buyMoney(aOrder);
 							} catch (IllegalArgumentException iae) {
+								logger.log(Level.SEVERE, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
 								System.out.println();
 								ok = false;

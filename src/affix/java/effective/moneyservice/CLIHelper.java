@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This is a support class for user interaction using CLI
@@ -12,6 +14,7 @@ import java.util.TreeMap;
  */
 public class CLIHelper {
 	
+	private final static Logger logger = Logger.getLogger("affix.java.effective.moneyservice");
 	static Scanner input = new Scanner(System.in);
 	
 	
@@ -41,6 +44,7 @@ public class CLIHelper {
 			try {
 				choice = Integer.parseInt(userChoice);
 			} catch(NumberFormatException e) {
+				logger.log(Level.SEVERE, "Choice Exception: " + e);
 				System.out.format("Your choice %s is not accepted!%n", userChoice);
 				ok = false;
 			}
@@ -109,6 +113,7 @@ public class CLIHelper {
 				try {
 					sellBuyChoice = Integer.parseInt(userSellBuyChoice);
 				} catch(NumberFormatException e) {
+					logger.log(Level.SEVERE, "Choice exception! " + e);
 					System.out.format("Your choice %s is not accepted!%n", userSellBuyChoice);
 					ok = false;
 				}
