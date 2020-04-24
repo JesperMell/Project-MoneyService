@@ -137,6 +137,7 @@ public class CLIHelper {
 				try {
 					currencyCode = userCurrencyCode.toUpperCase();
 				} catch(NumberFormatException e) {
+					logger.log(Level.SEVERE, "Currency code exception! " + e);
 					System.out.format("Your choice %s is not accepted!", userCurrencyCode);
 					ok = false;
 				}
@@ -144,6 +145,7 @@ public class CLIHelper {
 				try {
 					amount = Integer.parseInt(userAmount);
 				} catch(NumberFormatException e) {
+					logger.log(Level.SEVERE, "Amount exception! " + e);
 					System.out.format("Your choice %s is not accepted!%n", userAmount);
 					ok = false;
 				}
