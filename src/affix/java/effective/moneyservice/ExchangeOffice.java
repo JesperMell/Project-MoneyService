@@ -96,7 +96,7 @@ public class ExchangeOffice implements MoneyService{
 			double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.SELL_RATE;
 
 			// Calculation of what the customer has to pay for the transaction
-			double soldAmountInREF = orderData.getAmount() / (1 / alteredExchangeRate);
+			double soldAmountInREF = orderData.getAmount() * alteredExchangeRate;
 
 			if(validateOrderSell(orderData)) {
 				// Calculate the new inventory value of reference currency
