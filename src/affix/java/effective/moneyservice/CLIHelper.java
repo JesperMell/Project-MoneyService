@@ -32,7 +32,9 @@ public class CLIHelper {
 			System.out.println("----- Main menu -----");
 			System.out.println("1 - Show supported currencies and their exchange rate");
 			System.out.println("2 - Exchange currency");
-			//System.out.println("3 - Show order");
+			System.out.println("3 - Show Site report on the console");
+			System.out.println("4 - Print Site report to a textfile");
+			System.out.println("5 - Exit and save transactions to a file");
 			System.out.println("0 - Exit");
 			
 			System.out.print("Enter your choice: ");
@@ -45,7 +47,7 @@ public class CLIHelper {
 				ok = false;
 			}
 			
-			if (choice > 2)
+			if (choice < 0 || choice > 5)
 				ok = false;
 			
 			System.out.println();
@@ -144,16 +146,32 @@ public class CLIHelper {
 				}
 			}
 			
-			switch(sellBuyChoice) {
-			case 1:
-				aOrder = new Order(TransactionMode.SELL, amount, currencyCode);
-				break;
-			case 2:
-				aOrder = new Order(TransactionMode.BUY, amount, currencyCode);
-				break;
-			case 0:
-				//menuInput();
-				break;
+			if (ok) {
+				switch(sellBuyChoice) {
+				case 1:
+					try {
+						aOrder = new Order(TransactionMode.SELL, amount, currencyCode);
+					} catch(IllegalArgumentException iae) {
+						System.out.println(iae.getMessage());
+						System.out.println();
+						ok = false;
+					}
+					break;
+					
+				case 2:
+					try {
+						aOrder = new Order(TransactionMode.BUY, amount, currencyCode);
+					} catch(IllegalArgumentException iae) {
+						System.out.println(iae.getMessage());
+						System.out.println();
+						ok = false;
+					}
+					break;
+					
+				case 0:
+					//menuInput();
+					break;
+				}
 			}
 			
 			System.out.println();

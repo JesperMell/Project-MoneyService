@@ -55,6 +55,7 @@ public class MoneyServiceApp {
 				CLIHelper.showSupportedCurrencies(aExchangeOffice.getCurrencyMap());
 				break;
 			case 2:
+				CLIHelper.showSupportedCurrencies(aExchangeOffice.getCurrencyMap());
 				boolean ok;
 				do {
 					ok = true;
@@ -84,16 +85,27 @@ public class MoneyServiceApp {
 								//aOrder = null;
 							}
 						
+						if (ok && (aExchangeOffice.sellMoney(aOrder) == false || aExchangeOffice.buyMoney(aOrder) == false)) {
+							
+							System.out.println("The amount does not meet the requirements (min/multiples) or is a too high amount for us to handle");
+							System.out.println();
+							ok = false;
+						}
+						
 					}
 					
 				} while(!ok);
 				
 				CLIHelper.showValidatedOrder(aOrder);
 				break;
-//			case 3:
-//				aBuyOrder = CLIHelper.orderRequest();
-//				aExchangeOffice.buyMoney(aBuyOrder);
-//				break;
+			case 3:
+				aExchangeOffice.printSiteReport("console");
+				break;
+			case 4:
+				aExchangeOffice.printSiteReport("txt");
+				break;
+			case 5:
+				aExchangeOffice.shutDownService("Transactions.ser");
 			case 0:
 				System.out.println("Thanks for visiting group center MoneyService. Welcome back!");
 				done = true;
