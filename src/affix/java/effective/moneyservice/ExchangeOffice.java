@@ -125,7 +125,7 @@ public class ExchangeOffice implements MoneyService{
 	public void printSiteReport(String destination) {
 
 		if(destination.equalsIgnoreCase("console")) {
-			inventory.forEach((key, value) -> System.out.println(key + ": " + value));
+			inventory.forEach((key, value) -> System.out.format("%s : %.0f\n" , key,value));
 		}
 		if(destination.equalsIgnoreCase("txt")) {
 			try(PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("SiteReport.txt")))){
