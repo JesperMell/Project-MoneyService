@@ -92,6 +92,7 @@ public class ServiceConfig {
 				}
 			}
 			catch (IOException ioe) {
+				logger.log(Level.SEVERE, "Read currency file exception! " + ioe);
 				System.out.println("An IOException occurred for file " + currencyFile);
 			}
 	}
@@ -132,6 +133,7 @@ public class ServiceConfig {
 			}
 		}
 		catch (IOException ioe) {
+			logger.log(Level.SEVERE, "Read config file exception! " + ioe);
 			System.out.println("Could not read " + MONEYSERVICE_CONFIG_FILE);
 		}
 		

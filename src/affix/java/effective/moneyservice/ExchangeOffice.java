@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 
@@ -24,6 +26,8 @@ import java.util.Optional;
 public class ExchangeOffice implements MoneyService{
 
 	private String name;
+	
+	private final static Logger logger = Logger.getLogger("affix.java.effective.moneyservice");
 
 	// CHANGED FROM List<Transaction> CHECK WITH OTHERS IN THE GROUP
 	private List<Transaction> completedTransactions
@@ -137,6 +141,7 @@ public class ExchangeOffice implements MoneyService{
 				}
 			}
 			catch(IOException e) {
+				logger.log(Level.SEVERE, "Print Report exception! " + e);
 				e.printStackTrace();
 			}
 		}
@@ -150,6 +155,7 @@ public class ExchangeOffice implements MoneyService{
 			oos.writeObject(completedTransactions);
 		}
 		catch(IOException ioe) {
+			logger.log(Level.SEVERE, "Save transaction to file exception! " + ioe);
 			System.out.println("Sorry, could save transactions to file.");
 		}
 	}

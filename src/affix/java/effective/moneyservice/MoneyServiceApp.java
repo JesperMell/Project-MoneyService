@@ -99,7 +99,7 @@ public class MoneyServiceApp {
 					ok = true;
 					aOrder = null;
 					aOrder = CLIHelper.orderRequest();
-					//delete this log?
+					//logging order data.
 					logger.log(Level.FINER, "Order" + aOrder);
 					
 					if (aOrder != null) {
