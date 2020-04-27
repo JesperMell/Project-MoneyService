@@ -23,6 +23,7 @@ public class ServiceConfig {
 	private final static Logger logger = Logger.getLogger("affix.java.effective.moneyservice");
       
 	public static void readProjectConfigFile() {
+		logger.log(Level.INFO, "Entering readProjectConfigFile method..");
 		boolean insertToBox = false;
 		
 		
@@ -63,6 +64,7 @@ public class ServiceConfig {
 							MoneyServiceApp.referenceCurrencyCode = columns[1];
 							break;
 						default:
+							logger.log(Level.WARNING, "setting: " + columns[0] + " not valid!");
 							throw new IllegalArgumentException(
 										String.format("%s is not a valid setting", columns[0])
 									);
@@ -78,6 +80,7 @@ public class ServiceConfig {
 	}
 	
 	public static void readCurrencyConfigFile() {
+		logger.log(Level.INFO, "Entering readCurrencyConfigFile method..");
 			
 			int lineNumber = 1;
 			
@@ -119,6 +122,7 @@ public class ServiceConfig {
 	}
 	
 	public static int readMoneyServiceConfigFile() {
+		logger.log(Level.INFO, "Entering readMoneyServiceConfigFile method..");
 		
 		int orderAmountLimit = 0;
 		

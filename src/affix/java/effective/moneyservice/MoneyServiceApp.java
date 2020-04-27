@@ -57,8 +57,6 @@ public class MoneyServiceApp {
 		
 		setupLogger();
 	
-		logger.info("------File_Log------");
-		
 		configure();
 		MoneyService aExchangeOffice = new ExchangeOffice("THN", inventoryMap);
 		CLIApplication(aExchangeOffice);
@@ -83,6 +81,7 @@ public class MoneyServiceApp {
 		System.out.println();
 		
 		boolean done = false;
+		logger.log(Level.INFO, "Entering Menu input loop..");
 		do {
 			int choice = CLIHelper.menuInput();
 			Order aOrder = null;
@@ -100,7 +99,7 @@ public class MoneyServiceApp {
 					aOrder = null;
 					aOrder = CLIHelper.orderRequest();
 					//logging order data.
-					logger.log(Level.FINER, "Order" + aOrder);
+					logger.log(Level.INFO, "Order: " + aOrder);
 					
 					if (aOrder != null) {
 					
@@ -127,6 +126,9 @@ public class MoneyServiceApp {
 							}
 						
 					}
+					else {
+						logger.log(Level.WARNING, "Order not done properly! " + aOrder);
+					}
 					
 				} while(!ok);
 				
@@ -142,6 +144,7 @@ public class MoneyServiceApp {
 			}
 			
 		} while(!done);
+		logger.log(Level.INFO, "Exiting Menu input loop..");
 	}
 
 }

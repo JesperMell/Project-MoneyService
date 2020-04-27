@@ -1,2 +1,14 @@
-apr. 24, 2020 6:04:26 EM affix.java.effective.moneyservice.MoneyServiceApp main
-INFO: ------File_Log------
+apr. 27, 2020 5:27:50 EM affix.java.effective.moneyservice.ServiceConfig readMoneyServiceConfigFile
+INFO: Entering readMoneyServiceConfigFile method..
+apr. 27, 2020 5:27:51 EM affix.java.effective.moneyservice.ServiceConfig readProjectConfigFile
+INFO: Entering readProjectConfigFile method..
+apr. 27, 2020 5:27:51 EM affix.java.effective.moneyservice.ServiceConfig readCurrencyConfigFile
+INFO: Entering readCurrencyConfigFile method..
+apr. 27, 2020 5:27:51 EM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+INFO: Entering Menu input loop..
+apr. 27, 2020 5:27:54 EM affix.java.effective.moneyservice.CLIHelper orderRequest
+SEVERE: Choice exception! java.lang.NumberFormatException: For input string: "t"
+apr. 27, 2020 5:28:06 EM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+INFO: Order: Order [orderNr=1, mode=BUY, currencyCode=USD, amount=50]
+apr. 27, 2020 5:28:06 EM affix.java.effective.moneyservice.ExchangeOffice buyMoney
+INFO: Entering buyMoney method..

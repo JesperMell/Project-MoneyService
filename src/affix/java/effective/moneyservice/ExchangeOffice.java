@@ -42,16 +42,22 @@ public class ExchangeOffice implements MoneyService{
 	}
 
 	public boolean buyMoney(Order orderData){
+		logger.log(Level.INFO, "Entering buyMoney method..");
 		// We do not allow buying orders with reference currency.
 		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode 
-				|| orderData.getAmount() %50 != 0)
+				|| orderData.getAmount() %50 != 0) {
+			logger.log(Level.WARNING, "orderData didn't meet requirements: ");
 			return false;
+		}
 
 		// CurrencyCode is the bought currency
 		// Extract specific exchange rate for the currency the customer has
 		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());		
 		// If currency does not exist in currencyMap, then return false (Missing currencyRate).
-		if(temp == null) return false;
+		if(temp == null) {
+			logger.log(Level.WARNING, "temp has probably not been set: ", temp);
+			return false;
+		}
     
 		// Alter the exchange rate with profit margin
 		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.BUY_RATE;
@@ -78,22 +84,29 @@ public class ExchangeOffice implements MoneyService{
 			return true;
 		}
 		else {
+			logger.log(Level.WARNING, "missing amount in specified currency: ", inventory.get(MoneyServiceApp.referenceCurrencyCode));
 			throw new IllegalArgumentException("Order could not be accepted! missing amount in specified currency!");
 		}
 	}
 
 	public boolean sellMoney(Order orderData) {
+		logger.log(Level.INFO, "Entering sellMoney method..");
 		// We do not allow selling orders with reference currency.
 		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode
-				|| orderData.getAmount() %50 != 0)
+				|| orderData.getAmount() %50 != 0) {
+			logger.log(Level.WARNING, "orderData didn't meet requirements: ");
 			return false;
+		}
 
 		// CurrencyCode is the sold currency
 		// Extract specific exchange rate for the currency the customer has
 		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
 		
 		// If currency does not exist in currencyMap, then return false (Missing currencyRate).
-		if(temp == null) return false;
+		if(temp == null) {
+			logger.log(Level.WARNING, "temp has probably not been set: ", temp);
+			return false;
+		}
 
 		// Alter the exchange rate with profit margin
 		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.SELL_RATE;
@@ -121,12 +134,14 @@ public class ExchangeOffice implements MoneyService{
 			return true;
 		}
 		else {
+			logger.log(Level.WARNING, "didn't pass validateOrder: ", validateOrder(orderData));
 			throw new IllegalArgumentException("Order could not be accepted! missing amount in specified currency!");
 		}
 
 	}
 
 	public void printSiteReport(String destination) {
+		logger.log(Level.INFO, "Entering printSiteReport method..");
 
 		if(destination.equalsIgnoreCase("console")) {
 			inventory.forEach((key, value) -> System.out.println(key + ": " + value));
@@ -149,7 +164,7 @@ public class ExchangeOffice implements MoneyService{
 	}
 
 	public void shutDownService(String destination) {
-		
+		logger.log(Level.INFO, "Entering shutDownService method..");
 		// Serialize and store completed transactions.
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(destination))){
 			oos.writeObject(completedTransactions);
