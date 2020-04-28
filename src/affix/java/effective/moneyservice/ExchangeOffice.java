@@ -55,7 +55,7 @@ public class ExchangeOffice implements MoneyService{
 		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());		
 		// If currency does not exist in currencyMap, then return false (Missing currencyRate).
 		if(temp == null) {
-			logger.log(Level.WARNING, "temp has probably not been set: ", temp);
+			logger.log(Level.WARNING, "Currency has probably not been set: " + temp);
 			return false;
 		}
     
@@ -104,7 +104,7 @@ public class ExchangeOffice implements MoneyService{
 		
 		// If currency does not exist in currencyMap, then return false (Missing currencyRate).
 		if(temp == null) {
-			logger.log(Level.WARNING, "temp has probably not been set: ", temp);
+			logger.log(Level.WARNING, "Currency has probably not been set: " + temp);
 			return false;
 		}
 

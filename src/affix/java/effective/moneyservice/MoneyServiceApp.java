@@ -81,8 +81,9 @@ public class MoneyServiceApp {
 		System.out.println();
 		
 		boolean done = false;
-		logger.log(Level.INFO, "Entering Menu input loop..");
+	
 		do {
+			logger.log(Level.INFO, "Entering Menu input loop..");
 			int choice = CLIHelper.menuInput();
 			Order aOrder = null;
 //			Order aBuyOrder = null;
@@ -106,6 +107,7 @@ public class MoneyServiceApp {
 						if (aOrder.getMode() == TransactionMode.SELL)
 							try {
 								aExchangeOffice.sellMoney(aOrder);
+								logger.log(Level.INFO, "Completed " + aOrder.getMode() +  " order!");
 							} catch(IllegalArgumentException iae) {
 								logger.log(Level.SEVERE, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
@@ -117,6 +119,7 @@ public class MoneyServiceApp {
 						if (aOrder.getMode() == TransactionMode.BUY)
 							try {
 								aExchangeOffice.buyMoney(aOrder);
+								logger.log(Level.INFO, "Completed " + aOrder.getMode() +  " order!");
 							} catch (IllegalArgumentException iae) {
 								logger.log(Level.SEVERE, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
@@ -129,7 +132,6 @@ public class MoneyServiceApp {
 					else {
 						logger.log(Level.WARNING, "Order not done properly! " + aOrder);
 					}
-					
 				} while(!ok);
 				
 				CLIHelper.showValidatedOrder(aOrder);
