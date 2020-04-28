@@ -64,7 +64,7 @@ public class MoneyServiceApp {
 	
 	private static void configure() {
 		
-		orderAmountLimit = ServiceConfig.readMoneyServiceConfigFile();
+		ServiceConfig.readMoneyServiceConfigFile();
 		ServiceConfig.readProjectConfigFile();
 		ServiceConfig.readCurrencyConfigFile();
 	}
@@ -94,6 +94,7 @@ public class MoneyServiceApp {
 				CLIHelper.showSupportedCurrencies(aExchangeOffice.getCurrencyMap());
 				break;
 			case 2:
+				CLIHelper.showSupportedCurrencies(aExchangeOffice.getCurrencyMap());
 				boolean ok;
 				do {
 					ok = true;
@@ -120,6 +121,8 @@ public class MoneyServiceApp {
 							try {
 								aExchangeOffice.buyMoney(aOrder);
 								logger.log(Level.INFO, "Completed " + aOrder.getMode() +  " order!");
+								aExchangeOffice.printSiteReport("Console");
+                
 							} catch (IllegalArgumentException iae) {
 								logger.log(Level.SEVERE, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
@@ -127,6 +130,13 @@ public class MoneyServiceApp {
 								ok = false;
 								//aOrder = null;
 							}
+						
+						if (ok && (aExchangeOffice.sellMoney(aOrder) == false || aExchangeOffice.buyMoney(aOrder) == false)) {
+							
+							System.out.println("The amount does not meet the requirements (min/multiples) or is a too high amount for us to handle");
+							System.out.println();
+							ok = false;
+						}
 						
 					}
 					else {
@@ -136,10 +146,14 @@ public class MoneyServiceApp {
 				
 				CLIHelper.showValidatedOrder(aOrder);
 				break;
-//			case 3:
-//				aBuyOrder = CLIHelper.orderRequest();
-//				aExchangeOffice.buyMoney(aBuyOrder);
-//				break;
+			case 3:
+				aExchangeOffice.printSiteReport("console");
+				break;
+			case 4:
+				aExchangeOffice.printSiteReport("txt");
+				break;
+			case 5:
+				aExchangeOffice.shutDownService("Transactions.ser");
 			case 0:
 				System.out.println("Thanks for visiting group center MoneyService. Welcome back!");
 				done = true;

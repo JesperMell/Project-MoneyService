@@ -122,7 +122,8 @@ public class ServiceConfig {
 	}
 	
 	public static int readMoneyServiceConfigFile() {
-		logger.log(Level.INFO, "Entering readMoneyServiceConfigFile method..");
+	logger.log(Level.INFO, "Entering readMoneyServiceConfigFile method..");
+	public static void readMoneyServiceConfigFile() {
 		
 		int orderAmountLimit = 0;
 		
@@ -141,6 +142,6 @@ public class ServiceConfig {
 			System.out.println("Could not read " + MONEYSERVICE_CONFIG_FILE);
 		}
 		
-		return orderAmountLimit;
+		MoneyServiceApp.orderAmountLimit = orderAmountLimit;
 	}
 }
