@@ -73,7 +73,6 @@ public class MoneyServiceApp {
 	 */
 	private static void CLIApplication(MoneyService aExchangeOffice) {
 		
-//		MoneyService aExchangeOffice = new ExchangeOffice();
 		logger.log(Level.INFO, "Entering CLIApplication -->");
 		System.out.println("Welcome to group Center MoneyService");
 		System.out.println("------------------------------------");
@@ -85,12 +84,10 @@ public class MoneyServiceApp {
 			
 			int choice = CLIHelper.menuInput(); 
 			Order aOrder = null;
-//			Order aBuyOrder = null;
-			//logger.log(Level.INFO, "Entering Menu input loop..");
+			
 			switch(choice) {
 			
 			case 1:
-				//aExchangeOffice.getCurrencyMap().keySet();
 				CLIHelper.showSupportedCurrencies(aExchangeOffice.getCurrencyMap());
 				break;
 			case 2:
@@ -115,7 +112,6 @@ public class MoneyServiceApp {
 								System.out.println(iae.getMessage());
 								System.out.println();
 								ok = false;
-								//aOrder = null;
 							}
 						
 						if (aOrder.getMode() == TransactionMode.BUY)
@@ -129,7 +125,6 @@ public class MoneyServiceApp {
 								System.out.println(iae.getMessage());
 								System.out.println();
 								ok = false;
-								//aOrder = null;
 							}
 						
 						if (ok && output == false || output == false) {
