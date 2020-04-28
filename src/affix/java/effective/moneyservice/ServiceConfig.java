@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ServiceConfig {
 
@@ -16,8 +18,12 @@ public class ServiceConfig {
 	
 	static final double BUY_RATE = 0.995;
 	static final double SELL_RATE = 1.005;
+	
+	//logger
+	private final static Logger logger = Logger.getLogger("affix.java.effective.moneyservice");
       
 	public static void readProjectConfigFile() {
+		logger.log(Level.INFO, "Entering readProjectConfigFile method..");
 		boolean insertToBox = false;
 		
 		
@@ -58,6 +64,7 @@ public class ServiceConfig {
 							MoneyServiceApp.referenceCurrencyCode = columns[1];
 							break;
 						default:
+							logger.log(Level.WARNING, "setting: " + columns[0] + " not valid!");
 							throw new IllegalArgumentException(
 										String.format("%s is not a valid setting", columns[0])
 									);
@@ -66,11 +73,14 @@ public class ServiceConfig {
 			}
 		}
 		catch(IOException ioe) {
+			// add log.info
+			logger.log(Level.SEVERE, "Sorry, could not read config file." + ioe);
 			System.out.println("Sorry, could not read config file.");
 		}
 	}
 	
 	public static void readCurrencyConfigFile() {
+		logger.log(Level.INFO, "Entering readCurrencyConfigFile method..");
 			
 			int lineNumber = 1;
 			
@@ -85,6 +95,7 @@ public class ServiceConfig {
 				}
 			}
 			catch (IOException ioe) {
+				logger.log(Level.SEVERE, "Read currency file exception! " + ioe);
 				System.out.println("An IOException occurred for file " + currencyFile);
 			}
 	}
@@ -110,8 +121,10 @@ public class ServiceConfig {
 			return new Currency(currencyCode, exchangeRate);
 	}
 	
+
 	public static void readMoneyServiceConfigFile() {
-		
+		logger.log(Level.INFO, "Entering readMoneyServiceConfigFile method..");
+
 		int orderAmountLimit = 0;
 		
 		try(BufferedReader br = new BufferedReader(new FileReader(MONEYSERVICE_CONFIG_FILE))) {
@@ -125,6 +138,7 @@ public class ServiceConfig {
 			}
 		}
 		catch (IOException ioe) {
+			logger.log(Level.SEVERE, "Read config file exception! " + ioe);
 			System.out.println("Could not read " + MONEYSERVICE_CONFIG_FILE);
 		}
 		

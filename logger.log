@@ -1,0 +1,45 @@
+apr. 28, 2020 1:38:16 EM affix.java.effective.moneyservice.ServiceConfig readMoneyServiceConfigFile
+INFO: Entering readMoneyServiceConfigFile method..
+apr. 28, 2020 1:38:16 EM affix.java.effective.moneyservice.ServiceConfig readProjectConfigFile
+INFO: Entering readProjectConfigFile method..
+apr. 28, 2020 1:38:16 EM affix.java.effective.moneyservice.ServiceConfig readCurrencyConfigFile
+INFO: Entering readCurrencyConfigFile method..
+apr. 28, 2020 1:38:16 EM affix.java.effective.moneyservice.MoneyServiceApp main
+INFO: -------Configuration_Ends-------
+
+apr. 28, 2020 1:38:16 EM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+INFO: Entering CLIApplication -->
+apr. 28, 2020 1:38:16 EM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Entering Main menu loop -->
+apr. 28, 2020 1:38:18 EM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Exiting Main menu loop <--
+apr. 28, 2020 1:38:18 EM affix.java.effective.moneyservice.CLIHelper orderRequest
+INFO: Entering orderRequest method -->
+apr. 28, 2020 1:38:25 EM affix.java.effective.moneyservice.CLIHelper orderRequest
+INFO: Exiting orderRequest method <--
+apr. 28, 2020 1:38:25 EM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+INFO: Order: Order [orderNr=1, mode=BUY, currencyCode=T5, amount=50]
+apr. 28, 2020 1:38:25 EM affix.java.effective.moneyservice.ExchangeOffice buyMoney
+INFO: Entering buyMoney method -->
+apr. 28, 2020 1:38:25 EM affix.java.effective.moneyservice.ExchangeOffice buyMoney
+WARNING: missing amount in specified currency: T5
+apr. 28, 2020 1:38:25 EM affix.java.effective.moneyservice.ExchangeOffice buyMoney
+INFO: Exiting buyMoney method <--
+apr. 28, 2020 1:38:25 EM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+SEVERE: Order exception! java.lang.IllegalArgumentException: The specified currency code is not accepted!
+apr. 28, 2020 1:38:25 EM affix.java.effective.moneyservice.CLIHelper orderRequest
+INFO: Entering orderRequest method -->
+apr. 28, 2020 1:38:39 EM affix.java.effective.moneyservice.CLIHelper orderRequest
+SEVERE: Amount exception! java.lang.NumberFormatException: For input string: "t5t5"
+apr. 28, 2020 1:39:01 EM affix.java.effective.moneyservice.CLIHelper orderRequest
+INFO: Exiting orderRequest method <--
+apr. 28, 2020 1:39:01 EM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+INFO: Order: null
+apr. 28, 2020 1:39:01 EM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+WARNING: Order not done properly! null
+apr. 28, 2020 1:39:01 EM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Entering Main menu loop -->
+apr. 28, 2020 1:39:02 EM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Exiting Main menu loop <--
+apr. 28, 2020 1:39:02 EM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+INFO: Exiting CLIApplication <--
