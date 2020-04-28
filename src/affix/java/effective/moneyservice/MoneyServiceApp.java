@@ -38,7 +38,7 @@ public class MoneyServiceApp {
 		logger.setLevel(Level.ALL);
 		// Create a new Handler for console.
 		ConsoleHandler consHandler = new ConsoleHandler();
-		consHandler.setLevel(Level.SEVERE);
+		consHandler.setLevel(Level.WARNING);
 		logger.addHandler(consHandler);
 		
 		try {
@@ -55,16 +55,15 @@ public class MoneyServiceApp {
 	
 	public static void main(String[] args) {
 		
-		setupLogger();
-	
 		configure();
+		logger.log(Level.INFO, "-------Configuration_Ends-------\n");
 		MoneyService aExchangeOffice = new ExchangeOffice("THN", inventoryMap);
 		CLIApplication(aExchangeOffice);
 	}
 	
 	private static void configure() {
-		
-		orderAmountLimit = ServiceConfig.readMoneyServiceConfigFile();
+		setupLogger();
+		ServiceConfig.readMoneyServiceConfigFile();
 		ServiceConfig.readProjectConfigFile();
 		ServiceConfig.readCurrencyConfigFile();
 	}
@@ -75,7 +74,7 @@ public class MoneyServiceApp {
 	private static void CLIApplication(MoneyService aExchangeOffice) {
 		
 //		MoneyService aExchangeOffice = new ExchangeOffice();
-		
+		logger.log(Level.INFO, "Entering CLIApplication -->");
 		System.out.println("Welcome to group Center MoneyService");
 		System.out.println("------------------------------------");
 		System.out.println();
@@ -83,22 +82,25 @@ public class MoneyServiceApp {
 		boolean done = false;
 	
 		do {
-			logger.log(Level.INFO, "Entering Menu input loop..");
-			int choice = CLIHelper.menuInput();
+			
+			int choice = CLIHelper.menuInput(); 
 			Order aOrder = null;
 //			Order aBuyOrder = null;
-			
+			//logger.log(Level.INFO, "Entering Menu input loop..");
 			switch(choice) {
+			
 			case 1:
 				//aExchangeOffice.getCurrencyMap().keySet();
 				CLIHelper.showSupportedCurrencies(aExchangeOffice.getCurrencyMap());
 				break;
 			case 2:
+				CLIHelper.showSupportedCurrencies(aExchangeOffice.getCurrencyMap());
 				boolean ok;
 				do {
 					ok = true;
 					aOrder = null;
 					aOrder = CLIHelper.orderRequest();
+					boolean output = false;
 					//logging order data.
 					logger.log(Level.INFO, "Order: " + aOrder);
 					
@@ -106,8 +108,8 @@ public class MoneyServiceApp {
 					
 						if (aOrder.getMode() == TransactionMode.SELL)
 							try {
-								aExchangeOffice.sellMoney(aOrder);
-								logger.log(Level.INFO, "Completed " + aOrder.getMode() +  " order!");
+								output = aExchangeOffice.sellMoney(aOrder);
+								logger.log(Level.INFO, "Completed " + aOrder.getMode() +  " Transaction!\n");
 							} catch(IllegalArgumentException iae) {
 								logger.log(Level.SEVERE, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
@@ -118,8 +120,10 @@ public class MoneyServiceApp {
 						
 						if (aOrder.getMode() == TransactionMode.BUY)
 							try {
-								aExchangeOffice.buyMoney(aOrder);
-								logger.log(Level.INFO, "Completed " + aOrder.getMode() +  " order!");
+								output = aExchangeOffice.buyMoney(aOrder);
+								logger.log(Level.INFO, "Completed " + aOrder.getMode() +  " Transaction!\n");
+								
+
 							} catch (IllegalArgumentException iae) {
 								logger.log(Level.SEVERE, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
@@ -127,6 +131,13 @@ public class MoneyServiceApp {
 								ok = false;
 								//aOrder = null;
 							}
+						
+						if (ok && output == false || output == false) {
+							
+							System.out.println("The amount does not meet the requirements (min/multiples) or is a too high amount for us to handle");
+							System.out.println();
+							ok = false;
+						}
 						
 					}
 					else {
@@ -136,17 +147,21 @@ public class MoneyServiceApp {
 				
 				CLIHelper.showValidatedOrder(aOrder);
 				break;
-//			case 3:
-//				aBuyOrder = CLIHelper.orderRequest();
-//				aExchangeOffice.buyMoney(aBuyOrder);
-//				break;
+			case 3:
+				aExchangeOffice.printSiteReport("console");
+				break;
+			case 4:
+				aExchangeOffice.printSiteReport("txt");
+				break;
+			case 5:
+				aExchangeOffice.shutDownService("Transactions.ser");
 			case 0:
 				System.out.println("Thanks for visiting group center MoneyService. Welcome back!");
 				done = true;
 			}
 			
 		} while(!done);
-		logger.log(Level.INFO, "Exiting Menu input loop..");
+		logger.log(Level.INFO, "Exiting CLIApplication <--");
 	}
 
 }
