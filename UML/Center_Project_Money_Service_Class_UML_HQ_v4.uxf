@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>63</x>
+      <y>45</y>
+      <w>441</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Team Center
+fontsize=25
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>63</x>
+      <y>0</y>
+      <w>441</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Project: MoneyService/HQ
+fontsize=30
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>378</x>
+      <y>360</y>
+      <w>387</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>HQApp
+--
+_~ sites: Map&lt;String, Site&gt;_
+_~ currencyMap: Map&lt;String, Currency&gt;_
+--
+_+ main()_
+_+ readCurrencyConfigFile(String filename): map&lt;String, Currency&gt;_
+_- parseInput(String): Currency_
+--
+Responsibilities
+
+The initializing file for MoneyService HQ 
+service. </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>378</x>
+      <y>90</y>
+      <w>360</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>CLIHelper
+-- 
+--
+_~ menuInput()_
+_- readSites(): Set&lt;Sites&gt;_
+_- readStartDay(): Optional&lt;LocalDate&gt;_
+_- readPeriod(): Optional&lt;Period&gt;_
+_- readCurrencyCodes(): List&lt;String&gt;_
+_- createEndDay(Optional&lt;Period&gt;, Optional&lt;LocalDate&gt;)_
+--
+Responsibilities
+
+Command-line interface for HQ application.
+Handles user inputs and renders data.
+
+Should present following
+criteria: Site, Period and Currency.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>954</x>
+      <y>189</y>
+      <w>369</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>Site
+--
+- siteName: String
+- transactions: List&lt;Transaction&gt; 
+--
++ Site(String siteName)
++ readTransactions(LocalDate, LocalDate)
++ getSiteName(): String
++ getCompletedTransactions(): List&lt;Transaction&gt;
+--
+Responsibilities
+
+Contains a list of completed transaction related
+to instance site.
+
+ReadTransaction should read transactions from files according
+to dates. The list should return to HQ App for statistics.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>756</x>
+      <y>657</y>
+      <w>216</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m1=1..n</panel_attributes>
+    <additional_attributes>220.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>756</x>
+      <y>315</y>
+      <w>216</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;
+m1=1..n</panel_attributes>
+    <additional_attributes>220.0;10.0;140.0;10.0;140.0;180.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>585</x>
+      <y>315</y>
+      <w>27</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>378</x>
+      <y>594</y>
+      <w>387</w>
+      <h>342</h>
+    </coordinates>
+    <panel_attributes>Statistic
+--
+- currencyCodes: List&lt;String&gt;
+- siteName: String
+- transactions: List&lt;Transaction&gt;
+_- PROFIT_MARGIN_RATE = 0.005_
+_- SELL_RATE = 1.005_
+_- BUY_RATE = 0.995_
+--
++ Statistic(List&lt;Transaction&gt;, List&lt;String&gt;, String)
++ getTotalTransactions(): Map&lt;String. int&gt;
++ getTotalTransactionsBuy(): Map&lt;String, int&gt;
++ getTotalTransactionsSell(): Map&lt;String, int&gt;
++ getTotalAmount(String): Map&lt;String. int&gt;
++ getTotalAmountBuy(String): Map&lt;String. int&gt;
++ getTotalAmountSell(String): Map&lt;String. int&gt;
++ getDiffCurrency(): Map&lt;String. int&gt;
++ getProfit(String): Map&lt;String. int&gt;
++ getAvarageAmount(String): Map&lt;String, int&gt;
++ getAverageAmountBuy(String): Map&lt;String, int&gt;
++ getAverageAmountSell(String): Map&lt;String, int&gt;
+--
+Responsibilities
+An instance should calculate different values on 
+transaction list according to currencies in currencyCodes.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>522</x>
+      <y>540</y>
+      <w>81</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;creates&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1152</x>
+      <y>414</y>
+      <w>81</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;creates&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>954</x>
+      <y>486</y>
+      <w>396</w>
+      <h>306</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Value Type&gt;&gt;
+Transaction
+--
+- serialVersionUID: Long
+- id: int
+- timeStamp: LocaleDateTime
+- currencyCode: String
+- amount: int
+- mode: TransactionMode
+_- uniqueId: int_
+--
++ Transaction(LocaleDateTime, String, int, TransactionMode)
++ getTimeStamp: LocalDateTime
++ getCurrencyCode: String
++ getAmount(): int
++ getMode: TransactionMode
++ getId(): int
+--
+Responsibilities
+Represents a completed order. When order is
+validated, a transaction is created.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1098</x>
+      <y>837</y>
+      <w>243</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+TransactionMode
+--
+BUY, SELL
+--
+Responsibilities
+
+Defines if the Order/Transaction is a
+Sell or Buy type.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>963</x>
+      <y>9</y>
+      <w>243</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>Currency
+--
+- currencyCode: String
+- exhangeRate: double
+--
++ Currency(String, double)
++ getExhangeRate(): double
++ getCurrencyCode(): String
++ setExhangeRate(double):
+--
+Responsibilities
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1197</x>
+      <y>783</y>
+      <w>27</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>756</x>
+      <y>72</y>
+      <w>225</w>
+      <h>342</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;360.0;70.0;360.0;70.0;10.0;230.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>63</x>
+      <y>90</y>
+      <w>261</w>
+      <h>225</h>
+    </coordinates>
+    <panel_attributes>StatDay
+--
+- profit: Map&lt;String, Integer&gt;
+- amountBuy: Map&lt;String, Integer&gt;
+- amountSell: Map&lt;String, Integer&gt;
+- total: Map&lt;String, Integer&gt;
+- site: String
+- date: LocalDate
+--
++ StatDay(String, LocalDate)
+
+--
+Responsibilities
+Storing calculated statistics for each day</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>315</x>
+      <y>198</y>
+      <w>81</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+</diagram>
