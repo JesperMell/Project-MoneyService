@@ -37,7 +37,7 @@ fontsize=30
       <x>378</x>
       <y>360</y>
       <w>387</w>
-      <h>189</h>
+      <h>207</h>
     </coordinates>
     <panel_attributes>HQApp
 --
@@ -47,6 +47,9 @@ _~ currencyMap: Map&lt;String, Currency&gt;_
 _+ main()_
 _+ readCurrencyConfigFile(String filename): map&lt;String, Currency&gt;_
 _- parseInput(String): Currency_
+_- HQmenu(): int_
+_- CLIapplication():_
+_- createNewSite()_
 --
 Responsibilities
 
@@ -63,7 +66,6 @@ service. </panel_attributes>
       <h>234</h>
     </coordinates>
     <panel_attributes>CLIHelper
--- 
 --
 _~ menuInput()_
 _- readSites(): Set&lt;Sites&gt;_
@@ -112,7 +114,7 @@ to dates. The list should return to HQ App for statistics.</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>756</x>
-      <y>657</y>
+      <y>675</y>
       <w>216</w>
       <h>36</h>
     </coordinates>
@@ -147,7 +149,7 @@ m1=1..n</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>378</x>
-      <y>594</y>
+      <y>612</y>
       <w>387</w>
       <h>342</h>
     </coordinates>
@@ -169,7 +171,6 @@ _- BUY_RATE = 0.995_
 + getTotalAmountSell(String): Map&lt;String. int&gt;
 + getDiffCurrency(): Map&lt;String. int&gt;
 + getProfit(String): Map&lt;String. int&gt;
-+ getAvarageAmount(String): Map&lt;String, int&gt;
 + getAverageAmountBuy(String): Map&lt;String, int&gt;
 + getAverageAmountSell(String): Map&lt;String, int&gt;
 --
@@ -182,7 +183,7 @@ transaction list according to currencies in currencyCodes.</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>522</x>
-      <y>540</y>
+      <y>558</y>
       <w>81</w>
       <h>72</h>
     </coordinates>
