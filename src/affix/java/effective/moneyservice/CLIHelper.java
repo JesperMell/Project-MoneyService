@@ -24,10 +24,6 @@ public class CLIHelper {
 	 */
 	static int menuInput() {
 		
-//		System.out.println("Welcome to group Center MoneyService");
-//		System.out.println("------------------------------------");
-//		System.out.println();
-		
 		int choice = 0;
 		boolean ok;
 		do {
