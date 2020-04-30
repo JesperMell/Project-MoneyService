@@ -1,21 +1,49 @@
 package affix.java.effective.moneyservice;
 
+/**
+ * Order is a value type defining customers requested order for the exchange
+ * 
+ * @author Group Center
+ *
+ */
+
 public class Order {
+		
 	
-	
+	/**
+	 * orderCounter - a int for generation of unique orderNr
+	 */
 	private static int orderCounter = 0;
 	
+	
+	/**
+	 * orderNr - a unique number for identification
+	 */
 	private final int orderNr;
+	
+	/**
+	 * mode - a TransactionMode defining if its BUY or SELL order
+	 */
 	private final TransactionMode mode;
+	
+	/**
+	 * currencyCode - String holding which currency the Order was done in
+	 */
 	private final String currencyCode;
+	
+	/**
+	 * amount - a int holding information of the amount of the order
+	 */
 	private final int amount;
 	
-
 	/**
-  * @param orderType holds what kind of orderType, either SELL or BUY.
-  * @param amount the amount what the order should BUY or SELL.
-  * @param currencyCode the currency the order should deal with.
-  */
+	 * Constructor
+	 * @param mode - a TransactionMode defining if its BUY or SELL order
+	 * @param amount - an int  what the order should BUY or SELL.
+	 * @param currencyCode the currency the order should deal with.
+	 * @throws IllegalArgumentException If the currencyCode is empty or null
+	 * or if the amount is 0 or negative
+	 */
 	public Order(TransactionMode mode, int amount, String currencyCode) {
 		
 		if(currencyCode == null || currencyCode.isEmpty()) {

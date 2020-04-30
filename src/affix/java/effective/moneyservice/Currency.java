@@ -1,14 +1,31 @@
 package affix.java.effective.moneyservice;
 
+/**
+ * Class for holding information with with currency and it's exchange rate
+ * to reference currency
+ * 
+ * @author Group Center
+ *
+ */
+
 public class Currency {
 	
+	/**
+	 * currencyCode - a String defining a currency code
+	 */
 	private final String currencyCode;
-	private final double exchangeRate;
-	
 	
 	/**
-	 * @param currencyCode String holding the codename of a Currency
-	 * @param rate double holding the value of the exchange rate to local currency
+	 * exchangeRate - a Double value defining the exchange rate to reference currency
+	 */
+	private final double exchangeRate;
+	
+	/**
+	 * Constructor
+	 * @param currencyCode - String holding the codename of a Currency
+	 * @param rate - double holding the value of the exchange rate to reference currency
+	 * @throws IllegalArgumentException if currencyCode is null or empty,
+	 * or if the exchange rate is 0 or negative
 	 */
 	public Currency(String currencyCode, double rate) {
 		
