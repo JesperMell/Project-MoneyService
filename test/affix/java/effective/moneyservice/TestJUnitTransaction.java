@@ -125,4 +125,17 @@ public class TestJUnitTransaction {
 		assertFalse(t5.hashCode() == t6.hashCode() && t5.equals(t6));
 	}
 	
+	@Test
+	public void testGetTimeStamp() {
+		Transaction t1 = new Transaction("EUR", 300, TransactionMode.BUY);
+		
+		assertNotNull(t1.getTimeStamp());
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructorWrongAmount() {
+		Transaction t1 = new Transaction("EUR", 99, TransactionMode.BUY);
+	}
+	
 }
