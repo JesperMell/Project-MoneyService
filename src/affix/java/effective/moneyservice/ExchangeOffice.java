@@ -27,7 +27,6 @@ public class ExchangeOffice implements MoneyService{
 	
 	private final static Logger logger = Logger.getLogger("affix.java.effective.moneyservice");
 
-	// CHANGED FROM List<Transaction> CHECK WITH OTHERS IN THE GROUP
 	private List<Transaction> completedTransactions
 	= new ArrayList<>();
 
@@ -38,39 +37,6 @@ public class ExchangeOffice implements MoneyService{
 		this.name = name;
 		this.inventory = inv;
 	}
-
-//	public boolean buyMoney(Order orderData){
-//		logger.log(Level.INFO, "Entering buyMoney method..");
-//		// We do not allow buying orders with reference currency.
-//		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode 
-//				|| orderData.getAmount() %50 != 0) {
-//			logger.log(Level.WARNING, "orderData didn't meet requirements: ");
-//			return false;
-//		}
-//
-//		// CurrencyCode is the bought currency
-//		// Extract specific exchange rate for the currency the customer has
-//		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());		
-//		// If currency does not exist in currencyMap, then return false (Missing currencyRate).
-//		if(temp == null) {
-//			logger.log(Level.WARNING, "Currency has probably not been set: " + temp);
-//			return false;
-//		}
-//    
-//		// Alter the exchange rate with profit margin
-//		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.BUY_RATE;
-//
-//		// Amount to be returned to customer after bought currency
-//		double boughtInSEK = orderData.getAmount() * alteredExchangeRate;
-//    
-//		if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInSEK ) {
-//			Double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) - boughtInSEK;
-//			Double newBoughtCurrVal = inventory.get(orderData.getCurrencyCode());
-//			// Add new currency to list if it doens't exist.
-//			if(newBoughtCurrVal == null) {
-//				inventory.putIfAbsent(orderData.getCurrencyCode(), (double) 0);
-//				newBoughtCurrVal = (double) (0 + orderData.getAmount());
-//			}
 			
 	public boolean buyMoney(Order orderData) {
 		
@@ -168,76 +134,6 @@ public class ExchangeOffice implements MoneyService{
 		}
 	}
 	
-
-//	public boolean sellMoney(Order orderData) {
-//
-//		logger.log(Level.INFO, "Entering sellMoney method..");
-//		// We do not allow selling orders with reference currency.
-//		if(orderData.getCurrencyCode() == MoneyServiceApp.referenceCurrencyCode
-//				|| orderData.getAmount() %50 != 0) {
-//			logger.log(Level.WARNING, "orderData didn't meet requirements: ");
-//			return false;
-//		}
-//		// CurrencyCode is the sold currency
-//		// Extract specific exchange rate for the currency the customer has
-//		Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
-//		
-//		// If currency does not exist in currencyMap, then return false (Missing currencyRate).
-//		if(temp == null) {
-//			logger.log(Level.WARNING, "Currency has probably not been set: " + temp);
-//			return false;
-//		}
-//
-//		// Alter the exchange rate with profit margin
-//		double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.SELL_RATE;
-//
-//		double soldAmount = orderData.getAmount() / (1 / alteredExchangeRate);
-//
-//		if(validateOrder(orderData)) {
-//			Double newValueSEK = inventory.get(MoneyServiceApp.referenceCurrencyCode) + soldAmount;
-//			Double newSoldCurrVal = inventory.get(orderData.getCurrencyCode());
-//			
-//			// Return false if currency doesn't exist in office.
-//			if(newSoldCurrVal == null)
-//
-//		// Check if selected currency is one of the accepted currencies
-//		if(MoneyServiceApp.currencyMap.containsKey(orderData.getCurrencyCode())) {
-//
-//			// CurrencyCode is the sold currency
-//			// Extract specific exchange rate for the currency the customer has
-//			Currency temp = MoneyServiceApp.currencyMap.get(orderData.getCurrencyCode());
-//
-//			// Alter the exchange rate with profit margin
-//			double alteredExchangeRate = temp.getExchangeRate() * ServiceConfig.SELL_RATE;
-//
-//			// Calculation of what the customer has to pay for the transaction
-//			double soldAmountInREF = orderData.getAmount() / (1 / alteredExchangeRate);
-//
-//			if(validateOrderSell(orderData)) {
-//				// Calculate the new inventory value of reference currency
-//				Double newValueREF = inventory.get(MoneyServiceApp.referenceCurrencyCode) + soldAmountInREF;
-//				// Calculate the new inventory value of sold currency
-//				Double newSoldCurrencyValue = inventory.get(orderData.getCurrencyCode()) - orderData.getAmount();
-//
-//				// Update the inventory with the new values
-//				inventory.replace(MoneyServiceApp.referenceCurrencyCode, newValueREF);
-//				inventory.replace(orderData.getCurrencyCode(), newSoldCurrencyValue);
-//
-//				// Create new transaction and add to map with completed orders
-//				Transaction completedOrders = new Transaction(orderData.getCurrencyCode(), orderData.getAmount(), orderData.getMode());
-//				completedTransactions.add(completedOrders);
-//				return true;
-//			}
-//			else {
-//				return false;
-//			}
-//		}
-//		else {
-//			logger.log(Level.WARNING, "didn't pass validateOrder: ", validateOrder(orderData));
-//			throw new IllegalArgumentException("The specified currency code is not accepted!");
-//		}
-//	}
-//	}
 
 	public void printSiteReport(String destination) {
 		logger.log(Level.INFO, "Entering printSiteReport method -->");
