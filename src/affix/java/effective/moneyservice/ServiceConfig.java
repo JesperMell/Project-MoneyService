@@ -99,7 +99,7 @@ public class ServiceConfig {
 				} else {
 					switch(columns[0]) {
 						case "CurrencyConfig":
-							currencyFile = columns[1];
+							currencyFile = String.format("ExchangeRates/%s", columns[1]);
 							break;
 						case "ReferenceCurrency":
 							MoneyServiceApp.referenceCurrencyCode = columns[1];
