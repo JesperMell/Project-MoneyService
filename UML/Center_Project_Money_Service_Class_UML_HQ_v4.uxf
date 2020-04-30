@@ -4,7 +4,7 @@
   <element>
     <id>Text</id>
     <coordinates>
-      <x>63</x>
+      <x>27</x>
       <y>45</y>
       <w>441</w>
       <h>63</h>
@@ -19,7 +19,7 @@ fontsize=25
   <element>
     <id>Text</id>
     <coordinates>
-      <x>63</x>
+      <x>27</x>
       <y>0</y>
       <w>441</w>
       <h>63</h>
@@ -35,14 +35,15 @@ fontsize=30
     <id>UMLClass</id>
     <coordinates>
       <x>378</x>
-      <y>360</y>
+      <y>342</y>
       <w>387</w>
-      <h>207</h>
+      <h>225</h>
     </coordinates>
     <panel_attributes>HQApp
 --
 _~ sites: Map&lt;String, Site&gt;_
 _~ currencyMap: Map&lt;String, Currency&gt;_
+_~ AMOUNT_LIMIT = 50_
 --
 _+ main()_
 _+ readCurrencyConfigFile(String filename): map&lt;String, Currency&gt;_
@@ -61,18 +62,23 @@ service. </panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>378</x>
-      <y>90</y>
-      <w>360</w>
-      <h>234</h>
+      <y>18</y>
+      <w>378</w>
+      <h>297</h>
     </coordinates>
     <panel_attributes>CLIHelper
 --
+_- DISPLAY_COLUMN_WITH = 20_
+--
 _~ menuInput()_
-_- readSites(): Set&lt;Sites&gt;_
+_- readSites(): Set&lt;Site&gt;_
 _- readStartDay(): Optional&lt;LocalDate&gt;_
 _- readPeriod(): Optional&lt;Period&gt;_
 _- readCurrencyCodes(): List&lt;String&gt;_
 _- createEndDay(Optional&lt;Period&gt;, Optional&lt;LocalDate&gt;)_
+_- currencyFilter(List&lt;String&gt;): Predicate&lt;Transaction&gt;_
+_~ headDisplayer(List&lt;String&gt; titles): String_
+_~ rowDisplayer(List&lt;Map&lt;String, Integer&gt; &gt;, String): String_
 --
 Responsibilities
 
@@ -128,22 +134,22 @@ m1=1..n</panel_attributes>
       <x>756</x>
       <y>315</y>
       <w>216</w>
-      <h>180</h>
+      <h>162</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;
 m1=1..n</panel_attributes>
-    <additional_attributes>220.0;10.0;140.0;10.0;140.0;180.0;10.0;180.0</additional_attributes>
+    <additional_attributes>220.0;10.0;140.0;10.0;140.0;160.0;10.0;160.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>585</x>
-      <y>315</y>
+      <y>306</y>
       <w>27</w>
-      <h>63</h>
+      <h>54</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -222,7 +228,7 @@ Transaction
 - mode: TransactionMode
 _- uniqueId: int_
 --
-+ Transaction(LocaleDateTime, String, int, TransactionMode)
++ Transaction(String, int, TransactionMode)
 + getTimeStamp: LocalDateTime
 + getCurrencyCode: String
 + getAmount(): int
@@ -293,10 +299,10 @@ Responsibilities
       <x>756</x>
       <y>72</y>
       <w>225</w>
-      <h>342</h>
+      <h>324</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;360.0;70.0;360.0;70.0;10.0;230.0;10.0</additional_attributes>
+    <additional_attributes>10.0;340.0;70.0;340.0;70.0;10.0;230.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
