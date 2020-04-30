@@ -47,7 +47,7 @@ public class ServiceConfig {
 	static final double BUY_RATE = 0.995;
 	
 	/**
-	 * BUY_RATE - double defining the profit margin which exchange rate
+	 * SELL_RATE - double defining the profit margin which exchange rate
 	 * for selling should be adjusted with.
 	 */
 	static final double SELL_RATE = 1.005;
