@@ -5,6 +5,13 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Interface for handling of user requested orders in a
+ * money exchange office
+ * 
+ * @author Group Center
+ *
+ */
 public interface MoneyService {
 	
 	/**
@@ -47,7 +54,7 @@ public interface MoneyService {
 	/**
 	 * This method exports the current amount at an implementing site for a specified currency 
 	 * @param currencyCode String holding currency code used in local site
-	 * @return Optional<Double> holding current amount for required currency at site i/a
+	 * @return Optional {@code<Double>} holding current amount for required currency at site i/a
 	 */
 	default Optional<Double> getAvailableAmount(String currencyCode) { return Optional.empty(); }
 }

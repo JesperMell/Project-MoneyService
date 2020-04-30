@@ -16,8 +16,15 @@ import java.util.logging.SimpleFormatter;
  */
 public class MoneyServiceApp {
 	
+	/**
+	 * String holding the configured reference currency code
+	 */
 	static String referenceCurrencyCode;
 	
+	
+	/**
+	 * A Logger object
+	 */
 	// create logger
 	private static Logger logger;
 	
@@ -26,12 +33,35 @@ public class MoneyServiceApp {
 	}
 	
 	/**
-	 * Storage for Currency objects using CurrencyCode as key
+	 * Storage for Currency objects using CurrencyCode as key and Currency as value
 	 */
 	static Map<String, Currency> currencyMap = new HashMap<>();
+	
+	/**
+	 * Map holding configured values defining an inventory of money, key is a currency code
+	 * and value is a double defining the amount
+	 */
 	static Map<String, Double> inventoryMap = new HashMap<>();
+	
+	/**
+	 * int holding the configured value for min order amount
+	 */
 	static int orderAmountLimit;
 	
+	/**
+	 * Start method of the program, arguments are unused
+	 * @param args - A string argument
+	 */
+	public static void main(String[] args) {
+		configure();
+		logger.log(Level.INFO, "-------Configuration_Ends-------\n");
+		MoneyService aExchangeOffice = new ExchangeOffice("THN", inventoryMap);
+		CLIApplication(aExchangeOffice);
+	}
+	
+	/**
+	 * Method for setting up and configuring logging
+	 */
 	private static void setupLogger() {
 		LogManager.getLogManager().reset();
 		// set the level of logging.
@@ -52,15 +82,10 @@ public class MoneyServiceApp {
 			logger.log(Level.SEVERE, "File logger not working! ", e);
 		}
 	}
-	
-	public static void main(String[] args) {
 		
-		configure();
-		logger.log(Level.INFO, "-------Configuration_Ends-------\n");
-		MoneyService aExchangeOffice = new ExchangeOffice("THN", inventoryMap);
-		CLIApplication(aExchangeOffice);
-	}
-	
+	/**
+	 * Method for running configuration methods
+	 */
 	private static void configure() {
 		setupLogger();
 		ServiceConfig.readMoneyServiceConfigFile();
@@ -69,7 +94,8 @@ public class MoneyServiceApp {
 	}
 	
 	/**
-	 * This method supports user interaction via CLI
+	 * This method supports user interaction via CLI calling methods from MoneyService interface
+	 * @param aExchangeOffice - a reference to implementer of interface
 	 */
 	private static void CLIApplication(MoneyService aExchangeOffice) {
 		
