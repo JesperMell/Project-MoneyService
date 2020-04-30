@@ -56,7 +56,7 @@ public class MoneyServiceApp {
 	public static void main(String[] args) {
 		
 		configure();
-		logger.log(Level.INFO, "-------Configuration_Ends-------\n");
+		logger.info("-------Configuration_Ends-------\n");
 		MoneyService aExchangeOffice = new ExchangeOffice("THN", inventoryMap);
 		CLIApplication(aExchangeOffice);
 	}
