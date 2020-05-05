@@ -1,6 +1,7 @@
 package affix.java.effective.moneyservice;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -182,9 +183,16 @@ public class ExchangeOffice implements MoneyService{
 
 	@Override
 	public void shutDownService(String destination) {
+		// Create Directories
+		String path = String.format("Reports/%s", MoneyServiceApp.OFFICE_NAME);
+		new File(path).mkdirs();
+		
+		// Path and Filename = fullPath
+		String fullPath = String.format("%s/%s", path, destination);
+		
 		logger.log(Level.INFO, "Entering shutDownService method -->");
 		// Serialize and store completed transactions.
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(destination))){
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fullPath))){
 			oos.writeObject(completedTransactions);
 		}
 		catch(IOException ioe) {

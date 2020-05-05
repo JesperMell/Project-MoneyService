@@ -1,6 +1,8 @@
 package affix.java.effective.moneyservice;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.ConsoleHandler;
@@ -10,11 +12,14 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+
+
 /**
  * This class triggers an application defining an ExchangeOffice for Order objects.
  * @author Group Center
  */
 public class MoneyServiceApp {
+	public static final String OFFICE_NAME = "CENTER";
 	
 	/**
 	 * String holding the configured reference currency code
@@ -175,7 +180,8 @@ public class MoneyServiceApp {
 				aExchangeOffice.printSiteReport("txt");
 				break;
 			case 5:
-				aExchangeOffice.shutDownService("Transactions.ser");
+				String reportName = String.format("Report_%s_%s.ser", OFFICE_NAME, DateTimeFormatter.ofPattern("YYYY-MM-dd").format(LocalDate.now()));
+				aExchangeOffice.shutDownService(reportName);
 			case 0:
 				System.out.println("Thanks for visiting group center MoneyService. Welcome back!");
 				done = true;
