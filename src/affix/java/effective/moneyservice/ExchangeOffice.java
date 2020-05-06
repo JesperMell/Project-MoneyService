@@ -237,7 +237,7 @@ public class ExchangeOffice implements MoneyService{
 				return true;
 			}
 			else {
-				System.out.format("Currently can not meet the requested amount of %d\n", orderData.getAmount());
+				System.out.format("Currently can not meet the requested amount of %d %s\n", orderData.getAmount(), orderData.getCurrencyCode());
 			}
 		}
 		else {
@@ -262,7 +262,7 @@ public class ExchangeOffice implements MoneyService{
 					return true;					
 				}
 				else {
-					System.out.format("Currently can not meet the requested amount of %d\n", orderData.getAmount());
+					System.out.format("Currently can not meet the requested amount of %d %s\n", orderData.getAmount(), orderData.getCurrencyCode());
 				}
 			}
 		}
