@@ -160,7 +160,7 @@ public class MoneyServiceApp {
 								ok = false;
 							}
 						
-						if (ok && output == false || output == false) {
+						if (ok == false || output == false) {
 							
 							System.out.println("Your order has been rejected (could not be handeled)");
 							System.out.println();
