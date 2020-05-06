@@ -95,6 +95,7 @@ public class ExchangeOffice implements MoneyService{
 				Transaction completedOrders = new Transaction(orderData.getCurrencyCode(), orderData.getAmount(), orderData.getMode());
 				completedTransactions.add(completedOrders);
 
+				System.out.println("Your requested order has been processesed and accepted!");
 				System.out.format("Returning %.0f %s to customer\n\n",boughtInREF,MoneyServiceApp.referenceCurrencyCode);
 
 				logger.log(Level.INFO, "Exiting buyMoney method <--");
@@ -143,6 +144,7 @@ public class ExchangeOffice implements MoneyService{
 				Transaction completedOrders = new Transaction(orderData.getCurrencyCode(), orderData.getAmount(), orderData.getMode());
 				completedTransactions.add(completedOrders);
 
+				System.out.println("Your requested order has been processesed and accepted!");
 				System.out.format("Amount to pay %.0f %s\n\n",soldAmountInREF,MoneyServiceApp.referenceCurrencyCode);
 				System.out.println();
 				logger.log(Level.INFO, "Exiting sellMoney method <--");

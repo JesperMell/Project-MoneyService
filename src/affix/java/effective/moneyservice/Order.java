@@ -51,7 +51,7 @@ public class Order {
 		}
 		else{
 			if(amount <= 0) {
-				throw new IllegalArgumentException("Amount cant be negative!");
+				throw new IllegalArgumentException("Amount cant be negative or zero!");
 			}
 		}
 		this.orderNr = ++orderCounter;
