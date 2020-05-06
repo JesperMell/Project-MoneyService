@@ -128,6 +128,8 @@ public class MoneyServiceApp {
 					ok = true;
 					aOrder = null;
 					aOrder = CLIHelper.orderRequest();
+					
+					CLIHelper.showValidatedOrder(aOrder);
 					boolean output = false;
 					//logging order data.
 					logger.log(Level.INFO, "Order: " + aOrder);
@@ -160,7 +162,7 @@ public class MoneyServiceApp {
 						
 						if (ok && output == false || output == false) {
 							
-							System.out.println("The amount does not meet the requirements (min/multiples) or is a too high amount for us to handle");
+							System.out.println("Your order has been rejected (could not be handeled)");
 							System.out.println();
 							ok = false;
 						}
@@ -171,7 +173,7 @@ public class MoneyServiceApp {
 					}
 				} while(!ok);
 				
-				CLIHelper.showValidatedOrder(aOrder);
+
 				break;
 			case 3:
 				aExchangeOffice.printSiteReport("console");
