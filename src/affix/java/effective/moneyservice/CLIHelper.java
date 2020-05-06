@@ -85,7 +85,6 @@ public class CLIHelper {
 		
 		for (Map.Entry<String, Currency> me : set)
 			System.out.format(Locale.US, "%s: %7.4f%n", me.getKey(), me.getValue().getExchangeRate());
-			//System.out.println(me.getKey() + ": " + me.getValue().getExchangeRate());
 		
 		System.out.println();
 	}
@@ -99,7 +98,7 @@ public class CLIHelper {
 		
 		logger.log(Level.INFO, "Entering orderRequest method -->");
 		int sellBuyChoice = 0; // Default "Back to main menu"
-		String currencyCode = "SEK"; // Default SEK
+		String currencyCode = MoneyServiceApp.referenceCurrencyCode;
 		int amount = 0;
 		Order aOrder = null;
 		boolean ok;
@@ -134,7 +133,6 @@ public class CLIHelper {
 			
 			if (sellBuyChoice == 1 || sellBuyChoice == 2) {
 				
-				//showSupportedCurrencies();
 				System.out.print("Enter currency code (3 capital letters): ");
 				String userCurrencyCode = input.next();
 			
@@ -181,7 +179,6 @@ public class CLIHelper {
 					break;
 					
 				case 0:
-					//menuInput();
 					break;
 				}
 			}
