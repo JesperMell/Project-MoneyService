@@ -73,7 +73,7 @@ public class MoneyServiceApp {
 		logger.setLevel(Level.ALL);
 		// Create a new Handler for console.
 		ConsoleHandler consHandler = new ConsoleHandler();
-		consHandler.setLevel(Level.WARNING);
+		consHandler.setLevel(Level.SEVERE);
 		logger.addHandler(consHandler);
 		
 		try {
@@ -139,7 +139,7 @@ public class MoneyServiceApp {
 								output = aExchangeOffice.sellMoney(aOrder);
 								logger.log(Level.INFO, "Completed " + aOrder.getMode() +  " Transaction!\n");
 							} catch(IllegalArgumentException iae) {
-								logger.log(Level.SEVERE, "Order exception! " + iae);
+								logger.log(Level.WARNING, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
 								System.out.println();
 								ok = false;
@@ -152,7 +152,7 @@ public class MoneyServiceApp {
 								
 
 							} catch (IllegalArgumentException iae) {
-								logger.log(Level.SEVERE, "Order exception! " + iae);
+								logger.log(Level.WARNING, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
 								System.out.println();
 								ok = false;
