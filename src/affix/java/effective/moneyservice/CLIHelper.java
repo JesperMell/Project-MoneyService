@@ -50,7 +50,7 @@ public class CLIHelper {
 			try {
 				choice = Integer.parseInt(userChoice);
 			} catch(NumberFormatException e) {
-				logger.log(Level.SEVERE, "Choice Exception: " + e);
+				logger.log(Level.WARNING, "Choice Exception: " + e);
 				System.out.format("Your choice %s is not accepted!%n", userChoice);
 				ok = false;
 			}
@@ -119,7 +119,7 @@ public class CLIHelper {
 				try {
 					sellBuyChoice = Integer.parseInt(userSellBuyChoice);
 				} catch(NumberFormatException e) {
-					logger.log(Level.SEVERE, "Choice exception! " + e);
+					logger.log(Level.WARNING, "Choice exception! " + e);
 					System.out.format("Your choice %s is not accepted!%n", userSellBuyChoice);
 					ok = false;
 				}
@@ -142,7 +142,7 @@ public class CLIHelper {
 				try {
 					currencyCode = userCurrencyCode.toUpperCase();
 				} catch(NumberFormatException e) {
-					logger.log(Level.SEVERE, "Currency code exception! " + e);
+					logger.log(Level.WARNING, "Currency code exception! " + e);
 					System.out.format("Your choice %s is not accepted!", userCurrencyCode);
 					ok = false;
 				}
@@ -150,7 +150,7 @@ public class CLIHelper {
 				try {
 					amount = Integer.parseInt(userAmount);
 				} catch(NumberFormatException e) {
-					logger.log(Level.SEVERE, "Amount exception! " + e);
+					logger.log(Level.WARNING, "Amount exception! " + e);
 					System.out.format("Your choice %s is not accepted!%n", userAmount);
 					ok = false;
 				}
