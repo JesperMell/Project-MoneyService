@@ -1,48 +1,56 @@
-maj 04, 2020 10:22:23 FM affix.java.effective.moneyservice.ServiceConfig readMoneyServiceConfigFile
+maj 06, 2020 9:32:36 FM affix.java.effective.moneyservice.ServiceConfig readMoneyServiceConfigFile
 INFO: Entering readMoneyServiceConfigFile method..
-maj 04, 2020 10:22:23 FM affix.java.effective.moneyservice.ServiceConfig readProjectConfigFile
+maj 06, 2020 9:32:36 FM affix.java.effective.moneyservice.ServiceConfig readProjectConfigFile
 INFO: Entering readProjectConfigFile method..
-maj 04, 2020 10:22:23 FM affix.java.effective.moneyservice.ServiceConfig readCurrencyConfigFile
+maj 06, 2020 9:32:36 FM affix.java.effective.moneyservice.ServiceConfig readCurrencyConfigFile
 INFO: Entering readCurrencyConfigFile method..
-maj 04, 2020 10:22:24 FM affix.java.effective.moneyservice.MoneyServiceApp main
+maj 06, 2020 9:32:36 FM affix.java.effective.moneyservice.MoneyServiceApp main
 INFO: -------Configuration_Ends-------
 
-maj 04, 2020 10:22:24 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+maj 06, 2020 9:32:36 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
 INFO: Entering CLIApplication -->
-maj 04, 2020 10:22:24 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 06, 2020 9:32:36 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
-maj 04, 2020 10:22:28 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 06, 2020 9:32:38 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Exiting Main menu loop <--
-maj 04, 2020 10:22:28 FM affix.java.effective.moneyservice.CLIHelper orderRequest
+maj 06, 2020 9:32:38 FM affix.java.effective.moneyservice.CLIHelper orderRequest
 INFO: Entering orderRequest method -->
-maj 04, 2020 10:22:42 FM affix.java.effective.moneyservice.CLIHelper orderRequest
+maj 06, 2020 9:32:44 FM affix.java.effective.moneyservice.CLIHelper orderRequest
 INFO: Exiting orderRequest method <--
-maj 04, 2020 10:22:42 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
-INFO: Order: Order [orderNr=1, mode=BUY, currencyCode=US4, amount=50]
-maj 04, 2020 10:22:42 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
+maj 06, 2020 9:32:44 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+INFO: Order: Order [orderNr=1, mode=BUY, currencyCode=USD, amount=50]
+maj 06, 2020 9:32:44 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
 INFO: Entering buyMoney method -->
-maj 04, 2020 10:22:42 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
-WARNING: missing amount in specified currency: US4
-maj 04, 2020 10:22:42 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
+maj 06, 2020 9:32:44 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
 INFO: Exiting buyMoney method <--
-maj 04, 2020 10:22:42 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
-SEVERE: Order exception! java.lang.IllegalArgumentException: The specified currency code is not accepted!
-maj 04, 2020 10:22:42 FM affix.java.effective.moneyservice.CLIHelper orderRequest
-INFO: Entering orderRequest method -->
-maj 04, 2020 10:22:50 FM affix.java.effective.moneyservice.CLIHelper orderRequest
-INFO: Exiting orderRequest method <--
-maj 04, 2020 10:22:50 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
-INFO: Order: Order [orderNr=2, mode=BUY, currencyCode=USD, amount=100]
-maj 04, 2020 10:22:50 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
-INFO: Entering buyMoney method -->
-maj 04, 2020 10:22:50 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
-INFO: Exiting buyMoney method <--
-maj 04, 2020 10:22:50 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+maj 06, 2020 9:32:44 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
 INFO: Completed BUY Transaction!
 
-maj 04, 2020 10:22:50 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 06, 2020 9:32:44 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
-maj 04, 2020 10:22:55 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 06, 2020 9:32:46 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Exiting Main menu loop <--
-maj 04, 2020 10:22:55 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
-INFO: Exiting CLIApplication <--
+maj 06, 2020 9:32:46 FM affix.java.effective.moneyservice.CLIHelper orderRequest
+INFO: Entering orderRequest method -->
+maj 06, 2020 9:32:54 FM affix.java.effective.moneyservice.CLIHelper orderRequest
+INFO: Exiting orderRequest method <--
+maj 06, 2020 9:32:54 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+INFO: Order: Order [orderNr=2, mode=BUY, currencyCode=ABC, amount=50]
+maj 06, 2020 9:32:54 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
+INFO: Entering buyMoney method -->
+maj 06, 2020 9:32:54 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
+WARNING: missing amount in specified currency: ABC
+maj 06, 2020 9:32:54 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
+INFO: Exiting buyMoney method <--
+maj 06, 2020 9:32:54 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+WARNING: Order exception! java.lang.IllegalArgumentException: The specified currency code is not accepted!
+maj 06, 2020 9:32:54 FM affix.java.effective.moneyservice.CLIHelper orderRequest
+INFO: Entering orderRequest method -->
+maj 06, 2020 9:33:15 FM affix.java.effective.moneyservice.CLIHelper orderRequest
+INFO: Exiting orderRequest method <--
+maj 06, 2020 9:33:15 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+INFO: Order: null
+maj 06, 2020 9:33:15 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+WARNING: Order not done properly! null
+maj 06, 2020 9:33:15 FM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Entering Main menu loop -->

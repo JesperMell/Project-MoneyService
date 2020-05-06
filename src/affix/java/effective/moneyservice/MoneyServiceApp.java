@@ -1,6 +1,8 @@
 package affix.java.effective.moneyservice;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.ConsoleHandler;
@@ -10,14 +12,24 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+
+
 /**
  * This class triggers an application defining an ExchangeOffice for Order objects.
  * @author Group Center
  */
 public class MoneyServiceApp {
+	public static final String OFFICE_NAME = "CENTER";
 	
+	/**
+	 * String holding the configured reference currency code
+	 */
 	static String referenceCurrencyCode;
 	
+	
+	/**
+	 * A Logger object
+	 */
 	// create logger
 	private static Logger logger;
 	
@@ -26,19 +38,42 @@ public class MoneyServiceApp {
 	}
 	
 	/**
-	 * Storage for Currency objects using CurrencyCode as key
+	 * Storage for Currency objects using CurrencyCode as key and Currency as value
 	 */
 	static Map<String, Currency> currencyMap = new HashMap<>();
+	
+	/**
+	 * Map holding configured values defining an inventory of money, key is a currency code
+	 * and value is a double defining the amount
+	 */
 	static Map<String, Double> inventoryMap = new HashMap<>();
+	
+	/**
+	 * int holding the configured value for min order amount
+	 */
 	static int orderAmountLimit;
 	
+	/**
+	 * Start method of the program, arguments are unused
+	 * @param args - A string argument
+	 */
+	public static void main(String[] args) {
+		configure();
+		logger.log(Level.INFO, "-------Configuration_Ends-------\n");
+		MoneyService aExchangeOffice = new ExchangeOffice("THN", inventoryMap);
+		CLIApplication(aExchangeOffice);
+	}
+	
+	/**
+	 * Method for setting up and configuring logging
+	 */
 	private static void setupLogger() {
 		LogManager.getLogManager().reset();
 		// set the level of logging.
 		logger.setLevel(Level.ALL);
 		// Create a new Handler for console.
 		ConsoleHandler consHandler = new ConsoleHandler();
-		consHandler.setLevel(Level.WARNING);
+		consHandler.setLevel(Level.SEVERE);
 		logger.addHandler(consHandler);
 		
 		try {
@@ -52,15 +87,10 @@ public class MoneyServiceApp {
 			logger.log(Level.SEVERE, "File logger not working! ", e);
 		}
 	}
-	
-	public static void main(String[] args) {
 		
-		configure();
-		logger.info("-------Configuration_Ends-------\n");
-		MoneyService aExchangeOffice = new ExchangeOffice("THN", inventoryMap);
-		CLIApplication(aExchangeOffice);
-	}
-	
+	/**
+	 * Method for running configuration methods
+	 */
 	private static void configure() {
 		setupLogger();
 		ServiceConfig.readMoneyServiceConfigFile();
@@ -69,7 +99,8 @@ public class MoneyServiceApp {
 	}
 	
 	/**
-	 * This method supports user interaction via CLI
+	 * This method supports user interaction via CLI calling methods from MoneyService interface
+	 * @param aExchangeOffice - a reference to implementer of interface
 	 */
 	private static void CLIApplication(MoneyService aExchangeOffice) {
 		
@@ -108,7 +139,7 @@ public class MoneyServiceApp {
 								output = aExchangeOffice.sellMoney(aOrder);
 								logger.log(Level.INFO, "Completed " + aOrder.getMode() +  " Transaction!\n");
 							} catch(IllegalArgumentException iae) {
-								logger.log(Level.SEVERE, "Order exception! " + iae);
+								logger.log(Level.WARNING, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
 								System.out.println();
 								ok = false;
@@ -121,7 +152,7 @@ public class MoneyServiceApp {
 								
 
 							} catch (IllegalArgumentException iae) {
-								logger.log(Level.SEVERE, "Order exception! " + iae);
+								logger.log(Level.WARNING, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
 								System.out.println();
 								ok = false;
@@ -149,7 +180,8 @@ public class MoneyServiceApp {
 				aExchangeOffice.printSiteReport("txt");
 				break;
 			case 5:
-				aExchangeOffice.shutDownService("Transactions.ser");
+				String reportName = String.format("Report_%s_%s.ser", OFFICE_NAME, DateTimeFormatter.ofPattern("YYYY-MM-dd").format(LocalDate.now()));
+				aExchangeOffice.shutDownService(reportName);
 			case 0:
 				System.out.println("Thanks for visiting group center MoneyService. Welcome back!");
 				done = true;

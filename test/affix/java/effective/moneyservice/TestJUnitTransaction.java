@@ -17,6 +17,7 @@ public class TestJUnitTransaction {
 	
 	@BeforeClass
 	public static void setUp() {
+		ServiceConfig.readMoneyServiceConfigFile();
 		t1 = new Transaction("USD", 500, TransactionMode.SELL);
 	}
 	
@@ -52,21 +53,25 @@ public class TestJUnitTransaction {
 		assertEquals(TransactionMode.SELL, t1.getMode());
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testMissingCurrencyCode_1() {
 		Transaction t3 = new Transaction("", 1000, TransactionMode.SELL);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testMissingCurrencyCode_2() {
 		Transaction t3 = new Transaction(null, 1000, TransactionMode.SELL);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testNegativeAmount() {
 		Transaction t4 = new Transaction("USD", -100, TransactionMode.BUY);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testZeroAmount() {
 		Transaction t4 = new Transaction("USD", 0, TransactionMode.SELL);
@@ -118,6 +123,19 @@ public class TestJUnitTransaction {
 		Transaction t6 = new Transaction("USD", 100, TransactionMode.SELL);
 		
 		assertFalse(t5.hashCode() == t6.hashCode() && t5.equals(t6));
+	}
+	
+	@Test
+	public void testGetTimeStamp() {
+		Transaction t1 = new Transaction("EUR", 300, TransactionMode.BUY);
+		
+		assertNotNull(t1.getTimeStamp());
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructorWrongAmount() {
+		Transaction t1 = new Transaction("EUR", 99, TransactionMode.BUY);
 	}
 	
 }

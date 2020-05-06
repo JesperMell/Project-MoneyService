@@ -8,20 +8,63 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+/**
+ * Helper class for IO, reading configuration files and
+ * exchange rate files
+ * 
+ * @author Group Center
+ *
+ */
+
 public class ServiceConfig {
 
+	/**
+	 * CONFIG_FILE - A String defining name of configuration file
+	 */
 	private static final String CONFIG_FILE = "ProjectConfig.txt";
+	
+	/**
+	 * String for setting which line in the configuration file to start reading from
+	 */
 	private static final int CURRENCY_CONFIG_FILE_LINE_START = 2;
+	
+	/**
+	 * A String defining a configuration file
+	 */
 	private static final String MONEYSERVICE_CONFIG_FILE = "MoneyServiceConfig.txt";
 	
+	/**
+	 * A String for storing a configured filepath for currency exchange rates
+	 */
 	private static String currencyFile;
 	
+	
+	/**
+	 * BUY_RATE - double defining the profit margin which exchange rate
+	 *  for buying should be adjusted with.
+	 */
 	static final double BUY_RATE = 0.995;
+	
+	/**
+	 * SELL_RATE - double defining the profit margin which exchange rate
+	 * for selling should be adjusted with.
+	 */
 	static final double SELL_RATE = 1.005;
 	
 	//logger
+	/**
+	 * logger - a Logger object
+	 */
 	private final static Logger logger = Logger.getLogger("affix.java.effective.moneyservice");
-      
+    
+	
+	/**
+	 * Method for reading and parsing ProjectConfig.txt
+	 * setting configurable values for the inventory in each currency
+	 * and set the exchange rate file to be read.
+	 */
+	
 	public static void readProjectConfigFile() {
 		logger.log(Level.INFO, "Entering readProjectConfigFile method..");
 		boolean insertToBox = false;
@@ -44,8 +87,6 @@ public class ServiceConfig {
 				}
 				
 				// If the row doesn't include ' = ' then continue to next line.
-				// Maybe bad format.
-				// TODO: perhaps create suitable exception?
 				if(!row.contains(" = ")) continue;
 				
 				// Split the row by key, value.
@@ -58,7 +99,7 @@ public class ServiceConfig {
 				} else {
 					switch(columns[0]) {
 						case "CurrencyConfig":
-							currencyFile = columns[1];
+							currencyFile = String.format("ExchangeRates/%s", columns[1]);
 							break;
 						case "ReferenceCurrency":
 							MoneyServiceApp.referenceCurrencyCode = columns[1];
@@ -78,6 +119,11 @@ public class ServiceConfig {
 			System.out.println("Sorry, could not read config file.");
 		}
 	}
+	
+	/**
+	 * Method for reading the currency configuration file and set accepted currencies 
+	 * and their exchange rates
+	 */
 	
 	public static void readCurrencyConfigFile() {
 		logger.log(Level.INFO, "Entering readCurrencyConfigFile method..");
@@ -100,6 +146,13 @@ public class ServiceConfig {
 			}
 	}
 	
+	/**
+	 * Method for parsing currency configuration file
+	 * @param input - A String with data to be parsed
+	 * @return Currency - Data holding information about exchange rate
+	 * for each currency
+	 */
+	
 	private static Currency parseInput(String input) {
 		
 		// The column looks like following:
@@ -121,7 +174,11 @@ public class ServiceConfig {
 			return new Currency(currencyCode, exchangeRate);
 	}
 	
-
+	/**
+	 * Method for reading MoneyService configuration file setting
+	 * the order amount restrictions
+	 */
+	
 	public static void readMoneyServiceConfigFile() {
 		logger.log(Level.INFO, "Entering readMoneyServiceConfigFile method..");
 

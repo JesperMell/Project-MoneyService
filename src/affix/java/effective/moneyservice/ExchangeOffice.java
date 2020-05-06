@@ -1,6 +1,7 @@
 package affix.java.effective.moneyservice;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,29 +16,48 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-
 /**
- * This is an implementation of the generic interface MoneyService
- * plus some own implemented methods
+ * This is an implementation of the interface MoneyService
+ * 
  * @author group Center
  */
 public class ExchangeOffice implements MoneyService{
 
+	/**
+	 * name - a String defining the name of the exchange office
+	 */
 	private String name;
 	
+	/**
+	 * logger - a Logger object
+	 */
 	private final static Logger logger = Logger.getLogger("affix.java.effective.moneyservice");
 
+	/**
+	 * completedTransactions - a List for storing all the completeded transactions during a session
+	 */
 	private List<Transaction> completedTransactions
 	= new ArrayList<>();
 
+	/**
+	 * inventory - a Map holding current inventory value for exchange office where
+	 * key is currency code and value is the amount in specified currency
+	 */
 	private Map<String, Double> inventory
 	= new HashMap<>();
 
+	/**
+	 * Constructor
+	 * @param name - a String defining the name of the Exchange Office 
+	 * @param inv - a Map holding data for the exchange office inventory key is a currency code
+	 * and value is current inventory value in each currency
+	 */
 	public ExchangeOffice(String name, Map<String, Double> inv){
 		this.name = name;
 		this.inventory = inv;
 	}
-			
+	
+	@Override
 	public boolean buyMoney(Order orderData) {
 		
 		logger.log(Level.INFO, "Entering buyMoney method -->");
@@ -90,6 +110,7 @@ public class ExchangeOffice implements MoneyService{
 		}
 	}
 
+	@Override
 	public boolean sellMoney(Order orderData) {
 		
 		logger.log(Level.INFO, "Entering sellMoney method -->");
@@ -134,7 +155,7 @@ public class ExchangeOffice implements MoneyService{
 		}
 	}
 	
-
+	@Override
 	public void printSiteReport(String destination) {
 		logger.log(Level.INFO, "Entering printSiteReport method -->");
 
@@ -160,10 +181,18 @@ public class ExchangeOffice implements MoneyService{
 
 	}
 
+	@Override
 	public void shutDownService(String destination) {
+		// Create Directories
+		String path = String.format("Reports/%s", MoneyServiceApp.OFFICE_NAME);
+		new File(path).mkdirs();
+		
+		// Path and Filename = fullPath
+		String fullPath = String.format("%s/%s", path, destination);
+		
 		logger.log(Level.INFO, "Entering shutDownService method -->");
 		// Serialize and store completed transactions.
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(destination))){
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fullPath))){
 			oos.writeObject(completedTransactions);
 		}
 		catch(IOException ioe) {
@@ -177,6 +206,7 @@ public class ExchangeOffice implements MoneyService{
 		return MoneyServiceApp.currencyMap;
 	}
 
+	@Override
 	public Optional<Double> getAvailableAmount(String currencyCode){
 		// Get the value of the specified currency.
 		Double AvailableAmount = inventory.get(currencyCode);
@@ -186,17 +216,28 @@ public class ExchangeOffice implements MoneyService{
 		return opt;
 	}
 
-	private boolean validateOrderBuy(Order orderData, double boughtInSEK) {
+	/**
+	 * Helper method for validating a order of TransactionMode BUY
+	 * @param orderData - a Order object holding information about requested transaction from customer
+	 * @param boughtInRef - a double defining the ordered amount in reference currency
+	 * @return boolean true if validation of the order passed else false
+	 */
+	private boolean validateOrderBuy(Order orderData, double boughtInRef) {
 		// Check if amount is accepted configured via min amount
 		if(orderData.getAmount() %MoneyServiceApp.orderAmountLimit == 0) {
 			//Check if bought amount is available in inventory
-			if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInSEK) {
+			if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInRef) {
 				return true;
 			}
 		}
 		return false;
 	}
 
+	/**
+	 * Helper method for validating a order of TransactionMode SELL
+	 * @param orderData - a Order object holding information about requested transaction from customer
+	 * @return boolean true if validation of the order passed else false
+	 */
 	private boolean validateOrderSell(Order orderData) {
 
 		// Check if amount is accepted configured via min amount
@@ -210,6 +251,5 @@ public class ExchangeOffice implements MoneyService{
 		}
 		return false;
 	}
-
 }
 

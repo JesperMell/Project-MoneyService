@@ -10,17 +10,24 @@ import java.util.logging.Logger;
 
 /**
  * This is a support class for user interaction using CLI
+ * 
  * @author Group Center
  */
 public class CLIHelper {
 	
+	/**
+	 * A Logger object
+	 */
 	private final static Logger logger = Logger.getLogger("affix.java.effective.moneyservice");
-	static Scanner input = new Scanner(System.in);
-	
 	
 	/**
-	 * This is the overall helper method for user choice of operation
-	 * @return an "int" holding current menu choice
+	 * Reads input from the user
+	 */
+	static Scanner input = new Scanner(System.in);
+	
+	/**
+	 * This method display the menu and prompt a user input for choice
+	 * @return an int holding current user menu choice
 	 */
 	static int menuInput() {
 		
@@ -61,9 +68,8 @@ public class CLIHelper {
 	
 	
 	/**
-	 * Helper method that show supported currencies,
-	 * original taken from the "CurrencyConfig.txt"
-	 * @param a map with currencyCode as key and Currency as value
+	 * Method that show the currencies the system accept
+	 * @param hm - a map holding the currency codes as String and Currency as value
 	 */
 	static void showSupportedCurrencies(Map<String, Currency> hm) {
 		
@@ -189,6 +195,10 @@ public class CLIHelper {
 		
 	}
 	
+	/**
+	 * Method for displaying a requested order
+	 * @param aOrder - an Order object
+	 */
 	static void showValidatedOrder(Order aOrder) {
 		
 		if (aOrder != null) {
