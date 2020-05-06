@@ -202,10 +202,12 @@ public class CLIHelper {
 	static void showValidatedOrder(Order aOrder) {
 		
 		if (aOrder != null) {
-			System.out.println("Your Order: ");
+			System.out.println("Your requested order!");
+			System.out.println("----------------------");
+			System.out.println();
 			System.out.println("Order type: " + aOrder.getMode());
 			System.out.println("Currency code: " + aOrder.getCurrencyCode());
-			System.out.println("Amount in that currency: " + aOrder.getAmount());
+			System.out.println("Order amount in requested currency: " + aOrder.getAmount());
 			System.out.println();
 		}
 		
