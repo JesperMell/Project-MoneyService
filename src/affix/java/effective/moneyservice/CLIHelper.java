@@ -84,8 +84,9 @@ public class CLIHelper {
 		System.out.println("--------------------");
 		
 		for (Map.Entry<String, Currency> me : set)
-			System.out.format(Locale.US, "%s: %7.4f%n", me.getKey(), me.getValue().getExchangeRate());
+			System.out.format(Locale.US, "%s ", me.getKey());
 		
+		System.out.println();
 		System.out.println();
 	}
 	
