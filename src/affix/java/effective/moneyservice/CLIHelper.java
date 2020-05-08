@@ -152,7 +152,7 @@ public class CLIHelper {
 					amount = Integer.parseInt(userAmount);
 				} catch(NumberFormatException e) {
 					logger.log(Level.WARNING, "Amount exception! " + e);
-					System.out.format("Your choice %s is not accepted!%n", userAmount);
+					System.out.format("Input must be numerical!%n", userAmount);
 					ok = false;
 				}
 			}
