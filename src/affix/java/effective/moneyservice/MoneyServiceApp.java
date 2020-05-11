@@ -87,7 +87,7 @@ public class MoneyServiceApp {
 			logger.log(Level.SEVERE, "File logger not working! ", e);
 		}
 	}
-		
+	
 	/**
 	 * Method for running configuration methods
 	 */

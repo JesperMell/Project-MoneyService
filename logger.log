@@ -1,85 +1,76 @@
-maj 06, 2020 10:53:39 FM affix.java.effective.moneyservice.ServiceConfig readMoneyServiceConfigFile
+maj 11, 2020 9:37:42 FM affix.java.effective.moneyservice.ServiceConfig readMoneyServiceConfigFile
 INFO: Entering readMoneyServiceConfigFile method..
-maj 06, 2020 10:53:39 FM affix.java.effective.moneyservice.ServiceConfig readProjectConfigFile
+maj 11, 2020 9:37:42 FM affix.java.effective.moneyservice.ServiceConfig readProjectConfigFile
 INFO: Entering readProjectConfigFile method..
-maj 06, 2020 10:53:39 FM affix.java.effective.moneyservice.ServiceConfig readCurrencyConfigFile
+maj 11, 2020 9:37:42 FM affix.java.effective.moneyservice.ServiceConfig readCurrencyConfigFile
 INFO: Entering readCurrencyConfigFile method..
-maj 06, 2020 10:53:39 FM affix.java.effective.moneyservice.MoneyServiceApp main
+maj 11, 2020 9:37:42 FM affix.java.effective.moneyservice.MoneyServiceApp main
 INFO: -------Configuration_Ends-------
 
-maj 06, 2020 10:53:39 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+maj 11, 2020 9:37:42 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
 INFO: Entering CLIApplication -->
-maj 06, 2020 10:53:39 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 11, 2020 9:37:42 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:44 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 11, 2020 9:37:45 FM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Exiting Main menu loop <--
+maj 11, 2020 9:37:45 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:46 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 11, 2020 9:37:46 FM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Exiting Main menu loop <--
+maj 11, 2020 9:37:46 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:46 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 11, 2020 9:37:46 FM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Exiting Main menu loop <--
+maj 11, 2020 9:37:46 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:47 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Exiting Main menu loop <--
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.ExchangeOffice printSiteReport
+INFO: Entering printSiteReport method -->
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.ExchangeOffice printSiteReport
+INFO: Exiting printSiteReport method <--
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Exiting Main menu loop <--
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.ExchangeOffice printSiteReport
+INFO: Entering printSiteReport method -->
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.ExchangeOffice printSiteReport
+INFO: Exiting printSiteReport method <--
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Exiting Main menu loop <--
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.ExchangeOffice printSiteReport
+INFO: Entering printSiteReport method -->
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.ExchangeOffice printSiteReport
+INFO: Exiting printSiteReport method <--
+maj 11, 2020 9:37:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 11, 2020 9:37:49 FM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Exiting Main menu loop <--
+maj 11, 2020 9:37:49 FM affix.java.effective.moneyservice.ExchangeOffice printSiteReport
+INFO: Entering printSiteReport method -->
+maj 11, 2020 9:37:49 FM affix.java.effective.moneyservice.ExchangeOffice printSiteReport
+INFO: Exiting printSiteReport method <--
+maj 11, 2020 9:37:49 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:48 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:49 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:49 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:49 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:50 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:50 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:50 FM affix.java.effective.moneyservice.CLIHelper menuInput
-SEVERE: Choice Exception: java.lang.NumberFormatException: For input string: "jh"
-maj 06, 2020 10:53:50 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:50 FM affix.java.effective.moneyservice.CLIHelper menuInput
-SEVERE: Choice Exception: java.lang.NumberFormatException: For input string: "jh"
-maj 06, 2020 10:53:50 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:51 FM affix.java.effective.moneyservice.CLIHelper menuInput
-SEVERE: Choice Exception: java.lang.NumberFormatException: For input string: "jhj"
-maj 06, 2020 10:53:51 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:52 FM affix.java.effective.moneyservice.CLIHelper menuInput
-SEVERE: Choice Exception: java.lang.NumberFormatException: For input string: "hjh"
-maj 06, 2020 10:53:52 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:52 FM affix.java.effective.moneyservice.CLIHelper menuInput
-SEVERE: Choice Exception: java.lang.NumberFormatException: For input string: "jh"
-maj 06, 2020 10:53:52 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:53 FM affix.java.effective.moneyservice.CLIHelper menuInput
-SEVERE: Choice Exception: java.lang.NumberFormatException: For input string: "j"
-maj 06, 2020 10:53:53 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:54 FM affix.java.effective.moneyservice.CLIHelper menuInput
-SEVERE: Choice Exception: java.lang.NumberFormatException: For input string: "h"
-maj 06, 2020 10:53:54 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:54 FM affix.java.effective.moneyservice.CLIHelper menuInput
-SEVERE: Choice Exception: java.lang.NumberFormatException: For input string: "h"
-maj 06, 2020 10:53:54 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:55 FM affix.java.effective.moneyservice.CLIHelper menuInput
-SEVERE: Choice Exception: java.lang.NumberFormatException: For input string: "h"
-maj 06, 2020 10:53:55 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:56 FM affix.java.effective.moneyservice.CLIHelper menuInput
-SEVERE: Choice Exception: java.lang.NumberFormatException: For input string: "h"
-maj 06, 2020 10:53:56 FM affix.java.effective.moneyservice.CLIHelper menuInput
-INFO: Entering Main menu loop -->
-maj 06, 2020 10:53:57 FM affix.java.effective.moneyservice.CLIHelper menuInput
-SEVERE: Choice Exception: java.lang.NumberFormatException: For input string: "h"
-maj 06, 2020 10:53:57 FM affix.java.effective.moneyservice.CLIHelper menuInput
+maj 11, 2020 9:37:50 FM affix.java.effective.moneyservice.CLIHelper menuInput
+INFO: Exiting Main menu loop <--
+maj 11, 2020 9:37:50 FM affix.java.effective.moneyservice.CLIHelper orderRequest
+INFO: Entering orderRequest method -->
+maj 11, 2020 9:37:55 FM affix.java.effective.moneyservice.CLIHelper orderRequest
+INFO: Exiting orderRequest method <--
+maj 11, 2020 9:37:55 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+INFO: Order: Order [orderNr=1, mode=BUY, currencyCode=USD, amount=50]
+maj 11, 2020 9:37:55 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
+INFO: Entering buyMoney method -->
+maj 11, 2020 9:37:55 FM affix.java.effective.moneyservice.ExchangeOffice buyMoney
+INFO: Exiting buyMoney method <--
+maj 11, 2020 9:37:55 FM affix.java.effective.moneyservice.MoneyServiceApp CLIApplication
+INFO: Completed BUY Transaction!
+
+maj 11, 2020 9:37:55 FM affix.java.effective.moneyservice.CLIHelper menuInput
 INFO: Entering Main menu loop -->
