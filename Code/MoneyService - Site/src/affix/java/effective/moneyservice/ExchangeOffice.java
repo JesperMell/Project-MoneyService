@@ -1,6 +1,7 @@
 package affix.java.effective.moneyservice;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,7 +27,7 @@ public class ExchangeOffice implements MoneyService{
 	 * name - a String defining the name of the exchange office
 	 */
 	private String name;
-	
+
 	/**
 	 * logger - a Logger object
 	 */
@@ -55,10 +56,10 @@ public class ExchangeOffice implements MoneyService{
 		this.name = name;
 		this.inventory = inv;
 	}
-	
+
 	@Override
 	public boolean buyMoney(Order orderData) {
-		
+
 		logger.log(Level.INFO, "Entering buyMoney method -->");
 		// Check if selected currency is one of the accepted currencies
 		if(MoneyServiceApp.currencyMap.containsKey(orderData.getCurrencyCode())) {
@@ -93,7 +94,10 @@ public class ExchangeOffice implements MoneyService{
 				// Create new transaction and add to map with completed orders
 				Transaction completedOrders = new Transaction(orderData.getCurrencyCode(), orderData.getAmount(), orderData.getMode());
 				completedTransactions.add(completedOrders);
-				
+
+				System.out.println("Your requested order has been processesed and accepted!");
+				System.out.format("Returning %.0f %s to customer\n\n",boughtInREF,MoneyServiceApp.referenceCurrencyCode);
+
 				logger.log(Level.INFO, "Exiting buyMoney method <--");
 				return true;
 			}
@@ -111,7 +115,7 @@ public class ExchangeOffice implements MoneyService{
 
 	@Override
 	public boolean sellMoney(Order orderData) {
-		
+
 		logger.log(Level.INFO, "Entering sellMoney method -->");
 		// Check if selected currency is one of the accepted currencies
 		if(MoneyServiceApp.currencyMap.containsKey(orderData.getCurrencyCode())) {
@@ -139,6 +143,10 @@ public class ExchangeOffice implements MoneyService{
 				// Create new transaction and add to map with completed orders
 				Transaction completedOrders = new Transaction(orderData.getCurrencyCode(), orderData.getAmount(), orderData.getMode());
 				completedTransactions.add(completedOrders);
+
+				System.out.println("Your requested order has been processesed and accepted!");
+				System.out.format("Amount to pay %.0f %s\n\n",soldAmountInREF,MoneyServiceApp.referenceCurrencyCode);
+				System.out.println();
 				logger.log(Level.INFO, "Exiting sellMoney method <--");
 				return true;
 			}
@@ -153,7 +161,7 @@ public class ExchangeOffice implements MoneyService{
 			throw new IllegalArgumentException("The specified currency code is not accepted!");
 		}
 	}
-	
+
 	@Override
 	public void printSiteReport(String destination) {
 		logger.log(Level.INFO, "Entering printSiteReport method -->");
@@ -182,9 +190,16 @@ public class ExchangeOffice implements MoneyService{
 
 	@Override
 	public void shutDownService(String destination) {
+		// Create Directories
+		String path = String.format("Reports/%s", MoneyServiceApp.OFFICE_NAME);
+		new File(path).mkdirs();
+
+		// Path and Filename = fullPath
+		String fullPath = String.format("%s/%s", path, destination);
+
 		logger.log(Level.INFO, "Entering shutDownService method -->");
 		// Serialize and store completed transactions.
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(destination))){
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fullPath))){
 			oos.writeObject(completedTransactions);
 		}
 		catch(IOException ioe) {
@@ -221,6 +236,12 @@ public class ExchangeOffice implements MoneyService{
 			if(inventory.get(MoneyServiceApp.referenceCurrencyCode)>= boughtInRef) {
 				return true;
 			}
+			else {
+				System.out.format("Currently can not meet the requested amount of %d %s\n", orderData.getAmount(), orderData.getCurrencyCode());
+			}
+		}
+		else {
+			System.out.format("The amount does not meet the requirements (min/multiples) of %d\n", MoneyServiceApp.orderAmountLimit);
 		}
 		return false;
 	}
@@ -237,9 +258,16 @@ public class ExchangeOffice implements MoneyService{
 			//Check if bought currency is in inventory
 			Optional<Double> maybeAvailableAmount = getAvailableAmount(orderData.getCurrencyCode());
 			if(maybeAvailableAmount.isPresent()) {
-				if(maybeAvailableAmount.get() >= orderData.getAmount())
-					return true;
+				if(maybeAvailableAmount.get() >= orderData.getAmount()) {
+					return true;					
+				}
+				else {
+					System.out.format("Currently can not meet the requested amount of %d %s\n", orderData.getAmount(), orderData.getCurrencyCode());
+				}
 			}
+		}
+		else {
+			System.out.format("The amount does not meet the requirements (min/multiples) of %d\n", MoneyServiceApp.orderAmountLimit);
 		}
 		return false;
 	}

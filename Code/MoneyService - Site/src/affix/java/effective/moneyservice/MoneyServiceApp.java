@@ -1,6 +1,8 @@
 package affix.java.effective.moneyservice;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.ConsoleHandler;
@@ -10,11 +12,14 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+
+
 /**
  * This class triggers an application defining an ExchangeOffice for Order objects.
  * @author Group Center
  */
 public class MoneyServiceApp {
+	public static final String OFFICE_NAME = "CENTER";
 	
 	/**
 	 * String holding the configured reference currency code
@@ -68,7 +73,7 @@ public class MoneyServiceApp {
 		logger.setLevel(Level.ALL);
 		// Create a new Handler for console.
 		ConsoleHandler consHandler = new ConsoleHandler();
-		consHandler.setLevel(Level.WARNING);
+		consHandler.setLevel(Level.SEVERE);
 		logger.addHandler(consHandler);
 		
 		try {
@@ -123,6 +128,8 @@ public class MoneyServiceApp {
 					ok = true;
 					aOrder = null;
 					aOrder = CLIHelper.orderRequest();
+					
+					CLIHelper.showValidatedOrder(aOrder);
 					boolean output = false;
 					//logging order data.
 					logger.log(Level.INFO, "Order: " + aOrder);
@@ -134,7 +141,7 @@ public class MoneyServiceApp {
 								output = aExchangeOffice.sellMoney(aOrder);
 								logger.log(Level.INFO, "Completed " + aOrder.getMode() +  " Transaction!\n");
 							} catch(IllegalArgumentException iae) {
-								logger.log(Level.SEVERE, "Order exception! " + iae);
+								logger.log(Level.WARNING, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
 								System.out.println();
 								ok = false;
@@ -147,15 +154,15 @@ public class MoneyServiceApp {
 								
 
 							} catch (IllegalArgumentException iae) {
-								logger.log(Level.SEVERE, "Order exception! " + iae);
+								logger.log(Level.WARNING, "Order exception! " + iae);
 								System.out.println(iae.getMessage());
 								System.out.println();
 								ok = false;
 							}
 						
-						if (ok && output == false || output == false) {
+						if (ok == false || output == false) {
 							
-							System.out.println("The amount does not meet the requirements (min/multiples) or is a too high amount for us to handle");
+							System.out.println("Your order has been rejected (could not be handeled)");
 							System.out.println();
 							ok = false;
 						}
@@ -166,7 +173,7 @@ public class MoneyServiceApp {
 					}
 				} while(!ok);
 				
-				CLIHelper.showValidatedOrder(aOrder);
+
 				break;
 			case 3:
 				aExchangeOffice.printSiteReport("console");
@@ -175,7 +182,8 @@ public class MoneyServiceApp {
 				aExchangeOffice.printSiteReport("txt");
 				break;
 			case 5:
-				aExchangeOffice.shutDownService("Transactions.ser");
+				String reportName = String.format("Report_%s_%s.ser", OFFICE_NAME, DateTimeFormatter.ofPattern("YYYY-MM-dd").format(LocalDate.now()));
+				aExchangeOffice.shutDownService(reportName);
 			case 0:
 				System.out.println("Thanks for visiting group center MoneyService. Welcome back!");
 				done = true;

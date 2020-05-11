@@ -50,7 +50,7 @@ public class CLIHelper {
 			try {
 				choice = Integer.parseInt(userChoice);
 			} catch(NumberFormatException e) {
-				logger.log(Level.SEVERE, "Choice Exception: " + e);
+				logger.log(Level.WARNING, "Choice Exception: " + e);
 				System.out.format("Your choice %s is not accepted!%n", userChoice);
 				ok = false;
 			}
@@ -84,9 +84,9 @@ public class CLIHelper {
 		System.out.println("--------------------");
 		
 		for (Map.Entry<String, Currency> me : set)
-			System.out.format(Locale.US, "%s: %7.4f%n", me.getKey(), me.getValue().getExchangeRate());
-			//System.out.println(me.getKey() + ": " + me.getValue().getExchangeRate());
+			System.out.format(Locale.US, "%s ", me.getKey());
 		
+		System.out.println();
 		System.out.println();
 	}
 	
@@ -99,7 +99,7 @@ public class CLIHelper {
 		
 		logger.log(Level.INFO, "Entering orderRequest method -->");
 		int sellBuyChoice = 0; // Default "Back to main menu"
-		String currencyCode = "SEK"; // Default SEK
+		String currencyCode = MoneyServiceApp.referenceCurrencyCode;
 		int amount = 0;
 		Order aOrder = null;
 		boolean ok;
@@ -120,7 +120,7 @@ public class CLIHelper {
 				try {
 					sellBuyChoice = Integer.parseInt(userSellBuyChoice);
 				} catch(NumberFormatException e) {
-					logger.log(Level.SEVERE, "Choice exception! " + e);
+					logger.log(Level.WARNING, "Choice exception! " + e);
 					System.out.format("Your choice %s is not accepted!%n", userSellBuyChoice);
 					ok = false;
 				}
@@ -134,7 +134,6 @@ public class CLIHelper {
 			
 			if (sellBuyChoice == 1 || sellBuyChoice == 2) {
 				
-				//showSupportedCurrencies();
 				System.out.print("Enter currency code (3 capital letters): ");
 				String userCurrencyCode = input.next();
 			
@@ -144,7 +143,7 @@ public class CLIHelper {
 				try {
 					currencyCode = userCurrencyCode.toUpperCase();
 				} catch(NumberFormatException e) {
-					logger.log(Level.SEVERE, "Currency code exception! " + e);
+					logger.log(Level.WARNING, "Currency code exception! " + e);
 					System.out.format("Your choice %s is not accepted!", userCurrencyCode);
 					ok = false;
 				}
@@ -152,8 +151,8 @@ public class CLIHelper {
 				try {
 					amount = Integer.parseInt(userAmount);
 				} catch(NumberFormatException e) {
-					logger.log(Level.SEVERE, "Amount exception! " + e);
-					System.out.format("Your choice %s is not accepted!%n", userAmount);
+					logger.log(Level.WARNING, "Amount exception! " + e);
+					System.out.format("Input must be numerical!%n", userAmount);
 					ok = false;
 				}
 			}
@@ -181,7 +180,6 @@ public class CLIHelper {
 					break;
 					
 				case 0:
-					//menuInput();
 					break;
 				}
 			}
@@ -202,10 +200,12 @@ public class CLIHelper {
 	static void showValidatedOrder(Order aOrder) {
 		
 		if (aOrder != null) {
-			System.out.println("Your Order: ");
+			System.out.println("Your requested order!");
+			System.out.println("----------------------");
+			System.out.println();
 			System.out.println("Order type: " + aOrder.getMode());
 			System.out.println("Currency code: " + aOrder.getCurrencyCode());
-			System.out.println("Amount in that currency: " + aOrder.getAmount());
+			System.out.println("Order amount in requested currency: " + aOrder.getAmount());
 			System.out.println();
 		}
 		

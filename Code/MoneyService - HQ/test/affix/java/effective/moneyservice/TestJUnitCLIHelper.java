@@ -16,7 +16,7 @@ public class TestJUnitCLIHelper {
 	 */
 	@Test
 	public void testHeadDisplay1() {
-		String row = CLIHelper.headDisplayer(Arrays.asList("Test1", "Test2"));
+		String row = CLIHelper.headDisplayer(new String[] {"Test1", "Test2"});
 		assertEquals(row, "Test1               |Test2               |");
 	}
 	
@@ -25,16 +25,21 @@ public class TestJUnitCLIHelper {
 	 */
 	@Test
 	public void testRowDisplay1() {
-		Map<String, Integer> l1 = new HashMap<>();
-		Map<String, Integer> l2 = new HashMap<>();
-		l1.put("A", 1);
-		l1.put("B", 2);
+		StatisticData data = new StatisticData();
+		Map<String, Integer> d1 = new HashMap<>();
+		Map<String, Integer> d2 = new HashMap<>();
 		
-		l2.put("A", 3);
-		l2.put("B", 4);
-			
-		String row = CLIHelper.rowDisplayer(Arrays.asList(l1, l2), "");
-		assertEquals(row, "A: 1                |A: 3                |\nB: 2                |B: 4                |\n");
+		d1.put("A", 1);
+		d1.put("B", 2);
+		
+		d2.put("A", 3);
+		d2.put("B", 4);
+		
+		data.putToData("A", d1);
+		data.putToData("B", d2);
+		
+		String row = CLIHelper.rowDisplayer(data, "e", Arrays.asList("A", "B"), new String[] {"A", "B"});
+		assertEquals(row, "A:              1 e |A:              3 e |\nB:              2 e |B:              4 e |\n");
 	}
 
 }

@@ -4,15 +4,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,11 +24,18 @@ import java.util.stream.IntStream;
  *
  */
 public class CLIHelper {
+	
+	/**
+	 * The header used when rendering table.
+	 * These headers need to match the keys calculated when {@link StatisticData}
+	 * instances is created in displayTable function.
+	 */
+	static final String[] displayTitles = {"Total Buy", "Total Sell", "Total Sell & Buy", "Profit"};
 
 	/**
 	 * Variable for keyboard input
 	 */
-	static Scanner input = new Scanner(System.in);
+	static Scanner input = new Scanner(System.in).useDelimiter(System.lineSeparator());
 
 	/**
 	 * The width of column when rendering output.
@@ -80,9 +85,9 @@ public class CLIHelper {
 		 */
 		TRANSACTIONS,
 		/**
-		 * Render both statistics and transactions.
+		 * Exit the option list.
 		 */
-		BOTH
+		BACK
 	};
 
 	/**
@@ -137,137 +142,111 @@ public class CLIHelper {
 		// Choose Display Option.
 		do {
 			display_option = readDisplayOption();
+			if(display_option.isPresent() && display_option.get() != DisplayOption.BACK) {
+				displayTable(sites, startDay.get(), periodOption.get(), currencies, display_option.get());
+			}
 			logger.info("Exiting readDisplayOption <--");
-		} while (display_option.isEmpty());
+		} while (continueShowDisplayOptions(display_option));
 		System.out.println("---");
 
+
+		// Read Currency map again.
+		HQApp.currencyMap = HQApp.readCurrencyConfigFile("ExchangeRates/CurrencyConfig_Default_Accepted.txt");
+		
+	}
+	
+	/**
+	 * Should the displayOption menu still be visible?
+	 * If the Optional is empty, then the input is probably inaccurate.
+	 * If the Optional isn't BACK, well, keep rendering the menu.
+	 * 
+	 * @param opt - The option on what to display.
+	 * @return True - Continue render displayOption menu
+	 *         False - Stop rendering the displayOption menu
+	 */
+	private static Boolean continueShowDisplayOptions(Optional<DisplayOption> opt) {
+		if(opt.isEmpty()) return true;
+		if(opt.get() != DisplayOption.BACK) return true;
+		return false;
+	}
+	
+	/**
+	 * displayTable is ultimate responsible to render statistics for site/sites.
+	 * First, it's asks a site instance to read all transactions according to the date range.
+	 * Second, create statistics instances which holds the reference to the imported transactions.
+	 * The third part is to use Statistics methods to compute cool values, and each value is stored
+	 * in a StatisticsData instance, which could contain profit for a day, or profit for a week. 
+	 * Lastly render the output as a table of some sort.
+	 * 
+	 * @param sites - List of sites to present
+	 * @param sDay - Start of the search range.
+	 * @param period - Which period to calculate data.
+	 * @param currencies - List of currencies to present.
+	 * @param displayOpt - What data to display.
+	 */
+	private static void displayTable(Set<Site> sites, LocalDate sDay, Period period, List<String> currencies, DisplayOption displayOpt) {
 		// Compute the endDay.
-		LocalDate endDay = createEndDay(periodOption, startDay);
+		LocalDate endDay = createEndDay(period, sDay);
 
-		// Create Statistics
-		List<Statistic> statistics = new ArrayList<>();
-
-		for (Site s : sites) {
-			try {
-				s.readTransactions(startDay.get(), endDay);
-			} catch (ClassNotFoundException e1) {
-				logger.log(Level.SEVERE, "Site exception! " + e1);
-				System.out.println("Something went wrong!");
-			}
-
-			try {
-				statistics.add(new Statistic(s.getCompletedTransactions(), currencies, s.getSiteName()));
-			} catch (IllegalArgumentException e) {
-				logger.log(Level.WARNING, "Statistics exception! " + e);
-				System.out.println(
-						String.format("%s does not have any transactions and won't be included", s.getSiteName()));
-			}
-		}
+		// Initialize Statistics
+		List<Statistic> statistics = Statistic.initializeFromSites(sites, sDay, endDay, currencies);
 
 		if (statistics.isEmpty()) {
 			System.out.println("No statistics were generated");
 			return;
 		}
 
-		// Create and set StatDay for each day.
+		// Create and set StatisticsData for each day.
 		// Fill them with corresponding values from statistics list.
-		List<StatDay> result = new ArrayList<>();
+		List<StatisticData> result = StatisticData.initializeDataFromStatistics(statistics, sDay, endDay);
 
 		for (Statistic s : statistics) {
-			for (LocalDate l = startDay.get(); !l.equals(endDay); l = l.plusDays(1)) {
-				StatDay stat = new StatDay(s.getSiteName(), l);
-				stat.setProfit(s.getProfit(l.toString()));
-				stat.setAmountBuy(s.getTotalAmountBuy(l.toString()));
-				stat.setAmountSell(s.getTotalAmountSell(l.toString()));
-				stat.setTotal(s.getTotalAmount(l.toString()));
-
-				result.add(stat);
-			}
-
 			// Show Transactions.
-			if (display_option.get().equals(DisplayOption.TRANSACTIONS)
-					|| display_option.get().equals(DisplayOption.BOTH)) {
+			if (displayOpt.equals(DisplayOption.TRANSACTIONS)) {
 				System.out.println(String.format("----- Transactions for %s -----", s.getSiteName()));
-				System.out.println(headDisplayer(Arrays.asList("ID", "TYPE", "AMOUNT", "CURRENCY", "TIMESTAMP")));
+				System.out.println(headDisplayer(new String[] {"ID", "TYPE", "AMOUNT", "CURRENCY", "TIMESTAMP"}));
 				s.getTransactions().stream().filter(currencyFilter(currencies)).forEach(t -> {
-					System.out.println(headDisplayer(Arrays.asList(String.valueOf(t.getId()) + "",
+					System.out.println(headDisplayer(new String[] {String.valueOf(t.getId()) + "",
 							t.getMode().toString(), String.valueOf(t.getAmount()), t.getCurrencyCode(),
-							DateTimeFormatter.ofPattern("YYYY-MM-dd h:m:s").format(t.getTimeStamp()))));
+							DateTimeFormatter.ofPattern("YYYY-MM-dd h:m:s").format(t.getTimeStamp())}));
 				});
 			}
 		}
 
 		// Show Statistics.
-		if (display_option.get().equals(DisplayOption.STATISTICS) || display_option.get().equals(DisplayOption.BOTH)) {
-			result.stream().collect(Collectors.groupingBy(StatDay::getSite)).forEach((k, v) -> {
-				// Maps for calculating "total for all days" row.
-				Map<String, Integer> profit = new HashMap<>();
-				Map<String, Integer> amountBuy = new HashMap<>();
-				Map<String, Integer> amountSell = new HashMap<>();
-				Map<String, Integer> total = new HashMap<>();
-
-				System.out.println(String.format("\n----- %s -----", k));
-				v.forEach((s) -> {
-
-					System.out.println("\n" + s.getDate());
-					System.out.println(
-							headDisplayer(Arrays.asList("Profit", "Total Buy", "Total Sell", "Total Buy & Sell")));
-					System.out.println(rowDisplayer(
-							Arrays.asList(s.getProfit(), s.getAmountBuy(), s.getAmountSell(), s.getTotal()),"SEK"));
-
-					s.getProfit().forEach((a, b) -> profit.merge(a, b, Integer::sum));
-					s.getAmountBuy().forEach((a, b) -> amountBuy.merge(a, b, Integer::sum));
-					s.getAmountSell().forEach((a, b) -> amountSell.merge(a, b, Integer::sum));
-					s.getTotal().forEach((a, b) -> total.merge(a, b, Integer::sum));
-				});
-
-				// Total for all days row.
-				if (v.size() > 1) {
-					System.out.println("\nTOTAL");
-					System.out.println(
-							headDisplayer(Arrays.asList("Profit", "Total Buy", "Total Sell", "Total Buy & Sell")));
-					System.out.println(rowDisplayer(Arrays.asList(profit, amountBuy, amountSell, total), "SEK"));
-				}
-			});
-
+		// For each day
+		if (displayOpt.equals(DisplayOption.STATISTICS)) {
+			System.out.format("\nStart Day: %s --- Period: %s", sDay, period);
+			// For total days
+			result.stream().collect(Collectors.groupingBy(StatisticData::getSite)).forEach(displayStatData(currencies));
+			
 			// Display Statistics for all sites.
 			if (sites.size() > 1) {
 				System.out.println("\n----- ALL -----");
-
-				// Display Total Profit for all sites combined for each currency.
-				Map<String, Integer> l1 = result.stream()
-						.collect(Collectors.toMap(e -> "ALL", StatDay::getProfit, (s1, s2) -> {
-							s1.forEach((k, v) -> s2.merge(k, v, Integer::sum));
-							return s2;
-						})).get("ALL");
-
-				// Display Total Buy amount for all sites combined for each currency.
-				Map<String, Integer> l2 = result.stream()
-						.collect(Collectors.toMap(e -> "ALL", StatDay::getAmountBuy, (s1, s2) -> {
-							s1.forEach((k, v) -> s2.merge(k, v, Integer::sum));
-							return s2;
-						})).get("ALL");
-
-				// Display Total Sell amount for all sites combined for each currency.
-				Map<String, Integer> l3 = result.stream()
-						.collect(Collectors.toMap(e -> "ALL", StatDay::getAmountSell, (s1, s2) -> {
-							s1.forEach((k, v) -> s2.merge(k, v, Integer::sum));
-							return s2;
-						})).get("ALL");
-
-				// Display Total amount for all sites combined for each currency.
-				Map<String, Integer> l4 = result.stream()
-						.collect(Collectors.toMap(e -> "ALL", StatDay::getTotal, (s1, s2) -> {
-							s1.forEach((k, v) -> s2.merge(k, v, Integer::sum));
-							return s2;
-						})).get("ALL");
-
-				System.out
-						.println(headDisplayer(Arrays.asList("Profit", "Total Buy", "Total Sell", "Total Buy & Sell")));
-				System.out.println(rowDisplayer(Arrays.asList(l1, l2, l3, l4), "SEK"));
+				
+				StatisticData total = result.stream().reduce(new StatisticData(), (t, elem) -> t.mergeData(elem));
+				System.out.println(headDisplayer(displayTitles));
+				System.out.println(rowDisplayer(total, "SEK", currencies, displayTitles));
 			}
 		}
 		System.out.println("\n----- END -----");
+				
+	}
+	
+	/**
+	 * BiConsumer to merge and render statistics.
+	 * Key is the site name, Value is a list of statistics data.
+	 * 
+	 * @param currencies - List of currencies to filer on.
+	 * @return BiConsumer for presenting merged statistics.
+	 */
+	private static BiConsumer<String, List<StatisticData>> displayStatData(List<String> currencies) {
+		return (k1, v1) -> {
+			System.out.println(String.format("\n----- %s -----", k1));
+			StatisticData total = v1.stream().reduce(new StatisticData(), (t, elem) -> t.mergeData(elem));
+			System.out.println(headDisplayer(displayTitles));
+			System.out.println(rowDisplayer(total, "SEK", currencies, displayTitles));
+		};
 	}
 
 	/**
@@ -320,15 +299,15 @@ public class CLIHelper {
 				result.add(sites.get(index - 1));
 			}
 		} catch (IndexOutOfBoundsException e) {
-			logger.log(Level.SEVERE, "input exception! " + e);
+			logger.log(Level.WARNING, "input exception! " + e);
 			System.out.println("Wrong input.");
 			return new HashSet<>();
 		} catch (InputMismatchException e) {
-			logger.log(Level.SEVERE, "input exception! " + e);
+			logger.log(Level.WARNING, "input exception! " + e);
 			System.out.println("Wrong input.");
 			return new HashSet<>();
 		} catch (NumberFormatException e) {
-			logger.log(Level.SEVERE, "input exception! " + e);
+			logger.log(Level.WARNING, "input exception! " + e);
 			System.out.println("Wrong input.");
 			return new HashSet<>();
 		}
@@ -357,12 +336,13 @@ public class CLIHelper {
 		System.out.print("Enter your choice: ");
 
 		try {
-			return Optional.of(DisplayOption.values()[input.nextInt() - 1]);
-		} catch (IndexOutOfBoundsException e) {
-			logger.log(Level.SEVERE, "Display Option exception! " + e);
+			String data = input.next();
+			return Optional.of(DisplayOption.values()[Integer.parseInt(data) - 1]);
+		} catch (ArrayIndexOutOfBoundsException | InputMismatchException | NumberFormatException e) {
+			logger.log(Level.WARNING, "Display Option exception! " + e);
 			System.out.println("Invalid option, try again!");
 			return Optional.empty();
-		}
+		} 
 	}
 
 	/**
@@ -380,7 +360,7 @@ public class CLIHelper {
 		try {
 			return Optional.of(LocalDate.parse(input.next()));
 		} catch (DateTimeParseException e) {
-			logger.log(Level.SEVERE, "time input exception! " + e);
+			logger.log(Level.WARNING, "time input exception! " + e);
 			System.out.println("Invalid format, try again");
 			return Optional.empty();
 		}
@@ -406,12 +386,12 @@ public class CLIHelper {
 			int data = input.nextInt();
 			return Optional.of(Period.values()[data - 1]);
 		} catch (IndexOutOfBoundsException e) {
-			logger.log(Level.SEVERE, "input exception! " + e);
+			logger.log(Level.WARNING, "input exception! " + e);
 			System.out.println("Wrong input.");
 			return Optional.empty();
 		} catch (InputMismatchException e) {
 			input.next();
-			logger.log(Level.SEVERE, "input exception! " + e);
+			logger.log(Level.WARNING, "input exception! " + e);
 			System.out.println("Wrong input.");
 			return Optional.empty();
 		}
@@ -438,7 +418,7 @@ public class CLIHelper {
 			return new ArrayList<String>(HQApp.currencyMap.keySet());
 		}
 
-		for (String code : data.split(",")) {
+		for (String code : data.replace(" ", "").split(",")) {
 			if (HQApp.currencyMap.get(code) != null)
 				currencies.add(code);
 		}
@@ -457,16 +437,16 @@ public class CLIHelper {
 	 * @param startDay     - a start date in the format YYYY-MM-DD
 	 * @return LocalDate - an end date in the format YYYY-MM-DD
 	 */
-	static LocalDate createEndDay(Optional<Period> periodOption, Optional<LocalDate> startDay) {
-		switch (periodOption.get()) {
+	static LocalDate createEndDay(Period periodOption, LocalDate startDay) {
+		switch (periodOption) {
 		case DAY:
-			return startDay.get().plusDays(1);
+			return startDay.plusDays(1);
 		case WEEK:
-			return startDay.get().plusWeeks(1);
+			return startDay.plusWeeks(1);
 		case MONTH:
-			return startDay.get().plusMonths(1);
+			return startDay.plusMonths(1);
 		}
-		return startDay.get();
+		return startDay;
 	}
 
 	/**
@@ -474,12 +454,12 @@ public class CLIHelper {
 	 * separator.
 	 * 
 	 * @param titles - A list of string to fill the column with.
-	 * @return String
+	 * @return String - formatted string.
 	 */
 
-	static String headDisplayer(List<String> titles) {
+	static String headDisplayer(String[] titles) {
 		StringBuilder row = new StringBuilder();
-		titles.forEach(s -> {
+		for(String s : titles) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(s);
 			IntStream.range(0, DISPLAY_COLUMN_WIDTH - sb.length()).forEachOrdered(n -> {
@@ -487,170 +467,41 @@ public class CLIHelper {
 			});
 			sb.append("|");
 			row.append(sb);
-		});
+	}
 		return row.toString();
 	}
 
 	/**
 	 * Generates a string representing a table. Adds spaces as padding, '|' as
 	 * separator and NewLine character for new line (\n).
+	 * @param data - The data to present.
+	 * @param prefix - Append this string to each row column.
+	 * @param currencies - Which currencies to display in data.
+	 * @param titles - Which Map from data.GetData() attribute.
 	 * 
-	 * @param list - List of Maps. The First key of each map will render as first in
-	 *             each column, which becomes a row. The second key will be the
-	 *             second line in each column, which is the second row, and so on.
-	 * @param prefix - String to prepend to column value.
-	 * 
-	 * @return String
+	 * @return String - formatted string.
 	 */
-	static String rowDisplayer(List<Map<String, Integer>> list, String prefix) {
+	static String rowDisplayer(StatisticData data, String prefix, List<String> currencies, String[] titles) {
 		StringBuilder table = new StringBuilder();
-		for (String c : list.get(0).keySet()) {
+		Integer value;
+		// Get the currency list.
+		for(String currency : currencies) {
 			StringBuilder row = new StringBuilder();
-			for (Map<String, Integer> map : list) {
+			for(String title : titles) {
 				StringBuilder column = new StringBuilder();
-				column.append(String.format("%s: %d %s", c, map.get(c), prefix));
-				IntStream.range(0, DISPLAY_COLUMN_WIDTH - column.length()).forEachOrdered(n -> {
+				value = data.getData().get(title).get(currency);
+				column.append(String.format("%s: ", currency));
+				String str = String.format("%d %s ", value, prefix);
+				IntStream.range(0, DISPLAY_COLUMN_WIDTH - (str.length() + column.length())).forEachOrdered(n -> {
 					column.append(" ");
 				});
+				column.append(str);
 				column.append("|");
 				row.append(column);
 			}
 			table.append(row + "\n");
 		}
+
 		return table.toString();
 	}
-}
-
-/**
- * Container for data of transactions for a day.
- * 
- * @author jesper
- *
- */
-class StatDay {
-	/**
-	 * The sum of profit for a day for each currency.
-	 */
-	private Map<String, Integer> profit;
-
-	/**
-	 * The sum of BUY amount for a day for each currency.
-	 */
-	private Map<String, Integer> amountBuy;
-
-	/**
-	 * The sum of SELL amount for a day for each currency.
-	 */
-	private Map<String, Integer> amountSell;
-
-	/**
-	 * The result of SELL - BUY for a day for each currency.
-	 */
-	private Map<String, Integer> total;
-
-	/**
-	 * The site which the transactions belongs to.
-	 */
-	private String site;
-
-	/**
-	 * The date the transactions occurred (Transaction.getTimeStamp).
-	 */
-	private LocalDate date;
-
-	/**
-	 * Initialize a new statDay.
-	 * 
-	 * @param site - The site which the transactions belongs to.
-	 * @param date - The date the transactions occurred.
-	 */
-	public StatDay(String site, LocalDate date) {
-		this.site = site;
-		this.date = date;
-	}
-
-	/**
-	 * @return the profit
-	 */
-	public Map<String, Integer> getProfit() {
-		return profit;
-	}
-
-	/**
-	 * @param profit the profit to set
-	 */
-	public void setProfit(Map<String, Integer> profit) {
-		this.profit = profit;
-	}
-
-	/**
-	 * @return the amountBuy
-	 */
-	public Map<String, Integer> getAmountBuy() {
-		return amountBuy;
-	}
-
-	/**
-	 * @param amountBuy the amountBuy to set
-	 */
-	public void setAmountBuy(Map<String, Integer> amountBuy) {
-		this.amountBuy = amountBuy;
-	}
-
-	/**
-	 * @return the amountSell
-	 */
-	public Map<String, Integer> getAmountSell() {
-		return amountSell;
-	}
-
-	/**
-	 * @param amountSell the amountSell to set
-	 */
-	public void setAmountSell(Map<String, Integer> amountSell) {
-		this.amountSell = amountSell;
-	}
-
-	/**
-	 * @return the total
-	 */
-	public Map<String, Integer> getTotal() {
-		return total;
-	}
-
-	/**
-	 * @param total the total to set
-	 */
-	public void setTotal(Map<String, Integer> total) {
-		this.total = total;
-	}
-
-	/**
-	 * @return the site
-	 */
-	public String getSite() {
-		return site;
-	}
-
-	/**
-	 * @param site the site to set
-	 */
-	public void setSite(String site) {
-		this.site = site;
-	}
-
-	/**
-	 * @return the date
-	 */
-	public LocalDate getDate() {
-		return date;
-	}
-
-	/**
-	 * @param date the date to set
-	 */
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
 }

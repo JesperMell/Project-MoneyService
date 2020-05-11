@@ -67,14 +67,14 @@ public class Site {
 	@SuppressWarnings("unchecked")
 	public void readTransactions(LocalDate startDate, LocalDate endDate) throws ClassNotFoundException {
 		logger.info("Entering readTransactions method -->");
+		completedTransactions = new ArrayList<Transaction>();
 		do {
 			try (ObjectInputStream ois = new ObjectInputStream(
-					new FileInputStream(String.format("Reports/Report_%s_%s.ser", siteName, startDate)))) {
+					new FileInputStream(String.format("Reports/%s/Report_%s_%s.ser", siteName, siteName, startDate)))) {
 						((List<Transaction>) ois.readObject())
 							.forEach((o) -> { completedTransactions.add(o); });
         
 			} catch (IOException ioe) {
-				System.out.format("No report for %s\n", startDate);
 				logger.log(Level.WARNING, "Could not read file! " + ioe);
 			} catch (ClassNotFoundException ioe) {
 				logger.log(Level.SEVERE, "Class missmatch exception! " + ioe);
