@@ -121,14 +121,14 @@ to dates. The list should return to HQ App for statistics.</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>900</x>
-      <y>630</y>
-      <w>90</w>
+      <x>1062</x>
+      <y>621</y>
+      <w>99</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;
 m1=1..n</panel_attributes>
-    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -158,7 +158,7 @@ m1=1..n</panel_attributes>
     <coordinates>
       <x>522</x>
       <y>468</y>
-      <w>387</w>
+      <w>549</w>
       <h>405</h>
     </coordinates>
     <panel_attributes>Statistic
@@ -205,19 +205,19 @@ transaction list according to currencies in currencyCodes.</panel_attributes>
     <coordinates>
       <x>1170</x>
       <y>414</y>
-      <w>90</w>
-      <h>90</h>
+      <w>99</w>
+      <h>81</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 &lt;&lt;creates&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>90.0;70.0;90.0;40.0;10.0;40.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>972</x>
-      <y>486</y>
-      <w>396</w>
+      <x>1143</x>
+      <y>477</y>
+      <w>297</w>
       <h>306</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Value Type&gt;&gt;
@@ -248,7 +248,7 @@ validated, a transaction is created.</panel_attributes>
     <coordinates>
       <x>1116</x>
       <y>828</y>
-      <w>243</w>
+      <w>252</w>
       <h>117</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Enum&gt;&gt;
@@ -266,9 +266,9 @@ Sell or Buy type.
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>981</x>
+      <x>972</x>
       <y>9</y>
-      <w>243</w>
+      <w>252</w>
       <h>162</h>
     </coordinates>
     <panel_attributes>Currency
@@ -289,23 +289,23 @@ Responsibilities
     <id>Relation</id>
     <coordinates>
       <x>1215</x>
-      <y>783</y>
+      <y>774</y>
       <w>27</w>
-      <h>63</h>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>837</x>
       <y>72</y>
-      <w>162</w>
+      <w>153</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;60.0;90.0;60.0;90.0;10.0;160.0;10.0</additional_attributes>
+    <additional_attributes>10.0;60.0;90.0;60.0;90.0;10.0;150.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -313,7 +313,7 @@ Responsibilities
       <x>18</x>
       <y>90</y>
       <w>351</w>
-      <h>225</h>
+      <h>279</h>
     </coordinates>
     <panel_attributes>StatisticData
 --
@@ -323,7 +323,9 @@ Responsibilities
 --
 + mergeData(StatisticData)
 + putToData(String, Map&lt;String, Integer&gt;)
-_+ initializeDataFromStatistics(List&lt;Statistic&gt;, LocalDate, LocalDate): List&lt;StatisticData&gt;_
+_+ initializeDataFromStatistics(_
+_    List&lt;Statistic&gt;, LocalDate,_
+_    LocalDate): List&lt;StatisticData&gt;_
 
 --
 Responsibilities
@@ -334,11 +336,11 @@ Storing calculated statistics for each day</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>189</x>
-      <y>306</y>
+      <y>360</y>
       <w>27</w>
-      <h>180</h>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
   </element>
 </diagram>
